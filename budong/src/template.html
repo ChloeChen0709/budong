@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="budong">
+<meta name="theme-color" content="#ffffff">
+<title>budong · {{PACK_NAME}}</title>
+<style>
+{{STYLE}}
+</style>
+
+
+</head>
+<body>
+
+<aside>
+  <div class="bk">
+    <div class="t" id="bkTitle">微积分（新文科）</div>
+    <div class="m" id="bkMeta">8 章 · 25 节 · 8 道错题</div>
+    <div class="row">
+      <button class="tiny primary" id="btnImport">导入目录</button>
+      <button class="tiny" id="btnAdd">记一道错题</button>
+    </div>
+    <div class="usage" id="usage"></div>
+  </div>
+  <div class="toc" id="toc"></div>
+</aside>
+
+<main>
+  <div class="head">
+    <div>
+      <h1 id="hdTitle">薄弱点</h1>
+          </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <details class="help">
+        <summary>说明</summary>
+        <div class="help-panel">
+          <p><b>导入目录</b>　「第X章」为章，「1.2」为节，每行一条。</p>
+          <p><b>拍照记题</b>　图片先转文字；未填识图模型时只存图，文字手填。</p>
+          <p><b>复习间隔</b>　不会 1 天，算错 2 天，审题 3 天。</p>
+          <p><b>AI</b>　key 存本机；未填时讲解为规则提示。</p>
+          <p><b>题图</b>　存在浏览器数据库，上限约 10GB；列表只显示缩略图。</p>
+          <p><b>备份</b>　清除浏览器数据会清空。<button class="linky" id="btnBackup">下载备份</button> · <button class="linky" id="btnRestore">恢复</button><input type="file" id="fileRestore" accept=".json,application/json" class="hide"></p>
+        </div>
+      </details>
+      <button class="ghost" id="btnPdf">导出 PDF</button>
+      <button class="ghost" id="btnApi">AI 设置</button>
+      <button class="ghost" id="btnReset">清空错题</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button data-tab="map" class="on">薄弱点</button>
+    <button data-tab="items">错题</button>
+    <button data-tab="review">复习</button>
+    <button data-tab="notes">知识点</button>
+  </div>
+
+  <section id="tab-map">
+    <div class="card">
+      <p class="lead" id="mapLead"></p>
+    </div>
+    <div class="card">
+      <h2>按节 × 错因</h2>
+      <div class="mwrap"><table id="matrix"></table></div>
+    </div>
+    <div class="card">
+      <h2>各节掌握度</h2>
+      <ul class="bars" id="mastery"></ul>
+    </div>
+  </section>
+
+  <section id="tab-items" class="hide">
+    <div class="chips" id="chips"></div>
+    <div id="itemList"></div>
+  </section>
+
+  <section id="tab-notes" class="hide">
+    <div class="card" id="notesCard"></div>
+  </section>
+
+  <section id="tab-review" class="hide">
+    <div class="card">
+      <h2>今天该复习<span id="dueCount"></span></h2>
+      <div id="dueList"></div>
+    </div>
+    <div class="card">
+      <h2>接下来 7 天</h2>
+      <div id="soonList"></div>
+    </div>
+  </section>
+</main>
+
+<div class="mask hide" id="modalExplain">
+  <div class="modal">
+    <div class="mt">
+      <h3 id="exTitle">讲解</h3>
+      <button class="ghost" data-close>关闭</button>
+    </div>
+    <p class="sub" id="exSub"></p>
+    <div class="blocks" id="exBody"></div>
+    <div class="note" id="exNote"></div>
+  </div>
+</div>
+
+<div class="mask hide" id="modalImport">
+  <div class="modal">
+    <div class="mt">
+      <h3>导入一本书的目录</h3>
+      <button class="ghost" data-close>关闭</button>
+    </div>
+    <details class="mini">
+      <summary>目录格式</summary>
+      <div class="mini-body">
+        <p>每行一条。以「第X章」开头的算章，以「1.2」这类编号开头的算节。</p>
+        <p>PDF 里能选中的文字可直接粘贴。</p>
+      </div>
+    </details>
+    <textarea id="tocText" spellcheck="false"></textarea>
+    <div class="note">导入会清空现有错题。</div>
+    <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px">
+      <button data-close>取消</button>
+      <button class="primary" id="btnParse">解析并替换</button>
+    </div>
+  </div>
+</div>
+
+<div class="viewer hide" id="viewer">
+  <button class="vclose" id="vClose" aria-label="关闭">×</button>
+  <img id="viewImg" alt="题目照片">
+  <div class="vhint">点图片放大 · 再点一次还原 · Esc 关闭</div>
+</div>
+
+<div class="mask hide" id="modalNotes">
+  <div class="modal">
+    <div class="mt">
+      <h3 id="ntTitle">整理这一节</h3>
+      <button class="ghost" data-close>关闭</button>
+    </div>
+    <label class="f">知识点（每行一条）</label>
+    <textarea id="ntPoints" class="nta" placeholder="例：∫u dv = uv − ∫v du"></textarea>
+    <label class="f">重点题型（每行一条）</label>
+    <textarea id="ntTypes" class="nta" placeholder="例：幂 × 三角函数"></textarea>
+    <label class="f">例题（每行：题目 ||| 答案）</label>
+    <textarea id="ntExamples" class="nta" placeholder="例：∫x e^x dx ||| (x−1)e^x + C"></textarea>
+    <label class="f">课后习题（每行一条）</label>
+    <textarea id="ntExercises" class="nta" placeholder="例：∫x cos x dx"></textarea>
+    <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:18px">
+      <button data-close>取消</button>
+      <button class="primary" id="btnSaveNotes">保存</button>
+    </div>
+  </div>
+</div>
+
+<div class="mask hide" id="modalAdd">
+  <div class="modal">
+    <div class="mt">
+      <h3>记一道错题</h3>
+      <button class="ghost" data-close>关闭</button>
+    </div>
+    <label class="f">题目照片（可选）</label>
+    <div class="drop" id="dropZone">
+      <div id="dropIdle"><span class="pick">上传照片</span>也可拖入或粘贴</div>
+      <div class="inner hide" id="dropOn">
+        <img id="imgPrev" alt="题目照片">
+        <div class="st" id="imgSt"></div>
+        <button class="tiny" id="btnRetake">重选</button>
+      </div>
+    </div>
+    <input type="file" id="filePick" accept="image/*" capture="environment" class="hide">
+    <label class="f" style="margin-top:14px">题目</label>
+    <textarea id="addQ" style="min-height:112px" placeholder="例：求 ∫ x·e^x dx"></textarea>
+    <div class="hintbox" id="addHint">还没输入题目</div>
+    <label class="f">错因</label>
+    <div class="chips" id="addCauses"></div>
+    <label class="f">归到哪一节</label>
+    <select id="addSec"></select>
+    <div id="addNotes" class="addnotes hide"></div>
+    <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:18px">
+      <button data-close>取消</button>
+      <button class="primary" id="btnSaveItem">存下来</button>
+    </div>
+  </div>
+</div>
+
+<div class="mask hide" id="modalApi">
+  <div class="modal">
+    <div class="mt">
+      <h3>接入你自己的 AI</h3>
+      <button class="ghost" data-close>关闭</button>
+    </div>
+    <details class="mini">
+      <summary>说明</summary>
+      <div class="mini-body">
+        <p>key 存在本机浏览器，直接发给你填的接口地址，不经过其他服务器。</p>
+        <p>不填也能用，讲解改为规则提示。</p>
+      </div>
+    </details>
+    <label class="f">接口地址（OpenAI 兼容）</label>
+    <input id="apiBase" placeholder="https://api.deepseek.com/v1/chat/completions">
+    <label class="f">模型名（用来写讲解）</label>
+    <input id="apiModel" placeholder="deepseek-chat">
+    <label class="f">识图模型（可选，填了才能用拍照识别）</label>
+    <input id="apiVision" placeholder="要支持看图的模型，例如 qwen-vl-max、glm-4v、gpt-4o">
+    <label class="f">API Key</label>
+    <input id="apiKey" type="password" placeholder="sk-...">
+    <div class="apitest" id="apiTest">还没测过。填完点「测试连接」，它会真的发一次请求。</div>
+    <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px">
+      <button data-close>取消</button>
+      <button id="btnTest">测试连接</button>
+      <button class="primary" id="btnSaveApi">保存</button>
+    </div>
+  </div>
+</div>
+
+<div id="printArea" class="printonly"></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+{{SCRIPT}}
+</script>
+</body>
+</html>
