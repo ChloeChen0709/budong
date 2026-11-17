@@ -1269,6 +1269,47 @@ function bind(){
     [...$("#provRow").children].forEach(x=>x.classList.toggle("on", x === b));
   });
 
+  // 从接口拉取该账号可用的模型，避免猜模型名
+  $("#btnModels").addEventListener("click", async ()=>{
+    const url = normalizeApiUrl($("#apiBase").value);
+    const key = $("#apiKey").value.trim();
+    const hint = $("#modelHint"), list = $("#modelList");
+    if(!url || !key){ hint.textContent = "先填地址和 key"; return; }
+    const modelsUrl = url.replace(/\/chat\/completions$/, "/models");
+    hint.textContent = "正在拉取…";
+    list.classList.add("hide");
+    try{
+      const res = await fetch(modelsUrl, { headers:{ "Authorization":"Bearer " + key } });
+      if(!res.ok){
+        const t = await res.text().catch(()=> "");
+        hint.textContent = explainApiFailure(res.status, modelsUrl, apiErrorText(t));
+        return;
+      }
+      const d = await res.json();
+      const all = (d.data || d.models || []).map(m => m.id || m.name || m.model).filter(Boolean);
+      const skip = /embedding|rerank|tts|asr|speech|audio|video|image|ocr|livetranslate|realtime|wanx|comfy/i;
+      const chat = all.filter(id => !skip.test(id));
+      const show = (chat.length ? chat : all).slice(0, 60);
+      hint.textContent = "共 " + all.length + " 个，可用作讲解的 " + chat.length + " 个";
+      if(!show.length){ list.innerHTML = '<div class="empty">这家接口没有返回模型列表。</div>'; list.classList.remove("hide"); return; }
+      list.innerHTML = show.map(id=>`<button type="button" data-m="${id}">${id}</button>`).join("");
+      list.classList.remove("hide");
+      list.scrollTop = 0;
+    }catch(e){
+      hint.textContent = /Failed to fetch|NetworkError|Load failed/i.test(String(e && e.message))
+        ? "请求没到服务器：跨域被拦或地址错。"
+        : "拉取失败：" + ((e && e.message) || e);
+    }
+  });
+
+  $("#modelList").addEventListener("click", e=>{
+    const b = e.target.closest("button[data-m]"); if(!b) return;
+    $("#apiModel").value = b.dataset.m;
+    $("#apiModel").dataset.edited = "1";
+    [...$("#modelList").children].forEach(x=>x.classList.toggle("on", x === b));
+    $("#modelHint").textContent = "已选 " + b.dataset.m;
+  });
+
   $("#apiBase").addEventListener("input", ()=>{
     const norm = normalizeApiUrl($("#apiBase").value);
     let host = "";

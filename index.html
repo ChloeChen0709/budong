@@ -361,6 +361,24 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
 .apitest.bad{color:var(--red)}
 .modalfoot{display:flex;align-items:center;justify-content:flex-end;gap:26px;margin-top:28px}
 
+/* ---------- 模型列表 ---------- */
+.modelrow{display:flex;align-items:center;gap:16px;margin-top:10px}
+.modelhint{font-size:12.5px;color:var(--muted)}
+.models{
+  margin-top:14px;max-height:220px;overflow:auto;
+  border:1px solid var(--line);border-radius:10px;
+}
+.models.hide{display:none}
+.models button{
+  display:block;width:100%;text-align:left;
+  padding:9px 14px;font-size:13px;color:var(--text);
+  border-bottom:1px solid var(--line);
+}
+.models button:last-child{border-bottom:none}
+.models button:hover{background:var(--bg-soft);color:var(--ink)}
+.models button.on{color:var(--ink);font-weight:600;background:var(--bg-soft)}
+.models .empty{padding:14px;font-size:12.5px;color:var(--muted)}
+
 /* ---------- 服务商快捷键 ---------- */
 .provs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
 .provs button{
@@ -637,7 +655,7 @@ body.introing > aside, body.introing > main{
           <p><b>复习间隔</b>　不会 1 天，算错 2 天，审题 3 天。</p>
           <p><b>AI</b>　key 存本机；未填时讲解为规则提示。</p>
           <p><b>题图</b>　存在浏览器数据库，上限约 10GB；列表只显示缩略图。</p>
-          <p><b>版本</b>　2026-11-17 23:44 · ba9907</p>
+          <p><b>版本</b>　2026-11-17 23:50 · 23578f</p>
           <p><b>备份</b>　清除浏览器数据会清空。<button class="linky" id="btnBackup">下载备份</button> · <button class="linky" id="btnRestore">恢复</button><input type="file" id="fileRestore" accept=".json,application/json" class="hide"></p>
         </div>
       </details>
@@ -821,7 +839,12 @@ body.introing > aside, body.introing > main{
     <label class="f">接口地址（OpenAI 兼容，只填域名也行）</label>
     <input id="apiBase" placeholder="https://api.deepseek.com/v1/chat/completions">
     <label class="f">模型名（用来写讲解）</label>
-    <input id="apiModel" placeholder="deepseek-chat">
+    <input id="apiModel" placeholder="点下面的「拉取模型列表」，从你账号里有的模型里选">
+    <div class="modelrow">
+      <button type="button" class="ghost" id="btnModels">拉取模型列表</button>
+      <span class="modelhint" id="modelHint"></span>
+    </div>
+    <div class="models hide" id="modelList"></div>
     <label class="f">识图模型（可选，填了才能用拍照识别）</label>
     <input id="apiVision" placeholder="要支持看图的模型，例如 qwen-vl-max、glm-4v、gpt-4o">
     <label class="f">API Key</label>
@@ -2111,6 +2134,47 @@ function bind(){
     $("#apiTest").className = "apitest";
     $("#apiTest").textContent = "将调用：https://" + host + p.path + (p.vision ? "" : "");
     [...$("#provRow").children].forEach(x=>x.classList.toggle("on", x === b));
+  });
+
+  // 从接口拉取该账号可用的模型，避免猜模型名
+  $("#btnModels").addEventListener("click", async ()=>{
+    const url = normalizeApiUrl($("#apiBase").value);
+    const key = $("#apiKey").value.trim();
+    const hint = $("#modelHint"), list = $("#modelList");
+    if(!url || !key){ hint.textContent = "先填地址和 key"; return; }
+    const modelsUrl = url.replace(/\/chat\/completions$/, "/models");
+    hint.textContent = "正在拉取…";
+    list.classList.add("hide");
+    try{
+      const res = await fetch(modelsUrl, { headers:{ "Authorization":"Bearer " + key } });
+      if(!res.ok){
+        const t = await res.text().catch(()=> "");
+        hint.textContent = explainApiFailure(res.status, modelsUrl, apiErrorText(t));
+        return;
+      }
+      const d = await res.json();
+      const all = (d.data || d.models || []).map(m => m.id || m.name || m.model).filter(Boolean);
+      const skip = /embedding|rerank|tts|asr|speech|audio|video|image|ocr|livetranslate|realtime|wanx|comfy/i;
+      const chat = all.filter(id => !skip.test(id));
+      const show = (chat.length ? chat : all).slice(0, 60);
+      hint.textContent = "共 " + all.length + " 个，可用作讲解的 " + chat.length + " 个";
+      if(!show.length){ list.innerHTML = '<div class="empty">这家接口没有返回模型列表。</div>'; list.classList.remove("hide"); return; }
+      list.innerHTML = show.map(id=>`<button type="button" data-m="${id}">${id}</button>`).join("");
+      list.classList.remove("hide");
+      list.scrollTop = 0;
+    }catch(e){
+      hint.textContent = /Failed to fetch|NetworkError|Load failed/i.test(String(e && e.message))
+        ? "请求没到服务器：跨域被拦或地址错。"
+        : "拉取失败：" + ((e && e.message) || e);
+    }
+  });
+
+  $("#modelList").addEventListener("click", e=>{
+    const b = e.target.closest("button[data-m]"); if(!b) return;
+    $("#apiModel").value = b.dataset.m;
+    $("#apiModel").dataset.edited = "1";
+    [...$("#modelList").children].forEach(x=>x.classList.toggle("on", x === b));
+    $("#modelHint").textContent = "已选 " + b.dataset.m;
   });
 
   $("#apiBase").addEventListener("input", ()=>{
