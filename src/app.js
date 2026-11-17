@@ -138,7 +138,7 @@ function load(){
         if(Array.isArray(DB.items) && DB.items.length === 14 && DB.items.every(it=>/^s\d+$/.test(it.id))){
           DB.items = seedItems();
         }
-        if(!DB.notes || DB.notesVer !== 2){ DB.notes = deepClone(NOTES); DB.notesVer = 2; }
+        if(!DB.notes || DB.notesVer !== 3){ DB.notes = deepClone(NOTES); DB.notesVer = 3; }
       }
     }
   }catch(e){}
@@ -147,7 +147,7 @@ function save(){ try{ localStorage.setItem(KEY, JSON.stringify(DB)); return true
 function seedItems(){ return SAMPLE_ITEMS.map((it,i)=>({ id:"s"+i, ...deepClone(it) })); }
 
 function seed(){
-  DB = { book: deepClone(BOOK), items: seedItems(), notes: deepClone(NOTES), notesVer: 2, custom:false };
+  DB = { book: deepClone(BOOK), items: seedItems(), notes: deepClone(NOTES), notesVer: 3, custom:false };
   save();
 }
 
@@ -420,10 +420,11 @@ function renderNotes(){
   const host = $("#notesCard");
   if(!host) return;
 
+  const countOf = nt => nt ? (nt.concepts||nt.points||[]).length + (nt.types||[]).length + (nt.examples||[]).length : 0;
+
   if(!curSec){
     const rows = sections().map(s=>{
-      const nt = notesOf(s.id);
-      const c = nt ? (nt.points||[]).length + (nt.types||[]).length + (nt.examples||[]).length + (nt.exercises||[]).length : 0;
+      const c = countOf(notesOf(s.id));
       return `<li data-goto="${s.id}"><span>${s.id} ${s.title}</span><span class="m">${c ? c + " 条" : "未整理"}</span></li>`;
     }).join("");
     host.innerHTML = `<ul class="nlist">${rows}</ul>`;
@@ -433,30 +434,37 @@ function renderNotes(){
   const s = secOf(curSec);
   const nt = notesOf(curSec);
   const head = `<div class="notes-head"><h2>${s.id} ${s.title}</h2><button class="tiny" data-edit="${s.id}">编辑</button></div>`;
-  const empty = !nt || !((nt.points||[]).length + (nt.types||[]).length + (nt.examples||[]).length + (nt.exercises||[]).length);
-  if(empty){ host.innerHTML = head + `<div class="nempty">这一节还没有整理。</div>`; return; }
+  if(!nt || !countOf(nt)){ host.innerHTML = head + `<div class="nempty">这一节还没有整理。</div>`; return; }
 
+  const concepts = nt.concepts || nt.points || [];
   const ul = arr => (arr && arr.length) ? `<ul>${arr.map(x=>`<li>${fmtQ(x)}</li>`).join("")}</ul>` : "";
   const exs = (nt.examples||[]).length
-    ? nt.examples.map(e=>`<div class="ex"><p class="q">${fmtQ(e.q)}</p>${e.a?`<p class="a">${fmtQ(e.a)}</p>`:""}</div>`).join("")
+    ? nt.examples.map(e=>{
+        const ans = e.a ? fmtQ(e.a) : "";
+        const ana = e.analysis ? fmtQ(e.analysis) : "";
+        const inner = ans ? `<details class="ans"><summary>答案</summary>`
+            + `<div class="ansbody"><p class="a">${ans}</p>`
+            + (ana ? `<details class="ana"><summary>解析</summary><p class="a">${ana}</p></details>` : "")
+            + `</div></details>` : "";
+        return `<div class="ex"><p class="q">${fmtQ(e.q)}</p>${inner}</div>`;
+      }).join("")
     : "";
   const blk = (t, inner) => inner ? `<div class="nblock"><h3>${t}</h3>${inner}</div>` : "";
 
   host.innerHTML = head
-    + blk("知识点", ul(nt.points))
+    + blk("概念", ul(concepts))
     + blk("重点题型", ul(nt.types))
-    + blk("例题", exs)
-    + blk("课后习题", ul(nt.exercises));
+    + blk("例题", exs);
 }
 
 function openNotesEditor(id){
   const s = secOf(id);
-  const nt = notesOf(id) || {points:[],types:[],examples:[],exercises:[]};
+  const nt = notesOf(id) || {concepts:[],types:[],examples:[]};
   $("#ntTitle").textContent = `${s.id} ${s.title}`;
-  $("#ntPoints").value = (nt.points||[]).join("\n");
+  $("#ntPoints").value = (nt.concepts || nt.points || []).join("\n");
   $("#ntTypes").value = (nt.types||[]).join("\n");
-  $("#ntExamples").value = (nt.examples||[]).map(e=>e.a ? `${e.q} ||| ${e.a}` : e.q).join("\n");
-  $("#ntExercises").value = (nt.exercises||[]).join("\n");
+  $("#ntExamples").value = (nt.examples||[]).map(e=>[e.q, e.a||"", e.analysis||""].join(" ||| ")).join("\n");
+
   $("#modalNotes").dataset.sec = id;
   $("#modalNotes").classList.remove("hide");
 }
@@ -465,10 +473,10 @@ function renderAddNotes(){
   const box = $("#addNotes");
   if(!box) return;
   const nt = notesOf($("#addSec").value);
-  if(!nt || !(nt.points||[]).length){ box.classList.add("hide"); box.innerHTML = ""; return; }
-  const ps = nt.points;
+  const ps = (nt && (nt.concepts || nt.points)) || [];
+  if(!ps.length){ box.classList.add("hide"); box.innerHTML = ""; return; }
   box.classList.remove("hide");
-  box.innerHTML = `<details class="mini"><summary>本节知识点 · ${ps.length} 条</summary>`
+  box.innerHTML = `<details class="mini"><summary>本节概念 · ${ps.length} 条</summary>`
     + `<div class="mini-body"><ul>${ps.map(x=>`<li>${fmtQ(x)}</li>`).join("")}</ul></div></details>`;
 }
 
@@ -1078,13 +1086,12 @@ function bind(){
     const lines = t => t.split("\n").map(x=>x.trim()).filter(Boolean);
     DB.notes = DB.notes || {};
     DB.notes[id] = {
-      points: lines($("#ntPoints").value),
+      concepts: lines($("#ntPoints").value),
       types: lines($("#ntTypes").value),
       examples: lines($("#ntExamples").value).map(l=>{
-        const i = l.indexOf("|||");
-        return i < 0 ? { q:l, a:"" } : { q:l.slice(0,i).trim(), a:l.slice(i+3).trim() };
-      }),
-      exercises: lines($("#ntExercises").value)
+        const p = l.split("|||").map(x=>x.trim());
+        return { q: p[0] || "", a: p[1] || "", analysis: p[2] || "" };
+      }).filter(e=>e.q)
     };
     if(!save()) toast("本地空间满了");
     $("#modalNotes").classList.add("hide");
@@ -1127,7 +1134,7 @@ function bind(){
           items.push(copy);
         }
         DB = { book: o.book || DB.book, items, notes: o.notes || DB.notes,
-               notesVer: o.notesVer || 2, custom: !!o.custom };
+               notesVer: o.notesVer || 3, custom: !!o.custom };
         save(); renderAll();
         toast(`已恢复 ${items.length} 道错题`);
       }catch(e){ toast("这个文件读不出来"); }

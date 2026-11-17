@@ -225,12 +225,34 @@ ul.bars li:last-child{border-bottom:none}
 .notes-head{display:flex;align-items:baseline;justify-content:space-between;gap:24px;margin-bottom:12px}
 .nblock{padding:40px 0;border-top:1px solid var(--line)}
 .nblock:first-of-type{border-top:none;padding-top:8px}
-.nblock ul{margin:0;padding-left:20px;font-size:15px;line-height:1.85;color:var(--text)}
+.nblock ul{margin:0;padding-left:20px;font-size:15px;line-height:2.1;color:var(--text)}
 .nblock li{margin-bottom:6px}
+/* 例题手风琴：题目 → 答案 → 解析 */
+.ans{margin-top:14px}
+.ans > summary{
+  list-style:none;cursor:pointer;
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:13px;color:var(--accent);
+}
+.ans > summary::-webkit-details-marker{display:none}
+.ans > summary::after{content:"＋";font-size:11px;line-height:1}
+.ans[open] > summary::after{content:"－"}
+.ansbody{margin-top:14px;padding-left:16px;border-left:1px solid var(--line)}
+.ana{margin-top:16px}
+.ana > summary{
+  list-style:none;cursor:pointer;
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:12.5px;color:var(--muted);
+}
+.ana > summary::-webkit-details-marker{display:none}
+.ana > summary::after{content:"＋";font-size:10px;line-height:1}
+.ana[open] > summary::after{content:"－"}
+.ana p{margin-top:12px}
+
 .ex{padding:0 0 22px;margin-bottom:22px;border-bottom:1px solid var(--line)}
 .ex:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
-.ex .q{font-size:15px;line-height:1.6;margin:0 0 6px;color:var(--ink)}
-.ex .a{font-size:14px;line-height:1.7;margin:0;color:var(--muted)}
+.ex .q{font-size:15px;line-height:1.95;margin:0 0 6px;color:var(--ink)}
+.ex .a{font-size:14px;line-height:1.95;margin:0;color:var(--muted)}
 .nempty{font-size:14px;color:var(--muted);padding:16px 0}
 .nlist{list-style:none;margin:0;padding:0}
 .nlist li{
@@ -311,9 +333,10 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
 .mathinput sup,.mathinput sub{font-size:.7em;line-height:0}
 
 .frc{
-  display:inline-flex;flex-direction:column;vertical-align:-.42em;
+  display:inline-flex;flex-direction:column;
+  vertical-align:middle;position:relative;top:-.14em;
   text-align:center;margin:0 4px;
-  font-size:.92em;line-height:1.2;
+  font-size:.84em;line-height:1.18;
 }
 .frc-n{border-bottom:1px solid currentColor;padding:0 5px 1px}
 .frc-d{padding:1px 5px 0}

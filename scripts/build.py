@@ -27,10 +27,12 @@ def public_notes(notes):
     out = {}
     for sid, sec in notes.items():
         out[sid] = {
-            "points": sec["points"],
+            "concepts": sec.get("concepts", sec.get("points", [])),
             "types": sec["types"],
-            "examples": [{"q": e["q"], "a": e["a"]} for e in sec["examples"]],
-            "exercises": sec["exercises"],
+            "examples": [
+                {"q": e["q"], "a": e.get("a", ""), "analysis": e.get("analysis", "")}
+                for e in sec["examples"]
+            ],
         }
     return out
 

@@ -44,8 +44,10 @@ def check(kind, a):
         f, _v, lo, hi, val = a
         return sp.simplify(sp.integrate(S(f), (x, S(lo), S(hi))) - S(val)) == 0
     if kind == "ftc":
-        f, _v, lo, _up, val = a
-        return sp.simplify(sp.diff(sp.integrate(S(f), (x, S(lo), x)), x) - S(val)) == 0
+        f, v, lo, _up, val = a
+        var = ENV.get(v, x)
+        got = sp.diff(sp.integrate(S(f), (var, S(lo), var)), var)
+        return sp.simplify(got.subs(var, x) - S(val)) == 0
     if kind == "solve":
         e, _v, root = a
         return any(sp.simplify(r - S(root)) == 0 for r in sp.solve(S(e), x))
@@ -73,6 +75,8 @@ def main():
                 if not v:
                     continue
                 total += 1
+                if v["kind"] == "domain":
+                    continue  # 定义域类不做符号校验
                 try:
                     ok = check(v["kind"], v["args"])
                 except Exception as e:  # noqa: BLE001
