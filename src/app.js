@@ -449,11 +449,17 @@ function renderNotes(){
         return `<div class="ex"><p class="q">${fmtQ(e.q)}</p>${inner}</div>`;
       }).join("")
     : "";
+  const typList = (nt.types||[]).map(x=>{
+    if(typeof x === "string") return `<div class="typ flat"><div class="typname">${fmtQ(x)}</div></div>`;
+    return `<details class="typ"><summary>${fmtQ(x.t)}</summary>`
+      + `<div class="typbody">${fmtQ(x.how || "")}</div></details>`;
+  }).join("");
+  const typs = typList ? `<div class="typs">${typList}</div>` : "";
   const blk = (t, inner) => inner ? `<div class="nblock"><h3>${t}</h3>${inner}</div>` : "";
 
   host.innerHTML = head
     + blk("概念", ul(concepts))
-    + blk("重点题型", ul(nt.types))
+    + blk("重点题型", typs)
     + blk("例题", exs);
 }
 
@@ -462,7 +468,7 @@ function openNotesEditor(id){
   const nt = notesOf(id) || {concepts:[],types:[],examples:[]};
   $("#ntTitle").textContent = `${s.id} ${s.title}`;
   $("#ntPoints").value = (nt.concepts || nt.points || []).join("\n");
-  $("#ntTypes").value = (nt.types||[]).join("\n");
+  $("#ntTypes").value = (nt.types||[]).map(x=> typeof x === "string" ? x : [x.t, x.how||""].join(" ||| ")).join("\n");
   $("#ntExamples").value = (nt.examples||[]).map(e=>[e.q, e.a||"", e.analysis||""].join(" ||| ")).join("\n");
 
   $("#modalNotes").dataset.sec = id;
@@ -1087,7 +1093,10 @@ function bind(){
     DB.notes = DB.notes || {};
     DB.notes[id] = {
       concepts: lines($("#ntPoints").value),
-      types: lines($("#ntTypes").value),
+      types: lines($("#ntTypes").value).map(l=>{
+        const p = l.split("|||").map(x=>x.trim());
+        return p[1] ? { t: p[0], how: p.slice(1).join(" ") } : { t: l, how: "" };
+      }).filter(x=>x.t),
       examples: lines($("#ntExamples").value).map(l=>{
         const p = l.split("|||").map(x=>x.trim());
         return { q: p[0] || "", a: p[1] || "", analysis: p[2] || "" };

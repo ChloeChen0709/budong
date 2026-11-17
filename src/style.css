@@ -227,6 +227,27 @@ ul.bars li:last-child{border-bottom:none}
 .nblock:first-of-type{border-top:none;padding-top:8px}
 .nblock ul{margin:0;padding-left:20px;font-size:15px;line-height:2.1;color:var(--text)}
 .nblock li{margin-bottom:6px}
+/* 重点题型手风琴 */
+.typs{border-top:1px solid var(--line)}
+.typ{border-bottom:1px solid var(--line)}
+.typ > summary{
+  list-style:none;cursor:pointer;
+  display:flex;align-items:center;gap:12px;
+  padding:16px 0;font-size:15px;line-height:1.7;color:var(--ink);
+}
+.typ > summary::-webkit-details-marker{display:none}
+.typ > summary::after{
+  content:"＋";margin-left:auto;flex:none;
+  color:var(--faint);font-size:12px;line-height:1;
+}
+.typ[open] > summary::after{content:"－"}
+.typ > summary:hover{color:var(--accent)}
+.typbody{
+  padding:0 0 20px;max-width:64em;
+  font-size:14px;line-height:1.95;color:var(--text);
+}
+.typ.flat{padding:14px 0;font-size:15px;color:var(--text)}
+
 /* 例题手风琴：题目 → 答案 → 解析 */
 .ans{margin-top:14px}
 .ans > summary{
