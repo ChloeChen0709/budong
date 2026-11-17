@@ -40,15 +40,82 @@ const fmt = n => (Math.round(n*10)/10 % 1 === 0) ? String(Math.round(n)) : (Math
 const sum = a => a.reduce((x,y)=>x+y,0);
 
 function esc(v){ return String(v==null?"":v).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
-function fmtQ(v){
-  let t = esc(v);
-  t = t.replace(/\^\{([^{}]*)\}/g, "<sup>$1</sup>")
-       .replace(/\^\(([^()]*)\)/g, "<sup>$1</sup>")
-       .replace(/\^([A-Za-z0-9])/g, "<sup>$1</sup>");
-  t = t.replace(/_\{([^{}]*)\}/g, "<sub>$1</sub>")
-       .replace(/_\(([^()]*)\)/g, "<sub>$1</sub>")
-       .replace(/_([A-Za-z0-9])/g, "<sub>$1</sub>");
-  return t;
+/* ---------- 数学记号：渲染与序列化 ----------
+   存储用纯文本：\frac{2}{3}、^{x}、_{n}
+   渲染成书写样式：分数上下两层、指数在右上
+------------------------------------------------ */
+function readBraced(s, idx){
+  let depth = 0, out = "";
+  for(let j = idx; j < s.length; j++){
+    const ch = s[j];
+    if(ch === "{"){ depth++; if(depth === 1) continue; }
+    else if(ch === "}"){ depth--; if(depth === 0) return { body: out, next: j + 1 }; }
+    out += ch;
+  }
+  return { body: out, next: s.length };
+}
+
+function renderMath(src){
+  const plain = t => esc(t)
+    .replace(/\^\{([^{}]*)\}/g, "<sup>$1</sup>")
+    .replace(/\^\(([^()]*)\)/g, "<sup>$1</sup>")
+    .replace(/\^([A-Za-z0-9])/g, "<sup>$1</sup>")
+    .replace(/_\{([^{}]*)\}/g, "<sub>$1</sub>")
+    .replace(/_\(([^()]*)\)/g, "<sub>$1</sub>")
+    .replace(/_([A-Za-z0-9])/g, "<sub>$1</sub>");
+
+  let out = "", buf = "", i = 0;
+  const flush = ()=>{ if(buf){ out += plain(buf); buf = ""; } };
+  while(i < src.length){
+    if(src.startsWith("\\frac", i) && src[i + 5] === "{"){
+      const a = readBraced(src, i + 5), b = readBraced(src, a.next);
+      flush();
+      out += `<span class="frc"><span class="frc-n">${renderMath(a.body)}</span>`
+           + `<span class="frc-d">${renderMath(b.body)}</span></span>`;
+      i = b.next; continue;
+    }
+    if(src.startsWith("^{", i)){
+      const a = readBraced(src, i + 1); flush();
+      out += `<sup>${renderMath(a.body)}</sup>`; i = a.next; continue;
+    }
+    if(src.startsWith("_{", i)){
+      const a = readBraced(src, i + 1); flush();
+      out += `<sub>${renderMath(a.body)}</sub>`; i = a.next; continue;
+    }
+    buf += src[i]; i++;
+  }
+  flush();
+  return out;
+}
+
+function fmtQ(v){ return renderMath(String(v == null ? "" : v)); }
+
+/* DOM → 存储用记号 */
+function serializeQ(node){
+  let out = "";
+  node.childNodes.forEach(ch=>{
+    if(ch.nodeType === 3){ out += ch.nodeValue.replace(/\u200b/g, ""); return; }
+    if(ch.nodeType !== 1) return;
+    const tag = ch.tagName;
+    if(tag === "BR"){ out += " "; return; }
+    if(tag === "SUP"){ out += "^{" + serializeQ(ch) + "}"; return; }
+    if(tag === "SUB"){ out += "_{" + serializeQ(ch) + "}"; return; }
+    if(ch.classList && ch.classList.contains("frc")){
+      const a = ch.querySelector(".frc-n"), b = ch.querySelector(".frc-d");
+      out += "\\frac{" + (a ? serializeQ(a) : "") + "}{" + (b ? serializeQ(b) : "") + "}";
+      return;
+    }
+    out += serializeQ(ch);
+  });
+  return out;
+}
+
+/* 存储记号 → 人读的纯文本（用于归类判断） */
+function markPlain(v){
+  return String(v || "")
+    .replace(/\\frac\{([^{}]*)\}\{([^{}]*)\}/g, "($1)/($2)")
+    .replace(/\^\{([^{}]*)\}/g, "^$1")
+    .replace(/_\{([^{}]*)\}/g, "_$1");
 }
 
 function toast(m){ const t=$("#toast"); t.textContent=m; t.classList.add("on"); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove("on"),1900); }
@@ -242,8 +309,8 @@ function renderMap(){
     CAUSES.forEach(x=>{
       const v = r.cells[x.k];
       if(!v){ h += `<td class="empty"></td>`; return; }
-      const a = 0.15 + 0.75*(v/max);
-      h += `<td class="num" style="background:rgba(178,58,47,${a.toFixed(3)});color:${a>0.5?"#fff":"#6b2a22"}">${v}</td>`;
+      const a = 0.06 + 0.26*(v/max);
+      h += `<td class="num" style="background:rgba(178,58,47,${a.toFixed(3)})">${v}</td>`;
     });
     h += `<td class="num tot">${r.total}</td></tr>`;
   });
@@ -275,7 +342,7 @@ function renderItems(){
     <div class="qi">
       <div class="qrow">${(i.img||i.imgKey)?`<img class="qimg" src="${i.img||""}" data-key="${i.imgKey||""}" alt="">`:""}<p class="q">${fmtQ(i.q)}</p></div>
       <div class="meta">
-        <span class="tag" style="background:${CM[i.cause].color}">${CM[i.cause].name}</span>
+        <span class="tag" data-c="${i.cause}"><i></i>${CM[i.cause].name}</span>
         <span>${secTitle(i.sec)}</span>
         <span>·</span>
         <span>${chapterName(i.sec)}</span>
@@ -561,7 +628,7 @@ function fallbackExplain(it){
 async function realExplain(it, cfg){
   const s = secOf(it.sec);
   const sys = "你是一位耐心的大学数学助教。用中文回答，分三段：错在哪、正确思路、要补什么。每段不超过两句话，不要客套。";
-  const user = `教材：${DB.book.title}\n章节：${s?s.id+" "+s.title:"未归类"}\n学生打的错因：${CM[it.cause].name}\n题目：${it.q.replace(/<[^>]+>/g,"")}\n\n请按三段输出，用「1.」「2.」「3.」开头。`;
+  const user = `教材：${DB.book.title}\n章节：${s?s.id+" "+s.title:"未归类"}\n学生打的错因：${CM[it.cause].name}\n题目：${markPlain(it.q)}\n\n请按三段输出，用「1.」「2.」「3.」开头。`;
   try{
     const res = await fetch(cfg.url, {
       method:"POST",
@@ -716,7 +783,7 @@ function bind(){
   }
 
   function classifyHint(){
-    const q = $("#addQ").value.trim();
+    const q = qPlainText();
     const box = $("#addHint");
     if(!q){ box.className="hintbox hide"; box.textContent=""; renderAddNotes(); return; }
     const r = classify(q);
@@ -742,8 +809,10 @@ function bind(){
   async function handleImage(file){
     if(!file) return;
     if(!/^image\//.test(file.type)) return toast("请选图片文件");
+    const cut = await openCrop(file);
+    if(!cut) return;
     let imgs;
-    try{ imgs = await shrink(file); }catch(e){ return toast("图片读不出来，换一张试试"); }
+    try{ imgs = await shrink(cut); }catch(e){ return toast("图片读不出来，换一张试试"); }
     pendingImg = imgs;
     setDropState(true);
     $("#imgPrev").src = imgs.thumb;
@@ -755,7 +824,7 @@ function bind(){
     $("#imgSt").innerHTML = '<span class="spin"></span>识别中…';
     try{
       const txt = await ocrImage(imgs.full, cfg);
-      $("#addQ").value = txt;
+      $("#addQ").innerHTML = renderMath(txt);
       $("#addQ").dispatchEvent(new Event("input"));
       $("#imgSt").innerHTML = "<b>已转文字</b>可修改后保存。";
     }catch(e){
@@ -781,7 +850,7 @@ function bind(){
   $("#btnAdd").addEventListener("click", ()=>{
     addCause = "unknown";
     pendingImg = null;
-    $("#addQ").value = "";
+    qClear();
     $("#imgPrev").removeAttribute("src");
     $("#imgSt").innerHTML = "";
     setDropState(false);
@@ -790,9 +859,186 @@ function bind(){
     setTimeout(()=>$("#addQ").focus(), 30);
   });
   $("#addQ").addEventListener("input", classifyHint);
+  /* ---- 数学键盘 ---- */
+  const KB_ACTS = [
+    ["frac", "分数"], ["sup", "上标"], ["sub", "下标"], ["sqrt", "根号"]
+  ];
+  const KB = [
+    ["运算", ["∫","∬","∂","∑","∏","√","∞","→","≈","≠","≤","≥","±","×","÷"]],
+    ["希腊", ["π","θ","α","β","γ","δ","ε","λ","μ","σ","φ","ω","Δ","Σ","Ω"]],
+    ["函数", ["lim","ln","sin","cos","tan","arcsin","dx","dy","dt","e"]]
+  ];
+  $("#kb").innerHTML =
+    `<div class="kb-label">结构</div><div class="kb-row">` +
+    KB_ACTS.map(([a, label]) => `<button type="button" data-act="${a}">${label}</button>`).join("") +
+    `</div>` +
+    KB.map(([label, keys]) =>
+      `<div class="kb-label">${label}</div><div class="kb-row">` +
+      keys.map(k => `<button type="button" data-ins="${k}">${k}</button>`).join("") + `</div>`
+    ).join("");
+
+  const qEl = ()=> $("#addQ");
+  const qText = ()=> serializeQ(qEl()).replace(/\u200b/g, "").trim();
+  const qPlainText = ()=> markPlain(qText()).trim();
+  function qClear(){ qEl().innerHTML = ""; }
+
+  function insertRaw(html){
+    const q = qEl(); q.focus();
+    document.execCommand("insertHTML", false, html);
+    q.dispatchEvent(new Event("input"));
+  }
+  function insertText(t){ insertRaw(esc(t)); }
+
+  function focusNew(within){
+    const q = qEl();
+    const host = q.querySelector("[data-new]");
+    if(!host) return;
+    const target = within ? (host.querySelector(within) || host) : host;
+    q.querySelectorAll("[data-new]").forEach(el=>el.removeAttribute("data-new"));
+    const r = document.createRange();
+    r.selectNodeContents(target);
+    r.collapse(true);
+    const sel = window.getSelection();
+    sel.removeAllRanges(); sel.addRange(r);
+  }
+
+  function caretOutOfScripts(){
+    const sel = window.getSelection();
+    if(!sel.rangeCount) return;
+    let n = sel.anchorNode;
+    const el = n && n.nodeType === 1 ? n : (n ? n.parentElement : null);
+    const script = el && el.closest ? el.closest("sup,sub") : null;
+    if(script){
+      const r = document.createRange();
+      r.setStartAfter(script); r.collapse(true);
+      sel.removeAllRanges(); sel.addRange(r);
+    }
+  }
+
+  function doAct(act){
+    caretOutOfScripts();
+    if(act === "frac"){
+      insertRaw('<span class="frc" data-new="1"><span class="frc-n">\u200b</span><span class="frc-d">\u200b</span></span>');
+      focusNew(".frc-n");
+    } else if(act === "sup"){
+      insertRaw('<sup data-new="1">\u200b</sup>');
+      focusNew("");
+    } else if(act === "sub"){
+      insertRaw('<sub data-new="1">\u200b</sub>');
+      focusNew("");
+    } else if(act === "sqrt"){
+      insertRaw('√(<span data-new="1">\u200b</span>)');
+      focusNew("");
+    }
+  }
+
+  $("#kbToggle").addEventListener("click", ()=>{
+    const kb = $("#kb");
+    kb.classList.toggle("hide");
+    $("#kbToggle").textContent = kb.classList.contains("hide") ? "数学键盘" : "收起键盘";
+  });
+
+  $("#kb").addEventListener("click", e=>{
+    const b = e.target.closest("button"); if(!b) return;
+    if(b.dataset.act) doAct(b.dataset.act);
+    else if(b.dataset.ins !== undefined) insertText(b.dataset.ins);
+  });
+
+  // 分数里按 Tab 从分子跳到分母
+  $("#addQ").addEventListener("keydown", e=>{
+    if(e.key !== "Tab") return;
+    const host = e.target.closest ? e.target.closest(".frc") : null;
+    if(!host) return;
+    const num = host.querySelector(".frc-n");
+    if(num && num.contains(e.target) ){
+      e.preventDefault();
+      const d = host.querySelector(".frc-d");
+      if(d){
+        const r = document.createRange(); r.selectNodeContents(d); r.collapse(true);
+        const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      }
+    }
+  });
+
+  /* ---- 裁剪 ---- */
+  function openCrop(file){
+    return new Promise(resolve=>{
+      const url = URL.createObjectURL(file);
+      const img = $("#cropImg");
+      const wrap = $("#cropWrap");
+      const box = $("#cropBox");
+      img.src = url;
+      box.classList.add("hide");
+      let rect = null, start = null, done = false;
+
+      const finish = val=>{
+        if(done) return;
+        done = true;
+        $("#modalCrop").classList.add("hide");
+        URL.revokeObjectURL(url);
+        resolve(val);
+      };
+
+      const clamp = (v, max)=> Math.min(Math.max(v, 0), max);
+      const at = e=>{
+        const r = wrap.getBoundingClientRect();
+        const p = e.touches ? e.touches[0] : e;
+        return { x: clamp(p.clientX - r.left, r.width), y: clamp(p.clientY - r.top, r.height) };
+      };
+      const draw = ()=>{
+        if(!rect){ box.classList.add("hide"); return; }
+        box.classList.remove("hide");
+        box.style.left = rect.x + "px";
+        box.style.top = rect.y + "px";
+        box.style.width = rect.w + "px";
+        box.style.height = rect.h + "px";
+      };
+
+      const down = e=>{ e.preventDefault(); const p = at(e); start = p; rect = {x:p.x, y:p.y, w:0, h:0}; draw(); };
+      const move = e=>{
+        if(!start) return; e.preventDefault();
+        const p = at(e);
+        rect = { x: Math.min(start.x, p.x), y: Math.min(start.y, p.y),
+                 w: Math.abs(p.x - start.x), h: Math.abs(p.y - start.y) };
+        draw();
+      };
+      const up = ()=>{
+        start = null;
+        if(rect && (rect.w < 16 || rect.h < 16)){ rect = null; draw(); }
+      };
+
+      wrap.onpointerdown = down;
+      wrap.onpointermove = move;
+      wrap.onpointerup = up;
+      wrap.onpointercancel = up;
+
+      $("#cropAll").onclick = ()=>{ rect = null; draw(); finish(file); };
+      $("#cropCancel").onclick = ()=> finish(null);
+      $("#modalCrop").querySelector("[data-close]").onclick = ()=> finish(null);
+
+      $("#cropOk").onclick = ()=>{
+        const dw = img.clientWidth, dh = img.clientHeight;
+        const r = rect || { x:0, y:0, w:dw, h:dh };
+        if(r.w < 8 || r.h < 8) return finish(file);
+        const sx = img.naturalWidth / dw, sy = img.naturalHeight / dh;
+        const cv = document.createElement("canvas");
+        cv.width = Math.round(r.w * sx);
+        cv.height = Math.round(r.h * sy);
+        cv.getContext("2d").drawImage(
+          img,
+          Math.round(r.x * sx), Math.round(r.y * sy), Math.round(r.w * sx), Math.round(r.h * sy),
+          0, 0, cv.width, cv.height
+        );
+        cv.toBlob(b=> finish(b || file), "image/jpeg", 0.95);
+      };
+
+      $("#modalCrop").classList.remove("hide");
+    });
+  }
+
   $("#btnSaveItem").addEventListener("click", async ()=>{
-    const q = $("#addQ").value.trim();
-    if(!q && !pendingImg) return toast("写个题目，或者传一张照片");
+    const q = qText();
+    if(!qPlainText() && !pendingImg) return toast("写个题目，或者传一张照片");
     const sec = $("#addSec").value || sections()[0].id;
     const id = "u"+Date.now();
     const item = { id, sec, cause:addCause, due:0, lapses:0,
@@ -855,6 +1101,7 @@ function bind(){
     a.download = "错题本备份-" + new Date().toISOString().slice(0,10) + ".json";
     a.click();
     setTimeout(()=>URL.revokeObjectURL(a.href), 4000);
+    DB.lastBackup = Date.now(); save();
     toast("备份已下载（含图片）");
   });
 
@@ -961,4 +1208,9 @@ function bind(){
   }
   bind(); goTab("map"); renderAll();
   migrateImages();
+
+  const WEEK = 7 * 864e5;
+  if(DB.items.length && (!DB.lastBackup || Date.now() - DB.lastBackup > WEEK)){
+    setTimeout(()=>toast("上次备份超过 7 天，说明里可以下载备份"), 2600);
+  }
 })();

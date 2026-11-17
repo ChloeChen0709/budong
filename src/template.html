@@ -22,8 +22,7 @@
     <div class="t" id="bkTitle">微积分（新文科）</div>
     <div class="m" id="bkMeta">8 章 · 25 节 · 8 道错题</div>
     <div class="row">
-      <button class="tiny primary" id="btnImport">导入目录</button>
-      <button class="tiny" id="btnAdd">记一道错题</button>
+      <button class="tiny" id="btnImport">导入目录</button>
     </div>
     <div class="usage" id="usage"></div>
   </div>
@@ -75,6 +74,9 @@
   </section>
 
   <section id="tab-items" class="hide">
+    <div class="items-bar">
+      <button class="plus" id="btnAdd" aria-label="记录错题" title="记录错题">+</button>
+    </div>
     <div class="chips" id="chips"></div>
     <div id="itemList"></div>
   </section>
@@ -98,7 +100,7 @@
 <div class="mask hide" id="modalExplain">
   <div class="modal">
     <div class="mt">
-      <h3 id="exTitle">讲解</h3>
+      <h3 class="modal-title" id="exTitle">讲解</h3>
       <button class="ghost" data-close>关闭</button>
     </div>
     <p class="sub" id="exSub"></p>
@@ -110,7 +112,7 @@
 <div class="mask hide" id="modalImport">
   <div class="modal">
     <div class="mt">
-      <h3>导入一本书的目录</h3>
+      <h3 class="modal-title">导入目录</h3>
       <button class="ghost" data-close>关闭</button>
     </div>
     <details class="mini">
@@ -138,7 +140,7 @@
 <div class="mask hide" id="modalNotes">
   <div class="modal">
     <div class="mt">
-      <h3 id="ntTitle">整理这一节</h3>
+      <h3 class="modal-title" id="ntTitle">整理这一节</h3>
       <button class="ghost" data-close>关闭</button>
     </div>
     <label class="f">知识点（每行一条）</label>
@@ -156,10 +158,29 @@
   </div>
 </div>
 
+<div class="mask hide" id="modalCrop">
+  <div class="modal" style="width:min(820px,100%)">
+    <div class="mt">
+      <h3 class="modal-title">裁剪</h3>
+      <button class="ghost" data-close>关闭</button>
+    </div>
+    <div class="crop-wrap" id="cropWrap">
+      <img id="cropImg" alt="">
+      <div class="crop-box hide" id="cropBox"></div>
+    </div>
+    <div class="crop-actions">
+      <span class="hint">在图上拖拽，框出要保留的部分</span>
+      <button class="ghost" id="cropCancel">取消</button>
+      <button class="ghost" id="cropAll">整张</button>
+      <button class="primary" id="cropOk">确定</button>
+    </div>
+  </div>
+</div>
+
 <div class="mask hide" id="modalAdd">
   <div class="modal">
     <div class="mt">
-      <h3>记一道错题</h3>
+      <h3 class="modal-title">记录错题</h3>
       <button class="ghost" data-close>关闭</button>
     </div>
     <label class="f">题目照片（可选）</label>
@@ -173,16 +194,18 @@
     </div>
     <input type="file" id="filePick" accept="image/*" capture="environment" class="hide">
     <label class="f" style="margin-top:14px">题目</label>
-    <textarea id="addQ" style="min-height:112px" placeholder="例：求 ∫ x·e^x dx"></textarea>
+    <div id="addQ" class="mathinput" contenteditable="true" spellcheck="false" data-ph="例：∫ x·eˣ dx"></div>
     <div class="hintbox" id="addHint">还没输入题目</div>
+    <button type="button" class="kbtoggle" id="kbToggle">符号键盘</button>
+    <div class="kb hide" id="kb"></div>
     <label class="f">错因</label>
     <div class="chips" id="addCauses"></div>
     <label class="f">归到哪一节</label>
     <select id="addSec"></select>
     <div id="addNotes" class="addnotes hide"></div>
-    <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:18px">
-      <button data-close>取消</button>
-      <button class="primary" id="btnSaveItem">存下来</button>
+    <div style="display:flex;justify-content:flex-end;align-items:center;gap:24px;margin-top:36px">
+      <button class="ghost" data-close>取消</button>
+      <button class="primary" id="btnSaveItem">保存</button>
     </div>
   </div>
 </div>
@@ -190,7 +213,7 @@
 <div class="mask hide" id="modalApi">
   <div class="modal">
     <div class="mt">
-      <h3>接入你自己的 AI</h3>
+      <h3 class="modal-title">接入 AI</h3>
       <button class="ghost" data-close>关闭</button>
     </div>
     <details class="mini">
