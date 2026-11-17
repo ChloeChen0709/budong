@@ -493,7 +493,7 @@ function apiCfg(){
 
 /* 各家厂商的默认路径与模型，用于补全和预填 */
 const PROVIDERS = {
-  "api.deepseek.com":      { path:"/chat/completions",                 model:"deepseek-chat",  vision:"" },
+  "api.deepseek.com":      { path:"/chat/completions",                 model:"deepseek-chat",  vision:"deepseek-v4-flash-vision-exp" },
   "api.openai.com":        { path:"/v1/chat/completions",              model:"gpt-4o-mini",    vision:"gpt-4o" },
   "open.bigmodel.cn":      { path:"/api/paas/v4/chat/completions",     model:"glm-4-flash",    vision:"glm-4v" },
   "dashscope.aliyuncs.com":{ path:"/compatible-mode/v1/chat/completions", model:"qwen-plus",   vision:"qwen-vl-max" },
@@ -569,8 +569,8 @@ function explainApiFailure(status, url, detail){
 const OCR_PROMPT = [
   "你是题目转录工具。把图片里的题目转录成一行纯文本，规则：",
   "1. 数学符号一律用 Unicode：∫ ∂ ∑ √ ≤ ≥ ≠ ± × ÷ ∞ π θ α β γ Δ 等；",
-  "2. 上下标写成 ^(…) 和 _(…)，例如 e^(x)、∫_(0)^(1) x^2 dx、lim_(x→0)；",
-  "3. 分数写成 (a)/(b)，根号写成 √(…)；",
+  "2. 上下标用 ^{…} 和 _{…}，例如 e^{x}、∫_{0}^{1} x^{2} dx、lim_{x→0}；",
+  "3. 分数用 \\frac{分子}{分母}，根号用 √(…)；",
   "4. 保留题号、括号、单位；",
   "5. 不要解题、不要解释、不要输出任何前后缀；",
   "6. 看不清的字用 □ 代替。",
@@ -670,7 +670,8 @@ function shrink(file){
 }
 
 async function ocrImage(dataUrl, cfg){
-  const res = await fetch(cfg.url, {
+  const apiUrl = normalizeApiUrl(cfg.url);
+  const res = await fetch(apiUrl, {
     method:"POST",
     headers:{"Content-Type":"application/json","Authorization":"Bearer "+cfg.key},
     body: JSON.stringify({
@@ -681,7 +682,10 @@ async function ocrImage(dataUrl, cfg){
       ]}]
     })
   });
-  if(!res.ok) throw new Error("HTTP " + res.status);
+  if(!res.ok){
+    const t = await res.text().catch(()=> "");
+    throw new Error(explainApiFailure(res.status, apiUrl, apiErrorText(t)));
+  }
   const data = await res.json();
   let txt = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) || "";
   txt = txt.trim().replace(/^```[a-z]*\s*/i, "").replace(/```$/, "").trim();
