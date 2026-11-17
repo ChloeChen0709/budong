@@ -1215,13 +1215,19 @@ function bind(){
   }
   bind(); goTab("map"); renderAll();
 
-  // 开场：3 秒后移除，点击可提前跳过
+  // 开场：8 秒，5.4 秒起界面从雾里浮出
   const intro = $("#intro");
   if(intro){
-    const drop = ()=>{ intro.classList.add("gone"); };
-    intro.addEventListener("animationend", drop);
-    intro.addEventListener("click", drop);
-    setTimeout(drop, 3200);
+    const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if(reduce){ intro.remove(); }
+    else{
+      document.body.classList.add("introing");
+      const clear = ()=> document.body.classList.remove("introing");
+      const drop = ()=>{ clear(); intro.classList.add("gone"); setTimeout(()=>intro.remove(), 60); };
+      setTimeout(clear, 5400);
+      setTimeout(drop, 8200);
+      intro.addEventListener("click", drop);
+    }
   }
   migrateImages();
 

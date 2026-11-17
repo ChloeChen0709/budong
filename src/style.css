@@ -423,22 +423,41 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
 .mini .mini-body p{margin:0 0 8px}
 
 /* ---------- 开场 ---------- */
+/* 8 秒开场：淡入 1.8s，停留到 5.4s，雾化消散 2.6s */
 .intro{
   position:fixed;inset:0;z-index:200;
   background:var(--bg);
   display:flex;align-items:center;justify-content:center;
-  animation:introOut 3s var(--ease) forwards;
+  animation:introOut 8s linear forwards;
 }
-.intro-in{text-align:center;animation:introIn 1.1s var(--ease) both;padding:0 32px}
+.intro-in{
+  text-align:center;padding:0 40px;
+  animation:introIn 1.8s var(--ease) both,
+            introMist 2.6s var(--ease) 5.4s forwards;
+}
 .intro-t{font-size:64px;line-height:1.1;font-weight:500;letter-spacing:-.04em;color:var(--ink)}
 .intro-s{margin-top:22px;font-size:15px;line-height:1.7;color:var(--muted);letter-spacing:.02em}
+
 @keyframes introIn{
-  from{opacity:0;transform:translateY(12px)}
-  to{opacity:1;transform:translateY(0)}
+  from{opacity:0;transform:translateY(16px);filter:blur(14px)}
+  to{opacity:1;transform:translateY(0);filter:blur(0)}
+}
+@keyframes introMist{
+  from{opacity:1;transform:scale(1);filter:blur(0)}
+  to{opacity:0;transform:scale(1.12);filter:blur(18px)}
 }
 @keyframes introOut{
-  0%,50%{opacity:1}
+  0%,67.5%{opacity:1}
   100%{opacity:0;visibility:hidden}
+}
+
+/* 界面从雾里浮出来 */
+body > aside, body > main{
+  transition:filter 2.4s var(--ease), opacity 2.4s var(--ease);
+}
+body.introing > aside, body.introing > main{
+  filter:blur(9px);
+  opacity:.28;
 }
 .intro.gone{display:none}
 
@@ -484,6 +503,8 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
   .lead{font-size:21px}
   .head{margin-bottom:24px}
   .acts{gap:26px;padding-top:4px}
+  .intro-t{font-size:40px}
+  .intro-s{font-size:13.5px;margin-top:16px}
   .tabs{gap:22px;margin-bottom:36px}
   .tabs button{font-size:14px}
   .card{margin-bottom:48px}
