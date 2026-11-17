@@ -325,6 +325,24 @@ textarea{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 
+/* ---------- AI 设置 ---------- */
+.apitest{
+  margin-top:16px;font-size:12.5px;line-height:1.75;
+  color:var(--muted);white-space:pre-wrap;
+}
+.apitest.ok{color:#1d7a3f}
+.apitest.bad{color:var(--red)}
+.modalfoot{display:flex;align-items:center;justify-content:flex-end;gap:26px;margin-top:28px}
+
+/* ---------- 服务商快捷键 ---------- */
+.provs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.provs button{
+  font-size:13px;color:var(--text);
+  padding:7px 14px;border:1px solid var(--line);border-radius:999px;
+}
+.provs button:hover{border-color:var(--faint);color:var(--ink)}
+.provs button.on{border-color:var(--ink);color:var(--ink);font-weight:500}
+
 /* ---------- 拍照区 ---------- */
 .drop{
   border:1px dashed var(--line);border-radius:10px;padding:22px;text-align:center;

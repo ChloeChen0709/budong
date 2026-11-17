@@ -352,6 +352,24 @@ textarea{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 
+/* ---------- AI 设置 ---------- */
+.apitest{
+  margin-top:16px;font-size:12.5px;line-height:1.75;
+  color:var(--muted);white-space:pre-wrap;
+}
+.apitest.ok{color:#1d7a3f}
+.apitest.bad{color:var(--red)}
+.modalfoot{display:flex;align-items:center;justify-content:flex-end;gap:26px;margin-top:28px}
+
+/* ---------- 服务商快捷键 ---------- */
+.provs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.provs button{
+  font-size:13px;color:var(--text);
+  padding:7px 14px;border:1px solid var(--line);border-radius:999px;
+}
+.provs button:hover{border-color:var(--faint);color:var(--ink)}
+.provs button.on{border-color:var(--ink);color:var(--ink);font-weight:500}
+
 /* ---------- 拍照区 ---------- */
 .drop{
   border:1px dashed var(--line);border-radius:10px;padding:22px;text-align:center;
@@ -700,7 +718,7 @@ body.introing > aside, body.introing > main{
     </details>
     <textarea id="tocText" spellcheck="false"></textarea>
     <div class="note">导入会清空现有错题。</div>
-    <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px">
+    <div class="modalfoot">
       <button data-close>取消</button>
       <button class="primary" id="btnParse">解析并替换</button>
     </div>
@@ -797,7 +815,9 @@ body.introing > aside, body.introing > main{
         <p>不填也能用，讲解改为规则提示。</p>
       </div>
     </details>
-    <label class="f">接口地址（OpenAI 兼容）</label>
+    <label class="f">选一家（会自动填好地址和模型）</label>
+    <div class="provs" id="provRow"></div>
+    <label class="f">接口地址（OpenAI 兼容，只填域名也行）</label>
     <input id="apiBase" placeholder="https://api.deepseek.com/v1/chat/completions">
     <label class="f">模型名（用来写讲解）</label>
     <input id="apiModel" placeholder="deepseek-chat">
@@ -806,9 +826,9 @@ body.introing > aside, body.introing > main{
     <label class="f">API Key</label>
     <input id="apiKey" type="password" placeholder="sk-...">
     <div class="apitest" id="apiTest">还没测过。填完点「测试连接」，它会真的发一次请求。</div>
-    <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px">
-      <button data-close>取消</button>
-      <button id="btnTest">测试连接</button>
+    <div class="modalfoot">
+      <button class="ghost" data-close>取消</button>
+      <button class="ghost" id="btnTest">测试连接</button>
       <button class="primary" id="btnSaveApi">保存</button>
     </div>
   </div>
@@ -1314,6 +1334,69 @@ function apiCfg(){
   try{ return JSON.parse(localStorage.getItem(APIK) || "{}"); }catch(e){ return {}; }
 }
 
+/* 各家厂商的默认路径与模型，用于补全和预填 */
+const PROVIDERS = {
+  "api.deepseek.com":      { path:"/chat/completions",                 model:"deepseek-chat",  vision:"" },
+  "api.openai.com":        { path:"/v1/chat/completions",              model:"gpt-4o-mini",    vision:"gpt-4o" },
+  "open.bigmodel.cn":      { path:"/api/paas/v4/chat/completions",     model:"glm-4-flash",    vision:"glm-4v" },
+  "dashscope.aliyuncs.com":{ path:"/compatible-mode/v1/chat/completions", model:"qwen-plus",   vision:"qwen-vl-max" },
+  "api.moonshot.cn":       { path:"/v1/chat/completions",              model:"moonshot-v1-8k", vision:"moonshot-v1-8k-vision-preview" },
+  "api.siliconflow.cn":    { path:"/v1/chat/completions",              model:"Qwen/Qwen2.5-7B-Instruct", vision:"Qwen/Qwen2-VL-7B-Instruct" }
+};
+
+/* 用户只需要填域名，缺的路径自动补 */
+function normalizeApiUrl(raw){
+  let u = String(raw || "").trim().replace(/[\u200b-\u200d\ufeff]/g, "");
+  if(!u) return "";
+  if(!/^https?:\/\//i.test(u)) u = "https://" + u;
+  u = u.replace(/\/+$/, "");
+  if(/\/chat\/completions$/i.test(u)) return u;
+  let host = "";
+  try{ host = new URL(u).hostname.toLowerCase(); }catch(e){ return u; }
+  const preset = PROVIDERS[host];
+  if(preset){
+    try{
+      const p = new URL(u).pathname;
+      if(!p || p === "/") return u + preset.path;
+    }catch(e){}
+    return u + "/chat/completions";
+  }
+  if(/\/v\d+$/i.test(u)) return u + "/chat/completions";
+  try{
+    const p = new URL(u).pathname;
+    if(!p || p === "/") return u + "/v1/chat/completions";
+  }catch(e){}
+  return u + "/chat/completions";
+}
+
+/* 从服务端返回体里挖出人能看懂的那句话 */
+function apiErrorText(body){
+  const t = String(body || "").slice(0, 400);
+  try{
+    const o = JSON.parse(t);
+    const m = (o.error && (o.error.message || o.error.code)) || o.message || o.msg;
+    if(m) return String(m).slice(0, 160);
+  }catch(e){}
+  const m = t.match(/"message"\s*:\s*"([^"]{1,160})"/);
+  return m ? m[1] : t.replace(/\s+/g, " ").slice(0, 120);
+}
+
+/* 把失败原因翻译成一句可执行的建议 */
+function explainApiFailure(status, url, detail){
+  const u = url || "";
+  if(status === 401 || status === 403)
+    return "密钥无效或没有权限（HTTP " + status + "）。检查是否复制完整、有没有多余空格，以及这个 key 是否开通了该模型。";
+  if(status === 404)
+    return "地址不对（HTTP 404）。调用的是 " + u + "，通常要补 /v1 或 /chat/completions。";
+  if(status === 400)
+    return "请求被拒（HTTP 400）：" + (detail || "多半是模型名写错了。");
+  if(status === 429)
+    return "额度用完或请求太频繁（HTTP 429）。";
+  if(status >= 500)
+    return "服务端出错（HTTP " + status + "），稍后再试。";
+  return "HTTP " + status + (detail ? "：" + detail : "");
+}
+
 /* ---------- 拍照识别 ---------- */
 const OCR_PROMPT = [
   "你是题目转录工具。把图片里的题目转录成一行纯文本，规则：",
@@ -1467,12 +1550,16 @@ async function realExplain(it, cfg){
   const sys = "你是一位耐心的大学数学助教。用中文回答，分三段：错在哪、正确思路、要补什么。每段不超过两句话，不要客套。";
   const user = `教材：${DB.book.title}\n章节：${s?s.id+" "+s.title:"未归类"}\n学生打的错因：${CM[it.cause].name}\n题目：${markPlain(it.q)}\n\n请按三段输出，用「1.」「2.」「3.」开头。`;
   try{
-    const res = await fetch(cfg.url, {
+    const apiUrl = normalizeApiUrl(cfg.url);
+    const res = await fetch(apiUrl, {
       method:"POST",
       headers:{"Content-Type":"application/json","Authorization":"Bearer "+cfg.key},
       body: JSON.stringify({model:cfg.model, temperature:0.3, messages:[{role:"system",content:sys},{role:"user",content:user}]})
     });
-    if(!res.ok) throw new Error("HTTP "+res.status);
+    if(!res.ok){
+      const t = await res.text().catch(()=> "");
+      throw new Error(explainApiFailure(res.status, apiUrl, apiErrorText(t)));
+    }
     const data = await res.json();
     const txt = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) || "";
     if(!txt) throw new Error("空回复");
@@ -1484,8 +1571,8 @@ async function realExplain(it, cfg){
     fallbackExplain(it);
     const m = String((e && e.message) || e);
     $("#exNote").textContent = /Failed to fetch|NetworkError|Load failed/i.test(m)
-      ? "请求没到服务器：跨域被拦或地址错误。"
-      : "调用失败：" + m;
+      ? "请求没到服务器：跨域被拦或地址错误。点右上「AI 设置 → 测试连接」看具体原因。"
+      : m;
   }
 }
 
@@ -1986,22 +2073,70 @@ function bind(){
     $("#apiModel").value = c.model || "";
     $("#apiVision").value = c.vision || "";
     $("#apiKey").value = c.key || "";
+    const box = $("#apiTest");
+    box.className = "apitest";
+    box.textContent = c.url ? "将调用：" + c.url : "只填域名也可以，路径会自动补全。";
     $("#modalApi").classList.remove("hide");
+  });
+
+  const PROV_LABEL = [
+    ["api.deepseek.com", "DeepSeek"],
+    ["open.bigmodel.cn", "智谱"],
+    ["dashscope.aliyuncs.com", "通义"],
+    ["api.moonshot.cn", "Moonshot"],
+    ["api.siliconflow.cn", "硅基流动"],
+    ["api.openai.com", "OpenAI"]
+  ];
+  $("#provRow").innerHTML = PROV_LABEL.map(([h, n])=>`<button type="button" data-prov="${h}">${n}</button>`).join("");
+  $("#provRow").addEventListener("click", e=>{
+    const b = e.target.closest("button[data-prov]"); if(!b) return;
+    const host = b.dataset.prov, p = PROVIDERS[host];
+    $("#apiBase").value = "https://" + host;
+    $("#apiModel").value = p.model;
+    $("#apiVision").value = p.vision;
+    delete $("#apiModel").dataset.edited;
+    delete $("#apiVision").dataset.edited;
+    $("#apiTest").className = "apitest";
+    $("#apiTest").textContent = "将调用：https://" + host + p.path + (p.vision ? "" : "");
+    [...$("#provRow").children].forEach(x=>x.classList.toggle("on", x === b));
+  });
+
+  $("#apiBase").addEventListener("input", ()=>{
+    const norm = normalizeApiUrl($("#apiBase").value);
+    let host = "";
+    try{ host = new URL(norm).hostname.toLowerCase(); }catch(e){}
+    const preset = PROVIDERS[host];
+    if(preset){
+      if(!$("#apiModel").value.trim() && !$("#apiModel").dataset.edited) $("#apiModel").value = preset.model;
+      if(!$("#apiVision").value.trim() && !$("#apiVision").dataset.edited) $("#apiVision").value = preset.vision;
+    }
+    const box = $("#apiTest");
+    box.className = "apitest";
+    box.textContent = norm ? "将调用：" + norm : "";
+  });
+  ["apiModel","apiVision"].forEach(id=>{
+    $("#"+id).addEventListener("input", e=>{ e.target.dataset.edited = "1"; });
   });
   $("#btnTest").addEventListener("click", async ()=>{
     const c = { url:$("#apiBase").value.trim(), model:$("#apiModel").value.trim(),
                 vision:$("#apiVision").value.trim(), key:$("#apiKey").value.trim() };
     const box = $("#apiTest");
-    if(!c.url || !c.model || !c.key){
+    if(!c.model || !c.key){
       box.className = "apitest bad";
-      box.textContent = "地址、模型名、key 三样都要填，才能测。";
+      box.textContent = "模型名和 key 两样都要填。地址可以只写域名。";
+      return;
+    }
+    const url = normalizeApiUrl(c.url);
+    if(!url){
+      box.className = "apitest bad";
+      box.textContent = "地址还空着。";
       return;
     }
     box.className = "apitest";
     box.innerHTML = '<span class="spin"></span>正在真的发一次请求…';
     const t0 = performance.now();
     try{
-      const res = await fetch(c.url, {
+      const res = await fetch(url, {
         method:"POST",
         headers:{"Content-Type":"application/json","Authorization":"Bearer "+c.key},
         body: JSON.stringify({ model:c.model, max_tokens:8, temperature:0,
@@ -2010,24 +2145,27 @@ function bind(){
       const ms = Math.round(performance.now() - t0);
       if(!res.ok){
         const t = await res.text().catch(()=> "");
-        throw new Error("HTTP " + res.status + (t ? " · " + t.slice(0,90) : ""));
+        box.className = "apitest bad";
+        box.textContent = explainApiFailure(res.status, url, apiErrorText(t)) + "\n调用地址：" + url;
+        return;
       }
       const d = await res.json();
       const txt = (d.choices && d.choices[0] && d.choices[0].message && d.choices[0].message.content) || "";
       box.className = "apitest ok";
-      box.textContent = "通了 · " + ms + "ms · 模型回：" + String(txt).slice(0,24);
+      box.textContent = "通了 · " + ms + "ms · " + c.model + " 回复：" + String(txt).slice(0,24) + "\n调用地址：" + url;
     }catch(e){
       const m = String((e && e.message) || e);
       box.className = "apitest bad";
       box.textContent = /Failed to fetch|NetworkError|Load failed|Network request failed/i.test(m)
-        ? "没通：请求根本没到服务器。多半是这家厂商不允许网页直接调用（跨域 CORS 被拦），或者地址写错了。"
-        : "没通：" + m + "。检查 key、模型名或余额。";
+        ? "请求没到服务器。两种可能：① 这家不允许网页直连（OpenAI 就是，需要换中转地址）；② 域名写错。\n调用地址：" + url
+        : "调用失败：" + m + "\n调用地址：" + url;
     }
   });
 
   $("#btnSaveApi").addEventListener("click", ()=>{
     const c = { url:$("#apiBase").value.trim(), model:$("#apiModel").value.trim(),
                 vision:$("#apiVision").value.trim(), key:$("#apiKey").value.trim() };
+    c.url = normalizeApiUrl(c.url);
     if(!c.url || !c.model || !c.key){ try{localStorage.removeItem(APIK);}catch(e){} toast("已清空"); }
     else { try{localStorage.setItem(APIK, JSON.stringify(c));}catch(e){} toast("已保存"); }
     $("#modalApi").classList.add("hide");

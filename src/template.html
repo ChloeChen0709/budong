@@ -131,7 +131,7 @@
     </details>
     <textarea id="tocText" spellcheck="false"></textarea>
     <div class="note">导入会清空现有错题。</div>
-    <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px">
+    <div class="modalfoot">
       <button data-close>取消</button>
       <button class="primary" id="btnParse">解析并替换</button>
     </div>
@@ -228,7 +228,9 @@
         <p>不填也能用，讲解改为规则提示。</p>
       </div>
     </details>
-    <label class="f">接口地址（OpenAI 兼容）</label>
+    <label class="f">选一家（会自动填好地址和模型）</label>
+    <div class="provs" id="provRow"></div>
+    <label class="f">接口地址（OpenAI 兼容，只填域名也行）</label>
     <input id="apiBase" placeholder="https://api.deepseek.com/v1/chat/completions">
     <label class="f">模型名（用来写讲解）</label>
     <input id="apiModel" placeholder="deepseek-chat">
@@ -237,9 +239,9 @@
     <label class="f">API Key</label>
     <input id="apiKey" type="password" placeholder="sk-...">
     <div class="apitest" id="apiTest">还没测过。填完点「测试连接」，它会真的发一次请求。</div>
-    <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px">
-      <button data-close>取消</button>
-      <button id="btnTest">测试连接</button>
+    <div class="modalfoot">
+      <button class="ghost" data-close>取消</button>
+      <button class="ghost" id="btnTest">测试连接</button>
       <button class="primary" id="btnSaveApi">保存</button>
     </div>
   </div>
