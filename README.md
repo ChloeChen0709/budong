@@ -51,6 +51,11 @@ python3 scripts/verify.py
 - 手写体拍照识别准确率有限
 - 当前仅提供一个内容包
 
+## 字体
+
+封面标题用的 Great Vibes 字体（SIL Open Font License 1.1）已编码进 `index.html`，
+不依赖系统字体，所以任何设备看到的封面完全一致。授权原文见 `fonts/OFL-GreatVibes.txt`。
+
 ## 许可
 
 MIT

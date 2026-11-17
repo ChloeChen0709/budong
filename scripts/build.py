@@ -45,7 +45,9 @@ def main():
 
     pack = json.loads(pack_path.read_text(encoding="utf-8"))
     template = (SRC / "template.html").read_text(encoding="utf-8")
-    css = (SRC / "style.css").read_text(encoding="utf-8")
+    css = ((SRC / "script-font.css").read_text(encoding="utf-8")
+           + "\n"
+           + (SRC / "style.css").read_text(encoding="utf-8"))
     app = (SRC / "app.js").read_text(encoding="utf-8")
 
     dump = lambda o: json.dumps(o, ensure_ascii=False, separators=(",", ":"))
