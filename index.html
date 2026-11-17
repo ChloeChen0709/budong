@@ -637,7 +637,7 @@ body.introing > aside, body.introing > main{
           <p><b>复习间隔</b>　不会 1 天，算错 2 天，审题 3 天。</p>
           <p><b>AI</b>　key 存本机；未填时讲解为规则提示。</p>
           <p><b>题图</b>　存在浏览器数据库，上限约 10GB；列表只显示缩略图。</p>
-          <p><b>版本</b>　2026-11-17 23:42 · 3aed85</p>
+          <p><b>版本</b>　2026-11-17 23:44 · ba9907</p>
           <p><b>备份</b>　清除浏览器数据会清空。<button class="linky" id="btnBackup">下载备份</button> · <button class="linky" id="btnRestore">恢复</button><input type="file" id="fileRestore" accept=".json,application/json" class="hide"></p>
         </div>
       </details>
@@ -2147,13 +2147,27 @@ function bind(){
     box.className = "apitest";
     box.innerHTML = '<span class="spin"></span>正在真的发一次请求…';
     const t0 = performance.now();
+    let res;
     try{
-      const res = await fetch(url, {
+      res = await fetch(url, {
         method:"POST",
         headers:{"Content-Type":"application/json","Authorization":"Bearer "+c.key},
         body: JSON.stringify({ model:c.model, max_tokens:8, temperature:0,
                                messages:[{role:"user", content:"只回复两个字：可以"}] })
       });
+      // 限流时自动等一会儿重试一次
+      if(res.status === 429){
+        for(let left = 6; left > 0; left--){
+          box.innerHTML = '<span class="spin"></span>被限流，' + left + ' 秒后自动重试一次…';
+          await new Promise(r=>setTimeout(r, 1000));
+        }
+        res = await fetch(url, {
+          method:"POST",
+          headers:{"Content-Type":"application/json","Authorization":"Bearer "+c.key},
+          body: JSON.stringify({ model:c.model, max_tokens:8, temperature:0,
+                                 messages:[{role:"user", content:"只回复两个字：可以"}] })
+        });
+      }
       const ms = Math.round(performance.now() - t0);
       if(!res.ok){
         const t = await res.text().catch(()=> "");

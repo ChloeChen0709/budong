@@ -1303,13 +1303,27 @@ function bind(){
     box.className = "apitest";
     box.innerHTML = '<span class="spin"></span>正在真的发一次请求…';
     const t0 = performance.now();
+    let res;
     try{
-      const res = await fetch(url, {
+      res = await fetch(url, {
         method:"POST",
         headers:{"Content-Type":"application/json","Authorization":"Bearer "+c.key},
         body: JSON.stringify({ model:c.model, max_tokens:8, temperature:0,
                                messages:[{role:"user", content:"只回复两个字：可以"}] })
       });
+      // 限流时自动等一会儿重试一次
+      if(res.status === 429){
+        for(let left = 6; left > 0; left--){
+          box.innerHTML = '<span class="spin"></span>被限流，' + left + ' 秒后自动重试一次…';
+          await new Promise(r=>setTimeout(r, 1000));
+        }
+        res = await fetch(url, {
+          method:"POST",
+          headers:{"Content-Type":"application/json","Authorization":"Bearer "+c.key},
+          body: JSON.stringify({ model:c.model, max_tokens:8, temperature:0,
+                                 messages:[{role:"user", content:"只回复两个字：可以"}] })
+        });
+      }
       const ms = Math.round(performance.now() - t0);
       if(!res.ok){
         const t = await res.text().catch(()=> "");
