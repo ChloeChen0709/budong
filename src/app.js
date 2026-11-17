@@ -541,14 +541,19 @@ function apiErrorText(body){
 /* 把失败原因翻译成一句可执行的建议 */
 function explainApiFailure(status, url, detail){
   const u = url || "";
-  if(status === 401 || status === 403)
-    return "密钥无效或没有权限（HTTP " + status + "）。检查是否复制完整、有没有多余空格，以及这个 key 是否开通了该模型。";
+  if(status === 403){
+    if(/AccessDenied|unpurchased|not eligible|denied/i.test(detail || ""))
+      return "这个模型在你账号里没有开通（HTTP 403）。去控制台开通该模型，或把模型名换成可用的那个。\n服务端原话：" + (detail || "");
+    return "密钥没有调用权限（HTTP 403）。检查这个 key 是否属于可用的业务空间，以及是否已开通该模型。\n服务端原话：" + (detail || "");
+  }
+  if(status === 401)
+    return "密钥无效（HTTP 401）。检查是否复制完整、有没有多余空格或换行。";
+  if(status === 429)
+    return "请求太频繁或额度用完（HTTP 429），等一会儿再试；长期不够要去控制台看免费额度。";
   if(status === 404)
     return "地址不对（HTTP 404）。调用的是 " + u + "，通常要补 /v1 或 /chat/completions。";
   if(status === 400)
     return "请求被拒（HTTP 400）：" + (detail || "多半是模型名写错了。");
-  if(status === 429)
-    return "额度用完或请求太频繁（HTTP 429）。";
   if(status >= 500)
     return "服务端出错（HTTP " + status + "），稍后再试。";
   return "HTTP " + status + (detail ? "：" + detail : "");
