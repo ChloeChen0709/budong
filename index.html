@@ -468,8 +468,18 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
   animation:introIn 1.8s var(--ease) both,
             introMist 2.6s var(--ease) 5.4s forwards;
 }
-.intro-t{font-size:64px;line-height:1.1;font-weight:500;letter-spacing:-.04em;color:var(--ink)}
-.intro-s{margin-top:22px;font-size:15px;line-height:1.7;color:var(--muted);letter-spacing:.02em}
+.intro-t{
+  font-family:"Snell Roundhand","Savoye LET","Apple Chancery",Didot,"Bodoni 72",Georgia,serif;
+  font-size:124px;line-height:1.02;font-weight:700;
+  letter-spacing:0;color:var(--ink);
+  padding-bottom:.12em;
+}
+.intro-s{
+  margin-top:24px;
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",Georgia,serif;
+  font-size:15px;line-height:1.8;color:var(--muted);
+  letter-spacing:.06em;
+}
 
 @keyframes introIn{
   from{opacity:0;transform:translateY(16px);filter:blur(14px)}
@@ -536,8 +546,8 @@ body.introing > aside, body.introing > main{
   .lead{font-size:21px}
   .head{margin-bottom:24px}
   .acts{gap:26px;padding-top:4px}
-  .intro-t{font-size:40px}
-  .intro-s{font-size:13.5px;margin-top:16px}
+  .intro-t{font-size:66px}
+  .intro-s{font-size:12.5px;margin-top:18px;letter-spacing:.04em}
   .tabs{gap:22px;margin-bottom:36px}
   .tabs button{font-size:14px}
   .card{margin-bottom:48px}
@@ -563,7 +573,7 @@ body.introing > aside, body.introing > main{
 <div class="intro" id="intro">
   <div class="intro-in">
     <div class="intro-t">budong</div>
-    <p class="intro-s">把不懂的题，挂回它该在的那一节</p>
+    <p class="intro-s">Stay hungry. Stay foolish.</p>
   </div>
 </div>
 
