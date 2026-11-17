@@ -510,6 +510,12 @@ function normalizeApiUrl(raw){
   if(/\/chat\/completions$/i.test(u)) return u;
   let host = "";
   try{ host = new URL(u).hostname.toLowerCase(); }catch(e){ return u; }
+
+  /* 阿里云百炼：业务空间专属域名与公共域名，强制走 OpenAI 兼容路径。
+     用户常把 Base URL（不带路径）或原生 /api/v1 粘进来，两种都要纠正。 */
+  if(/(^|\.)maas\.aliyuncs\.com$/i.test(host) || host === "dashscope.aliyuncs.com")
+    return "https://" + host + "/compatible-mode/v1/chat/completions";
+
   const preset = PROVIDERS[host];
   if(preset){
     try{
