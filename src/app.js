@@ -1214,6 +1214,15 @@ function bind(){
     seed(); try{localStorage.setItem(KEY+".seeded","1");}catch(e){}
   }
   bind(); goTab("map"); renderAll();
+
+  // 开场：3 秒后移除，点击可提前跳过
+  const intro = $("#intro");
+  if(intro){
+    const drop = ()=>{ intro.classList.add("gone"); };
+    intro.addEventListener("animationend", drop);
+    intro.addEventListener("click", drop);
+    setTimeout(drop, 3200);
+  }
   migrateImages();
 
   const WEEK = 7 * 864e5;

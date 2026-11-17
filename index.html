@@ -121,7 +121,7 @@ aside{
 main{overflow:auto;padding:64px 72px 160px;-webkit-overflow-scrolling:touch}
 
 .head{display:flex;align-items:flex-start;justify-content:space-between;gap:32px;margin-bottom:36px}
-.acts{display:flex;align-items:center;gap:26px;flex-shrink:0;padding-top:8px}
+.acts{display:flex;align-items:center;gap:44px;flex-shrink:0;padding-top:8px}
 
 .tabs{display:flex;gap:32px;border-bottom:1px solid var(--line);margin-bottom:56px}
 .tabs button{
@@ -434,6 +434,26 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
 .mini .mini-body{margin-top:12px;font-size:12.5px;line-height:1.8;color:var(--muted)}
 .mini .mini-body p{margin:0 0 8px}
 
+/* ---------- 开场 ---------- */
+.intro{
+  position:fixed;inset:0;z-index:200;
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  animation:introOut 3s var(--ease) forwards;
+}
+.intro-in{text-align:center;animation:introIn 1.1s var(--ease) both;padding:0 32px}
+.intro-t{font-size:64px;line-height:1.1;font-weight:500;letter-spacing:-.04em;color:var(--ink)}
+.intro-s{margin-top:22px;font-size:15px;line-height:1.7;color:var(--muted);letter-spacing:.02em}
+@keyframes introIn{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes introOut{
+  0%,50%{opacity:1}
+  100%{opacity:0;visibility:hidden}
+}
+.intro.gone{display:none}
+
 /* ---------- toast ---------- */
 .toast{
   position:fixed;left:50%;bottom:36px;transform:translate(-50%,8px);
@@ -450,7 +470,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
 @media print{
   @page{margin:18mm 16mm}
   body{display:block!important;background:#fff!important;height:auto!important;overflow:visible!important}
-  aside,.tabs,.head,.toast,.mask,.viewer{display:none!important}
+  aside,.tabs,.head,.toast,.mask,.viewer,.intro{display:none!important}
   main{display:none!important}
   .printonly{display:block!important}
   .p-title{font-size:20px;font-weight:600;margin:0 0 4px}
@@ -463,6 +483,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
 
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .intro{display:none!important}
 }
 
 /* ---------- 窄屏 ---------- */
@@ -474,7 +495,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
   h1{font-size:32px}
   .lead{font-size:21px}
   .head{margin-bottom:24px}
-  .acts{gap:18px;padding-top:4px}
+  .acts{gap:26px;padding-top:4px}
   .tabs{gap:22px;margin-bottom:36px}
   .tabs button{font-size:14px}
   .card{margin-bottom:48px}
@@ -497,6 +518,13 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
 
 </head>
 <body>
+<div class="intro" id="intro">
+  <div class="intro-in">
+    <div class="intro-t">budong</div>
+    <p class="intro-s">把不懂的题，挂回它该在的那一节</p>
+  </div>
+</div>
+
 
 <aside>
   <div class="bk">
@@ -515,7 +543,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
     <div>
       <h1 id="hdTitle">薄弱点</h1>
           </div>
-    <div style="display:flex;gap:8px;align-items:center">
+    <div class="acts">
       <details class="help">
         <summary>说明</summary>
         <div class="help-panel">
@@ -679,7 +707,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
     <div class="kb hide" id="kb"></div>
     <label class="f">错因</label>
     <div class="chips" id="addCauses"></div>
-    <label class="f">归到哪一节</label>
+    <label class="f">纳入章节</label>
     <select id="addSec"></select>
     <div id="addNotes" class="addnotes hide"></div>
     <div style="display:flex;justify-content:flex-end;align-items:center;gap:24px;margin-top:36px">
@@ -1942,6 +1970,15 @@ function bind(){
     seed(); try{localStorage.setItem(KEY+".seeded","1");}catch(e){}
   }
   bind(); goTab("map"); renderAll();
+
+  // 开场：3 秒后移除，点击可提前跳过
+  const intro = $("#intro");
+  if(intro){
+    const drop = ()=>{ intro.classList.add("gone"); };
+    intro.addEventListener("animationend", drop);
+    intro.addEventListener("click", drop);
+    setTimeout(drop, 3200);
+  }
   migrateImages();
 
   const WEEK = 7 * 864e5;
