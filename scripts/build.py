@@ -5,10 +5,12 @@
     python3 scripts/build.py            # 默认 calculus
     python3 scripts/build.py cet46      # 换一个内容包
 """
+import hashlib
 import json
 import pathlib
 import shutil
 import sys
+from datetime import datetime
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SRC = ROOT / "src"
@@ -56,8 +58,12 @@ def main():
         "const NOTES = " + dump(public_notes(pack["notes"])) + ";\n"
     )
 
+    stamp = datetime.now().strftime("%Y-%m-%d %H:%M") + " · " + \
+            hashlib.sha1((css + app + content_js).encode("utf-8")).hexdigest()[:6]
+
     html = (template
             .replace("{{PACK_NAME}}", pack["name"])
+            .replace("{{BUILD}}", stamp)
             .replace("{{STYLE}}", css)
             .replace("{{SCRIPT}}", content_js + app))
 
