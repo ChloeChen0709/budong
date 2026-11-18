@@ -801,7 +801,7 @@ const TOOLS = {
     fields: [{ id: "essay", label: "把你的作文粘进来", rows: 10,
                ph: "直接粘贴英文原文，不用标题" }],
     sys: "你是大学英语四级阅卷老师。按四级写作评分标准（满分 15 分）批改，用中文回答，不客套。",
-    ask: t => `请批改下面这篇四级作文：\n\n${t.essay}\n\n按这个格式输出：\n1. 评分：X/15，一句话说明理由\n2. 错误：逐条列出「原文 → 改为 → 原因」，最多 6 条\n3. 升级：给出 3 处可以写得更好的表达\n4. 建议：接下来最该练的一点`
+    tpl: "请批改下面这篇四级作文：\n\n{{essay}}\n\n按这个格式输出：\n1. 评分：X/15，一句话说明理由\n2. 错误：逐条列出「原文 → 改为 → 原因」，最多 6 条\n3. 升级：给出 3 处可以写得更好的表达\n4. 建议：接下来最该练的一点"
   },
   "trans-check": {
     title: "翻译批改",
@@ -809,9 +809,17 @@ const TOOLS = {
     fields: [{ id: "src", label: "中文原句", rows: 3, ph: "粘贴题目给的段落" },
              { id: "mine", label: "你的译文", rows: 4, ph: "粘贴你翻的英文" }],
     sys: "你是大学英语四级翻译阅卷老师。按四级翻译评分标准（满分 15 分）批改，用中文回答，不客套。",
-    ask: t => `中文原文：\n${t.src}\n\n学生的译文：\n${t.mine}\n\n按这个格式输出：\n1. 评分：X/15，一句话说明理由\n2. 问题：逐条列出漏译、误译、搭配或语法错误，每条给出正确写法\n3. 参考译文：给一个贴近原文的版本\n4. 高频表达：从这段里挑 2-3 个值得记住的搭配`
+    tpl: "中文原文：\n{{src}}\n\n学生的译文：\n{{mine}}\n\n按这个格式输出：\n1. 评分：X/15，一句话说明理由\n2. 问题：逐条列出漏译、误译、搭配或语法错误，每条给出正确写法\n3. 参考译文：给一个贴近原文的版本\n4. 高频表达：从这段里挑 2-3 个值得记住的搭配"
   }
 };
+
+function toolPrompt(id){
+  return (DB.toolPrompts && DB.toolPrompts[id]) || TOOLS[id].tpl;
+}
+
+function fillTpl(tpl, val){
+  return tpl.replace(/\{\{(\w+)\}\}/g, (m, k)=> (val[k] || ""));
+}
 
 function openTool(id){
   const t = TOOLS[id]; if(!t) return;
@@ -822,6 +830,9 @@ function openTool(id){
   ).join("");
   $("#toolOut").classList.add("hide");
   $("#toolOut").innerHTML = "";
+  $("#toolPrompt").value = toolPrompt(id);
+  $("#toolPromptBox").open = false;
+  $("#modalTool").dataset.tool = id;
   $("#modalTool").classList.remove("hide");
 }
 
@@ -841,11 +852,12 @@ async function runTool(){
   }
   out.innerHTML = `<p class="toolnote"><span class="spin"></span>正在批改…</p>`;
   try{
+    const prompt = fillTpl(toolPrompt(id), val);
     const res = await fetch(normalizeApiUrl(cfg.url), {
       method:"POST",
       headers:{"Content-Type":"application/json","Authorization":"Bearer "+cfg.key},
       body: JSON.stringify({ model: cfg.model, temperature: 0.3,
-        messages:[{role:"system",content:t.sys},{role:"user",content:t.ask(val)}] })
+        messages:[{role:"system",content:t.sys},{role:"user",content:prompt}] })
     });
     if(!res.ok){
       const e = await res.text().catch(()=> "");
@@ -1329,6 +1341,20 @@ function bind(){
   };
   $("#btnShelf").addEventListener("click", openShelf);
   $("#btnRunTool").addEventListener("click", runTool);
+  $("#toolPrompt").addEventListener("input", ()=>{
+    const id = $("#modalTool").dataset.tool;
+    DB.toolPrompts = DB.toolPrompts || {};
+    const v = $("#toolPrompt").value;
+    if(v.trim() === TOOLS[id].tpl.trim()) delete DB.toolPrompts[id];
+    else DB.toolPrompts[id] = v;
+    save();
+  });
+  $("#btnToolTplReset").addEventListener("click", ()=>{
+    const id = $("#modalTool").dataset.tool;
+    if(DB.toolPrompts) delete DB.toolPrompts[id];
+    $("#toolPrompt").value = TOOLS[id].tpl;
+    save(); toast("已恢复默认");
+  });
   $("#modalVocab").addEventListener("click", e=>{
     if(e.target.closest("[data-close]")) renderNotes();
   });

@@ -399,6 +399,10 @@ ul.bars li:last-child{border-bottom:none}
 }
 .toolname{font-size:15px;font-weight:500;color:var(--ink);flex:1}
 .toolgo{color:var(--faint);font-size:13px}
+#toolPrompt{width:100%;font-family:inherit;font-size:12.5px;line-height:1.75;color:var(--text);
+  background:var(--bg-soft);border:0;border-radius:12px;padding:14px;resize:vertical}
+.tplnote{font-size:12px;color:var(--muted);margin:8px 0 10px}
+
 .toolout{margin-top:22px;border-top:1px solid var(--line);padding-top:20px}
 .toolout.hide{display:none}
 .toolnote{font-size:12.5px;color:var(--muted);margin:0 0 12px}
@@ -1016,7 +1020,7 @@ body.introing > aside, body.introing > main{
           <p><b>复习间隔</b>　不会 1 天，算错 2 天，审题 3 天</p>
           <p><b>AI</b>　key 存本机，未填时讲解为规则提示</p>
           <p><b>题图</b>　存浏览器数据库，上限约 10GB</p>
-          <p><b>版本</b>　2026-11-19 00:22 · 9140b3</p>
+          <p><b>版本</b>　2026-11-19 00:25 · 084cd2</p>
           <p><b>备份</b>　清除浏览器数据即清空　<button class="linky" id="btnBackup">下载备份</button>·<button class="linky" id="btnRestore">恢复</button><input type="file" id="fileRestore" accept=".json,application/json" class="hide"></p>
         </div>
       </details>
@@ -1188,6 +1192,14 @@ body.introing > aside, body.introing > main{
       <button class="ghost" data-close>关闭</button>
     </div>
     <div id="toolFields"></div>
+    <details class="mini" id="toolPromptBox">
+      <summary>提示词</summary>
+      <div class="mini-body">
+        <textarea id="toolPrompt" rows="8" spellcheck="false"></textarea>
+        <p class="tplnote">大括号里的占位符会被上面的内容替换，不要删。改完自动保存。</p>
+        <button class="ghost" id="btnToolTplReset">恢复默认</button>
+      </div>
+    </details>
     <div class="toolout hide" id="toolOut"></div>
     <div class="modalfoot">
       <button class="ghost" data-close>取消</button>
@@ -2094,7 +2106,7 @@ const TOOLS = {
     fields: [{ id: "essay", label: "把你的作文粘进来", rows: 10,
                ph: "直接粘贴英文原文，不用标题" }],
     sys: "你是大学英语四级阅卷老师。按四级写作评分标准（满分 15 分）批改，用中文回答，不客套。",
-    ask: t => `请批改下面这篇四级作文：\n\n${t.essay}\n\n按这个格式输出：\n1. 评分：X/15，一句话说明理由\n2. 错误：逐条列出「原文 → 改为 → 原因」，最多 6 条\n3. 升级：给出 3 处可以写得更好的表达\n4. 建议：接下来最该练的一点`
+    tpl: "请批改下面这篇四级作文：\n\n{{essay}}\n\n按这个格式输出：\n1. 评分：X/15，一句话说明理由\n2. 错误：逐条列出「原文 → 改为 → 原因」，最多 6 条\n3. 升级：给出 3 处可以写得更好的表达\n4. 建议：接下来最该练的一点"
   },
   "trans-check": {
     title: "翻译批改",
@@ -2102,9 +2114,17 @@ const TOOLS = {
     fields: [{ id: "src", label: "中文原句", rows: 3, ph: "粘贴题目给的段落" },
              { id: "mine", label: "你的译文", rows: 4, ph: "粘贴你翻的英文" }],
     sys: "你是大学英语四级翻译阅卷老师。按四级翻译评分标准（满分 15 分）批改，用中文回答，不客套。",
-    ask: t => `中文原文：\n${t.src}\n\n学生的译文：\n${t.mine}\n\n按这个格式输出：\n1. 评分：X/15，一句话说明理由\n2. 问题：逐条列出漏译、误译、搭配或语法错误，每条给出正确写法\n3. 参考译文：给一个贴近原文的版本\n4. 高频表达：从这段里挑 2-3 个值得记住的搭配`
+    tpl: "中文原文：\n{{src}}\n\n学生的译文：\n{{mine}}\n\n按这个格式输出：\n1. 评分：X/15，一句话说明理由\n2. 问题：逐条列出漏译、误译、搭配或语法错误，每条给出正确写法\n3. 参考译文：给一个贴近原文的版本\n4. 高频表达：从这段里挑 2-3 个值得记住的搭配"
   }
 };
+
+function toolPrompt(id){
+  return (DB.toolPrompts && DB.toolPrompts[id]) || TOOLS[id].tpl;
+}
+
+function fillTpl(tpl, val){
+  return tpl.replace(/\{\{(\w+)\}\}/g, (m, k)=> (val[k] || ""));
+}
 
 function openTool(id){
   const t = TOOLS[id]; if(!t) return;
@@ -2115,6 +2135,9 @@ function openTool(id){
   ).join("");
   $("#toolOut").classList.add("hide");
   $("#toolOut").innerHTML = "";
+  $("#toolPrompt").value = toolPrompt(id);
+  $("#toolPromptBox").open = false;
+  $("#modalTool").dataset.tool = id;
   $("#modalTool").classList.remove("hide");
 }
 
@@ -2134,11 +2157,12 @@ async function runTool(){
   }
   out.innerHTML = `<p class="toolnote"><span class="spin"></span>正在批改…</p>`;
   try{
+    const prompt = fillTpl(toolPrompt(id), val);
     const res = await fetch(normalizeApiUrl(cfg.url), {
       method:"POST",
       headers:{"Content-Type":"application/json","Authorization":"Bearer "+cfg.key},
       body: JSON.stringify({ model: cfg.model, temperature: 0.3,
-        messages:[{role:"system",content:t.sys},{role:"user",content:t.ask(val)}] })
+        messages:[{role:"system",content:t.sys},{role:"user",content:prompt}] })
     });
     if(!res.ok){
       const e = await res.text().catch(()=> "");
@@ -2622,6 +2646,20 @@ function bind(){
   };
   $("#btnShelf").addEventListener("click", openShelf);
   $("#btnRunTool").addEventListener("click", runTool);
+  $("#toolPrompt").addEventListener("input", ()=>{
+    const id = $("#modalTool").dataset.tool;
+    DB.toolPrompts = DB.toolPrompts || {};
+    const v = $("#toolPrompt").value;
+    if(v.trim() === TOOLS[id].tpl.trim()) delete DB.toolPrompts[id];
+    else DB.toolPrompts[id] = v;
+    save();
+  });
+  $("#btnToolTplReset").addEventListener("click", ()=>{
+    const id = $("#modalTool").dataset.tool;
+    if(DB.toolPrompts) delete DB.toolPrompts[id];
+    $("#toolPrompt").value = TOOLS[id].tpl;
+    save(); toast("已恢复默认");
+  });
   $("#modalVocab").addEventListener("click", e=>{
     if(e.target.closest("[data-close]")) renderNotes();
   });

@@ -227,6 +227,14 @@
       <button class="ghost" data-close>关闭</button>
     </div>
     <div id="toolFields"></div>
+    <details class="mini" id="toolPromptBox">
+      <summary>提示词</summary>
+      <div class="mini-body">
+        <textarea id="toolPrompt" rows="8" spellcheck="false"></textarea>
+        <p class="tplnote">大括号里的占位符会被上面的内容替换，不要删。改完自动保存。</p>
+        <button class="ghost" id="btnToolTplReset">恢复默认</button>
+      </div>
+    </details>
     <div class="toolout hide" id="toolOut"></div>
     <div class="modalfoot">
       <button class="ghost" data-close>取消</button>
