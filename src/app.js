@@ -1272,6 +1272,9 @@ function bind(){
   };
   $("#btnShelf").addEventListener("click", openShelf);
   $("#btnRunTool").addEventListener("click", runTool);
+  $("#modalVocab").addEventListener("click", e=>{
+    if(e.target.closest("[data-close]")) renderNotes();
+  });
   $("#vocabShow").addEventListener("click", vocabShowBack);
   $("#vocabCard").addEventListener("click", ()=>{ if(!VOCAB.shown) vocabShowBack(); });
   $("#vocabAct").addEventListener("click", e=>{
