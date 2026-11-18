@@ -792,6 +792,27 @@ body.introing > aside, body.introing > main{
 .intro.gone{display:none}
 
 /* ---------- toast ---------- */
+/* 备份提醒：显眼但会自己淡出 */
+#nag{
+  position:fixed;left:50%;bottom:32px;z-index:260;
+  display:flex;align-items:center;gap:18px;
+  padding:14px 16px 14px 20px;border-radius:16px;
+  background:#1d1d1f;color:#fff;font-size:14px;letter-spacing:-.01em;
+  box-shadow:0 12px 40px rgba(0,0,0,.18);
+  opacity:0;transform:translateX(-50%) translateY(10px);pointer-events:none;
+  transition:opacity .3s var(--ease), transform .3s var(--ease);
+}
+#nag.on{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
+#nag button{
+  flex:none;font-size:13px;color:#fff;background:rgba(255,255,255,.14);
+  padding:8px 14px;border-radius:999px;
+}
+#nag button:hover{background:rgba(255,255,255,.24)}
+@media (max-width:900px){
+  #nag{left:12px;right:12px;bottom:78px;transform:translateY(10px);font-size:13px}
+  #nag.on{transform:translateY(0)}
+}
+
 .toast{
   position:fixed;left:50%;bottom:36px;transform:translate(-50%,8px);
   background:var(--ink);color:#fff;padding:11px 22px;border-radius:999px;font-size:13px;

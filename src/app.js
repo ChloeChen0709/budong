@@ -124,6 +124,37 @@ function markPlain(v){
     .replace(/_\{([^{}]*)\}/g, "_$1");
 }
 
+const BACKUP_AT = "cuotiben.backupAt";
+let nagTimer = null;
+
+function showNag(text){
+  const el = $("#nag"); if(!el) return;
+  $("#nagText").textContent = text;
+  el.classList.add("on");
+  clearTimeout(nagTimer);
+  nagTimer = setTimeout(()=>el.classList.remove("on"), 9000);
+}
+
+function daysSinceBackup(){
+  const at = +(localStorage.getItem(BACKUP_AT) || 0);
+  if(!at) return null;
+  return Math.floor((Date.now() - at) / 864e5);
+}
+
+/* 有数据、但很久没备份（或从没备份）时提醒一次，30 分钟内不重复 */
+function nagBackup(){
+  const hasData = (DB.items && DB.items.length) || Object.keys(DB.srs || {}).length;
+  if(!hasData) return;
+  const last = +(sessionStorage.getItem("cuotiben.nagAt") || 0);
+  if(Date.now() - last < 30 * 60000) return;
+  const d = daysSinceBackup();
+  if(d !== null && d < 7) return;
+  sessionStorage.setItem("cuotiben.nagAt", String(Date.now()));
+  showNag(d === null
+    ? "还没有备份过。数据只存在这台设备，清缓存就没了"
+    : `距上次备份 ${d} 天，数据只存在这台设备`);
+}
+
 function toast(m){ const t=$("#toast"); t.textContent=m; t.classList.add("on"); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove("on"),1900); }
 
 function sections(){ return DB.book.chapters.flatMap(ch=>ch.sections); }
@@ -182,6 +213,7 @@ function save(){
     localStorage.setItem(KEY + ".last", DB.bookId || PACKS[0].id);
     return true;
   }catch(e){ return false; }
+  nagBackup();
 }
 function seedItems(){ return SAMPLE_ITEMS.map((it,i)=>({ id:"s"+i, ...deepClone(it) })); }
 
@@ -1761,7 +1793,7 @@ function bind(){
     a.download = "错题本备份-" + new Date().toISOString().slice(0,10) + ".json";
     a.click();
     setTimeout(()=>URL.revokeObjectURL(a.href), 4000);
-    DB.lastBackup = Date.now(); save();
+    localStorage.setItem(BACKUP_AT, String(Date.now()));
     toast("备份已下载（含图片）");
   });
 
@@ -2021,10 +2053,12 @@ function bind(){
       intro.addEventListener("click", ()=>{ drop(); afterIntro(); });
     }
   }
+  $("#nagBtn").addEventListener("click", ()=>{ $("#btnBackup").click(); $("#nag").classList.remove("on"); });
+
   migrateImages();
 
   const WEEK = 7 * 864e5;
   if(DB.items.length && (!DB.lastBackup || Date.now() - DB.lastBackup > WEEK)){
-    setTimeout(()=>toast("上次备份超过 7 天，说明里可以下载备份"), 2600);
+    setTimeout(nagBackup, 2600);
   }
 })();
