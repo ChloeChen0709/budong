@@ -30,7 +30,12 @@ const SAMPLE_ITEMS = [
 /* ================= 状态 ================= */
 const KEY = "cuotiben.v2";
 const APIK = "cuotiben.api.v1";
-let DB = { book: deepClone(BOOK), items: [] };
+let BOOK = null, NOTES = null;
+let DB = { book: null, items: [] };
+
+function packById(id){ return PACKS.find(p=>p.id===id) || PACKS[0]; }
+function applyPack(id){ const p = packById(id); BOOK = p.book; NOTES = p.notes; return p; }
+function storeKey(id){ return KEY + "." + (id || DB.bookId || "calculus"); }
 let tab = "map", filter = "all", curSec = null;
 
 function deepClone(o){ return JSON.parse(JSON.stringify(o)); }
@@ -126,13 +131,16 @@ function secTitle(id){ const s=secOf(id); return s? s.id+" "+s.title : "未归�
 function chOf(id){ return DB.book.chapters.find(ch=>ch.sections.some(s=>s.id===id)); }
 function chapterName(id){ const ch=chOf(id); return ch? ch.no+" "+ch.title : ""; }
 
-function load(){
+function load(id){
+  id = id || localStorage.getItem(KEY + ".last") || PACKS[0].id;
+  const pack = applyPack(id);
+  DB = { book: deepClone(BOOK), items: [], notes: deepClone(NOTES), notesVer: 3, custom:false, bookId: id };
   try{
-    const raw = localStorage.getItem(KEY);
+    const raw = localStorage.getItem(storeKey(id)) || (id === PACKS[0].id ? localStorage.getItem(KEY) : null);
     if(raw){
       const o = JSON.parse(raw);
       if(o && o.book && Array.isArray(o.items)){
-        DB = o;
+        DB = o; DB.bookId = id;
         if(DB.book.title === "微积分（新文科）") DB.book.title = "微积分";
         DB.items.forEach(it=>{ if(it.cause === "time") it.cause = "unknown"; });
         if(Array.isArray(DB.items) && DB.items.length === 14 && DB.items.every(it=>/^s\d+$/.test(it.id))){
@@ -143,11 +151,19 @@ function load(){
     }
   }catch(e){}
 }
-function save(){ try{ localStorage.setItem(KEY, JSON.stringify(DB)); return true; }catch(e){ return false; } }
+function save(){
+  try{
+    localStorage.setItem(storeKey(), JSON.stringify(DB));
+    localStorage.setItem(KEY + ".last", DB.bookId || PACKS[0].id);
+    return true;
+  }catch(e){ return false; }
+}
 function seedItems(){ return SAMPLE_ITEMS.map((it,i)=>({ id:"s"+i, ...deepClone(it) })); }
 
 function seed(){
-  DB = { book: deepClone(BOOK), items: seedItems(), notes: deepClone(NOTES), notesVer: 3, custom:false };
+  const id = DB.bookId || PACKS[0].id;
+  applyPack(id);
+  DB = { book: deepClone(BOOK), items: seedItems(), notes: deepClone(NOTES), notesVer: 3, custom:false, bookId: id };
   save();
 }
 
@@ -263,6 +279,7 @@ function renderMap(){
   const total = items.length;
 
   if(!total){
+    const stale = document.getElementById("compBar"); if(stale) stale.remove();
     $("#mapLead").innerHTML = curSec ? "这一节还没有错题。" : "还没有错题。";
     $("#matrix").innerHTML = ""; $("#mastery").innerHTML = "";
     return;
@@ -485,6 +502,46 @@ function renderAddNotes(){
   box.classList.remove("hide");
   box.innerHTML = `<details class="mini"><summary>本节概念 · ${ps.length} 条</summary>`
     + `<div class="mini-body"><ul>${ps.map(x=>`<li>${fmtQ(x)}</li>`).join("")}</ul></div></details>`;
+}
+
+/* ================= 书架 ================= */
+function renderShelf(){
+  const last = localStorage.getItem(KEY + ".last") || "";
+  $("#shelfList").innerHTML = PACKS.map(p=>`
+    <button class="bookcard${p.id===last?" last":""}" data-book="${p.id}">
+      <span class="bk-mark">${esc(p.mark || "")}</span>
+      <span class="bk-kicker">${esc(p.meta || "")}</span>
+      <span class="bk-name">${esc(p.name)}</span>
+      <span class="bk-sub">${esc(p.tagline || "")}</span>
+      <span class="bk-go">${p.id===last ? "继续上次" : "进入"} <i>→</i></span>
+    </button>`).join("");
+}
+
+function switchBook(id){
+  if(DB.bookId === id) return;
+  save();
+  load(id);
+  curSec = null;
+  renderSidebar(); renderAll();
+  toast("已进入「" + packById(id).name + "」");
+}
+
+function openBook(id){
+  const card = document.querySelector('[data-book="' + id + '"]');
+  if(card) card.classList.add("opening");
+  document.body.classList.add("shelf-leaving");
+  setTimeout(()=>{
+    if(DB.bookId !== id) switchBook(id);
+    else { renderSidebar(); renderAll(); }
+    document.body.classList.remove("shelf-open", "shelf-leaving");
+    document.body.classList.add("revealing");
+    setTimeout(()=>document.body.classList.remove("revealing"), 700);
+  }, 420);
+}
+
+function showShelf(){
+  renderShelf();
+  document.body.classList.add("shelf-open");
 }
 
 /* ================= 讲解 ================= */
@@ -848,6 +905,12 @@ function bind(){
   $$(".tabs button").forEach(b=>b.addEventListener("click",()=>goTab(b.dataset.tab)));
   $$("[data-close]").forEach(b=>b.addEventListener("click", e=>e.target.closest(".mask").classList.add("hide")));
   $$(".mask").forEach(m=>m.addEventListener("click", e=>{ if(e.target===m) m.classList.add("hide"); }));
+
+  $("#shelfList").addEventListener("click", e=>{
+    const b = e.target.closest("[data-book]"); if(!b) return;
+    openBook(b.dataset.book);
+  });
+  $("#btnShelf").addEventListener("click", ()=>{ document.body.classList.add("shelf-open"); renderShelf(); });
 
   const closeToc = ()=> document.body.classList.remove("toc-open");
   $("#btnToc").addEventListener("click", ()=> document.body.classList.toggle("toc-open"));
@@ -1415,20 +1478,22 @@ function bind(){
   if(!DB.items.length && !localStorage.getItem(KEY+".seeded")){
     seed(); try{localStorage.setItem(KEY+".seeded","1");}catch(e){}
   }
-  bind(); goTab("map"); renderAll();
+  bind(); goTab("map"); renderAll(); renderShelf();
 
   // 开场：8 秒，5.4 秒起界面从雾里浮出
   const intro = $("#intro");
+  const afterIntro = ()=>{ document.body.classList.add("shelf-open"); renderShelf(); };
   if(intro){
     const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if(reduce){ intro.remove(); }
+    if(reduce){ intro.remove(); afterIntro(); }
     else{
       document.body.classList.add("introing");
       const clear = ()=> document.body.classList.remove("introing");
       const drop = ()=>{ clear(); intro.classList.add("gone"); setTimeout(()=>intro.remove(), 60); };
       setTimeout(clear, 5400);
       setTimeout(drop, 8200);
-      intro.addEventListener("click", drop);
+      setTimeout(afterIntro, 8200);
+      intro.addEventListener("click", ()=>{ drop(); afterIntro(); });
     }
   }
   migrateImages();
