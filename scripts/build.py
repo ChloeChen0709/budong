@@ -59,7 +59,7 @@ def main():
     )
 
     stamp = datetime.now().strftime("%Y-%m-%d %H:%M") + " · " + \
-            hashlib.sha1((css + app + content_js).encode("utf-8")).hexdigest()[:6]
+            hashlib.sha1((template + css + app + content_js).encode("utf-8")).hexdigest()[:6]
 
     html = (template
             .replace("{{PACK_NAME}}", pack["name"])
