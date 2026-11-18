@@ -274,9 +274,14 @@ function renderSidebar(){
   $("#bkTitle").textContent = DB.book.title;
   const ns = sections().length;
   const lb = (packById(DB.bookId).labels) || {};
-  $("#bkMeta").textContent = `${DB.book.chapters.length} ${lb.unit || "章"} · ${ns} ${lb.sec || "节"} · ${DB.items.length} 道错题`;
+  $("#bkMeta").textContent = isExam()
+    ? `${DB.book.chapters.length} 个 Part · ${ns} 节`
+    : `${DB.book.chapters.length} ${lb.unit || "章"} · ${ns} ${lb.sec || "节"} · ${DB.items.length} 道错题`;
   const tocBtn = $("#btnToc");
   if(tocBtn) tocBtn.textContent = lb.toc || "目录";
+  const usageEl = $("#usage"), resetBtn = $("#btnReset");
+  if(usageEl) usageEl.style.display = isExam() ? "none" : "";
+  if(resetBtn) resetBtn.style.display = isExam() ? "none" : "";
 
   let h = "";
   const chs = isExam()
@@ -286,7 +291,7 @@ function renderSidebar(){
   chs.forEach(ch=>{
     const cn = sum(ch.sections.map(s=>cnt(s.id)));
     h += `<div class="ch">${ch.no} ${ch.title}${cn?` <span style="color:#b23a2f;font-weight:500">·${cn}</span>`:""}</div>`;
-    if(ch.note) h += `<div class="chnote">${esc(ch.note)}</div>`;
+
     ch.sections.forEach(s=>{
       const n = cnt(s.id), lv = levelOf(s.id);
       h += `<div class="sec${curSec===s.id?" on":""}" data-sec="${s.id}">
@@ -481,11 +486,9 @@ function renderNotes(){
   if(!curSec && isExam()){
     const ch = DB.book.chapters.find(c=>c.no===curModule) || DB.book.chapters[0];
     const rows = ch.sections.map(s=>{
-      const c = countOf(notesOf(s.id));
-      return `<li data-goto="${s.id}"><span>${s.id} ${s.title}</span><span class="m">${c ? c + " 条" : "待补"}</span></li>`;
+      return `<li data-goto="${s.id}"><span>${s.id} ${s.title}</span></li>`;
     }).join("");
-    host.innerHTML = (ch.note ? `<p class="modnote">${esc(ch.note)}</p>` : "")
-      + `<ul class="nlist">${rows}</ul>`;
+    host.innerHTML = `<ul class="nlist">${rows}</ul>`;
     return;
   }
 
@@ -587,6 +590,7 @@ function openModule(i){
   curSec = null;
   renderModBar();
   goTab("notes");
+  renderSidebar();
   renderNotes();
 }
 
@@ -952,6 +956,26 @@ async function buildBackup(){
 /* ---------- 导出 PDF（走系统打印） ---------- */
 async function buildPrint(){
   const host = $("#printArea");
+
+  if(isExam()){
+    const out = [];
+    DB.book.chapters.forEach(ch=>{
+      out.push(`<div class="p-title">${esc(ch.no)} ${esc(ch.title)}</div>`);
+      ch.sections.forEach(s=>{
+        const nt = DB.notes[s.id] || {};
+        const cp = nt.concepts || [];
+        const ex = nt.examples || [];
+        if(!cp.length && !ex.length) return;
+        out.push(`<div class="p-item"><div class="p-q">${esc(s.id)} ${esc(s.title)}</div>`);
+        if(cp.length) out.push(`<div class="p-s">` + cp.map(x=>esc(x)).join("<br>") + `</div>`);
+        ex.forEach(e=>{ out.push(`<div class="p-s">${esc(e.q)}　${esc(e.a || "")}</div>`); });
+        out.push(`</div>`);
+      });
+    });
+    host.innerHTML = `<div class="p-title">${esc(DB.book.title)} · 知识点</div>`
+      + `<div class="p-meta">导出时间 ${new Date().toLocaleString("zh-CN")}</div>` + out.join("");
+    return;
+  }
   const items = [...DB.items].sort((a,b)=> String(a.sec).localeCompare(String(b.sec)));
   if(!items.length){
     host.innerHTML = `<div class="p-title">${esc(DB.book.title)} · 错题</div><div class="p-empty">还没有错题。</div>`;
@@ -995,7 +1019,7 @@ function renderUsage(){
      <div class="ubar"><i style="width:${pct}%;background:${col}"></i></div>`;
 }
 
-function renderAll(){ renderSidebar(); renderMap(); renderItems(); renderReview(); renderNotes(); renderUsage(); }
+function renderAll(){ renderSidebar(); renderMap(); renderItems(); renderReview(); renderNotes(); if(!isExam()) renderUsage(); }
 
 function bind(){
   $$(".tabs button").forEach(b=>b.addEventListener("click",()=>goTab(b.dataset.tab)));
