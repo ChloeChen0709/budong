@@ -39,6 +39,8 @@ def public_notes(notes):
         }
         if sec.get("plain"):
             item["plain"] = True
+        if sec.get("typesStyle"):
+            item["typesStyle"] = sec["typesStyle"]
         out[sid] = item
     return out
 

@@ -556,7 +556,20 @@ function renderNotes(){
         return `<div class="ex"><p class="q">${fmtQ(e.q)}</p>${inner}</div>`;
       }).join(""))
     : "";
+  const sceneHTML = t => {
+    const m = String(t).split(/[：:]/);
+    const head = m[0].trim();
+    const rest = (m.slice(1).join("：") || "").trim();
+    const items = rest.split(/[、,，]/).map(x=>x.trim()).filter(Boolean).map(x=>{
+      const i = x.search(/[\u4e00-\u9fff]/);
+      if(i <= 0) return `<span class="w">${esc(x)}</span>`;
+      return `<span class="w">${esc(x.slice(0,i).trim())}</span> <span class="m">${esc(x.slice(i).trim())}</span>`;
+    }).join("　");
+    return `<div class="scene"><b>${esc(head)}</b><div class="sitems">${items}</div></div>`;
+  };
+
   const typList = (nt.types||[]).map(x=>{
+    if(nt.typesStyle === "scene" && typeof x === "string") return sceneHTML(x);
     if(typeof x === "string") return `<div class="typ flat"><div class="typname">${fmtQ(x)}</div></div>`;
     return `<details class="typ"><summary>${fmtQ(x.t)}</summary>`
       + `<div class="typbody">${fmtQ(x.how || "")}</div></details>`;
