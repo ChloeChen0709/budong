@@ -112,6 +112,14 @@
        "替换",
        "高分词"
       ]
+     },
+     {
+      "id": "3.4",
+      "title": "写作主题词",
+      "kw": [
+       "主题词",
+       "写作"
+      ]
      }
     ]
    },
@@ -10427,6 +10435,411 @@
      "q": "(be) at an end (=finished)",
      "a": "结束了",
      "analysis": ""
+    }
+   ]
+  },
+  "3.4": {
+   "concepts": [
+    "按七个主题收录 79 组固定译法，写作文时直接调取，不要临场拼。",
+    "主题词的价值在于准确：文化融合是 cultural integration，不是 culture mix。",
+    "图表作文的趋势词分四档：升、降、波动、不变，用词要分开，不能都写 change。"
+   ],
+   "types": [],
+   "examples": [
+    {
+     "q": "砍伐森林",
+     "a": "deforestation",
+     "analysis": "环境污染与保护"
+    },
+    {
+     "q": "过度捕捞",
+     "a": "overfishing",
+     "analysis": "环境污染与保护"
+    },
+    {
+     "q": "节约资源",
+     "a": "conserve / save resources",
+     "analysis": "环境污染与保护"
+    },
+    {
+     "q": "资源短缺",
+     "a": "resource shortage",
+     "analysis": "环境污染与保护"
+    },
+    {
+     "q": "资源枯竭",
+     "a": "resources exhaustion",
+     "analysis": "环境污染与保护"
+    },
+    {
+     "q": "破坏环境",
+     "a": "damage environment",
+     "analysis": "环境污染与保护"
+    },
+    {
+     "q": "餐厅卫生",
+     "a": "restaurant sanitary",
+     "analysis": "环境污染与保护"
+    },
+    {
+     "q": "汽车限购",
+     "a": "vehicle purchase restriction",
+     "analysis": "环境污染与保护"
+    },
+    {
+     "q": "交通堵塞",
+     "a": "traffic jam / congestion",
+     "analysis": "环境污染与保护"
+    },
+    {
+     "q": "环境恶化",
+     "a": "environmental deterioration",
+     "analysis": "环境污染与保护"
+    },
+    {
+     "q": "一次性塑料袋",
+     "a": "disposable plastic bags",
+     "analysis": "环境污染与保护"
+    },
+    {
+     "q": "文化融合",
+     "a": "cultural integration / fusion / blending",
+     "analysis": "文化类"
+    },
+    {
+     "q": "文化多样性",
+     "a": "cultural diversity",
+     "analysis": "文化类"
+    },
+    {
+     "q": "文化交流",
+     "a": "cultural exchange / interaction",
+     "analysis": "文化类"
+    },
+    {
+     "q": "外国文化",
+     "a": "alien culture",
+     "analysis": "文化类"
+    },
+    {
+     "q": "文化遗产",
+     "a": "cultural heritage",
+     "analysis": "文化类"
+    },
+    {
+     "q": "民间艺术",
+     "a": "folk art",
+     "analysis": "文化类"
+    },
+    {
+     "q": "东西方文化",
+     "a": "oriental and occidental cultures",
+     "analysis": "文化类"
+    },
+    {
+     "q": "强化文化认同",
+     "a": "strengthen cultural identity",
+     "analysis": "文化类"
+    },
+    {
+     "q": "保护珍惜传统",
+     "a": "preserve and cherish tradition",
+     "analysis": "文化类"
+    },
+    {
+     "q": "文化创新",
+     "a": "cultural innovation",
+     "analysis": "文化类"
+    },
+    {
+     "q": "人工智能",
+     "a": "Artificial Intelligence",
+     "analysis": "科技类"
+    },
+    {
+     "q": "网络暴力",
+     "a": "cyber violence / crime / bullying",
+     "analysis": "科技类"
+    },
+    {
+     "q": "共享经济",
+     "a": "sharing economy",
+     "analysis": "科技类"
+    },
+    {
+     "q": "自动驾驶",
+     "a": "auto-pilot",
+     "analysis": "科技类"
+    },
+    {
+     "q": "团购",
+     "a": "group purchasing",
+     "analysis": "科技类"
+    },
+    {
+     "q": "网络购物",
+     "a": "online shopping",
+     "analysis": "科技类"
+    },
+    {
+     "q": "潜在风险",
+     "a": "potential risks",
+     "analysis": "科技类"
+    },
+    {
+     "q": "与时俱进",
+     "a": "keep abreast with the times",
+     "analysis": "科技类"
+    },
+    {
+     "q": "心理健康",
+     "a": "mental / psychological health",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "孝顺",
+     "a": "fulfill filial duty",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "互相理解",
+     "a": "mutual understanding",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "代际关系",
+     "a": "generational relationship",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "代沟",
+     "a": "generation gap",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "证书",
+     "a": "certificate",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "创业",
+     "a": "start a business",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "出国深造",
+     "a": "study abroad; go abroad for further education",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "就业压力",
+     "a": "employment pressure",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "溺爱",
+     "a": "spoil; dote on",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "履行责任",
+     "a": "fulfill / perform responsibility or duty",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "老龄化社会",
+     "a": "aging society",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "啃老族",
+     "a": "the NEET group (Not in Education, Employment or Training)",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "高考",
+     "a": "college entrance examination",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "全面发展",
+     "a": "well-round development",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "传授知识",
+     "a": "impart knowledge",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "开阔眼界",
+     "a": "broaden one's horizon / vision",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "盲目崇拜",
+     "a": "blind worship",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "道德意识",
+     "a": "moral awareness",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "乐观",
+     "a": "optimism",
+     "analysis": "品质类"
+    },
+    {
+     "q": "悲观",
+     "a": "pessimism",
+     "analysis": "品质类"
+    },
+    {
+     "q": "勤奋",
+     "a": "diligence",
+     "analysis": "品质类"
+    },
+    {
+     "q": "耐心",
+     "a": "patience",
+     "analysis": "品质类"
+    },
+    {
+     "q": "创新",
+     "a": "innovation",
+     "analysis": "品质类"
+    },
+    {
+     "q": "感恩",
+     "a": "be grateful",
+     "analysis": "品质类"
+    },
+    {
+     "q": "奉献",
+     "a": "contribution",
+     "analysis": "品质类"
+    },
+    {
+     "q": "节约",
+     "a": "thrift",
+     "analysis": "品质类"
+    },
+    {
+     "q": "谨慎",
+     "a": "prudence",
+     "analysis": "品质类"
+    },
+    {
+     "q": "坚持",
+     "a": "persistence / perseverance",
+     "analysis": "品质类"
+    },
+    {
+     "q": "自信",
+     "a": "self-confidence; self-assurance",
+     "analysis": "品质类"
+    },
+    {
+     "q": "谦虚",
+     "a": "modesty",
+     "analysis": "品质类"
+    },
+    {
+     "q": "尊老爱幼",
+     "a": "respect the old and care for the young",
+     "analysis": "品质类"
+    },
+    {
+     "q": "成功无捷径",
+     "a": "There is no shortcut to success.",
+     "analysis": "品质类"
+    },
+    {
+     "q": "宜居城市",
+     "a": "livable city",
+     "analysis": "记述与写景"
+    },
+    {
+     "q": "湖光山色",
+     "a": "a landscape of lakes and mountains",
+     "analysis": "记述与写景"
+    },
+    {
+     "q": "避暑胜地",
+     "a": "summer resort",
+     "analysis": "记述与写景"
+    },
+    {
+     "q": "风景如画的",
+     "a": "picturesque",
+     "analysis": "记述与写景"
+    },
+    {
+     "q": "全景",
+     "a": "panorama",
+     "analysis": "记述与写景"
+    },
+    {
+     "q": "当地美食",
+     "a": "local cuisine",
+     "analysis": "记述与写景"
+    },
+    {
+     "q": "美味零食",
+     "a": "mouth-watering snacks",
+     "analysis": "记述与写景"
+    },
+    {
+     "q": "苗条的",
+     "a": "skinny, slim, slender",
+     "analysis": "记述与写景"
+    },
+    {
+     "q": "强壮的",
+     "a": "well-built",
+     "analysis": "记述与写景"
+    },
+    {
+     "q": "包容的",
+     "a": "tolerant",
+     "analysis": "记述与写景"
+    },
+    {
+     "q": "自信的",
+     "a": "self-assured",
+     "analysis": "记述与写景"
+    },
+    {
+     "q": "教养",
+     "a": "have good upbringing",
+     "analysis": "记述与写景"
+    },
+    {
+     "q": "值得信赖的",
+     "a": "reliable / credible",
+     "analysis": "记述与写景"
+    },
+    {
+     "q": "表上升",
+     "a": "increase, climb, rise, jump, rocket, spike, soar, surge",
+     "analysis": "图表趋势"
+    },
+    {
+     "q": "表下降",
+     "a": "drop, fall, reduce, decline, diminish, descend, plunge, plummet, slump",
+     "analysis": "图表趋势"
+    },
+    {
+     "q": "表波动",
+     "a": "fluctuate; slightly increase / decrease",
+     "analysis": "图表趋势"
+    },
+    {
+     "q": "表不变",
+     "a": "remain stable / steady / constant; stay the same",
+     "analysis": "图表趋势"
     }
    ]
   }
