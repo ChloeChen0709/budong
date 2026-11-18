@@ -1938,8 +1938,9 @@ function bind(){
   // 开场：8 秒，5.4 秒起界面从雾里浮出
   const intro = $("#intro");
   let introSettled = false;
+  renderShelf();                       // 首屏就是书架，不留一帧书本页面
   const afterIntro = ()=>{
-    if(introSettled) return;          // 只放行一次，避免跳过开场后定时器再把书架弹出来
+    if(introSettled) return;
     introSettled = true;
     document.body.classList.add("shelf-open");
     renderShelf();
