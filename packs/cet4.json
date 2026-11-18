@@ -354,9 +354,42 @@
    "examples": []
   },
   "2.1": {
-   "concepts": [],
-   "types": [],
-   "examples": []
+   "concepts": [
+    "做题顺序按分值排：仔细阅读（142.5 分）→ 快速阅读（71 分）→ 翻译（106.5 分）→ 最后才是选词填空。选词填空分少且费时，不要先做。",
+    "时间分配：仔细阅读每篇平时练 10–15 分钟，考场压到 9 分钟，因为还要留时间涂卡。",
+    "三步法：扫读题干划关键词 → 回原文标出定位句 → 比较选项排除。",
+    "关键词优先级：时间和数字高于一切，其次是专有名词，再到主语名词、宾语名词、表语名词。",
+    "英文是“开门见山”，主旨常在首段首句；中文习惯“好戏在后头”，这个差异会让人把主旨题做错。"
+   ],
+   "types": [
+    "定位题：含关键词的句子就是答案区，把定位句括起来，培养边界感",
+    "同义改写题：measure 对应 investigate 这类，考的是换词不换义",
+    "干扰项识别：词性词形变化改变词义，如 sounding 试探 / soundings 声音",
+    "主旨题：看第一段首句，若首句是定义或概念，通常就是主题句",
+    "长难句题：定位句是长难句时不要怕，答案往往就在这句里，先找主干"
+   ],
+   "examples": [
+    {
+     "q": "阅读第一步该做什么？",
+     "a": "扫读题干，划出关键词，带着目的去读原文",
+     "analysis": "没有目的地的阅读只能匀速，匀速就没有方向。先划关键词，再回原文定位，比通读全文快得多。"
+    },
+    {
+     "q": "第一题的关键词到第二段还没找到，怎么办？",
+     "a": "继续往下找，不要硬在头两段里选",
+     "analysis": "“第一题一定在前两段”是错误预设。四六级常把首题对应内容放在更后面，硬选正是失分原因。"
+    },
+    {
+     "q": "选项把原文的 sounding 写成了 soundings，说明什么？",
+     "a": "这是词形变化改变词义的干扰项",
+     "analysis": "只改了词形，意思却从“试探”变成“声音”。同类还有 custom/customs、speed/speeding。认得出这个坑，才能避开。"
+    },
+    {
+     "q": "主旨题该去哪儿找答案？",
+     "a": "优先看第一段首句，其次看最后一段首句",
+     "analysis": "英文写作开门见山，主旨常在第一段；当首段只有一句话且抽象时，这句几乎一定是主题句。"
+    }
+   ]
   },
   "2.2": {
    "concepts": [],
@@ -399,9 +432,43 @@
    "examples": []
   },
   "3.5": {
-   "concepts": [],
-   "types": [],
-   "examples": []
+   "concepts": [
+    "四六级写作正在反模板化：整段套话会被判低分，但功能句仍然有用——它保证句子结构不出错。",
+    "七类功能句各管一段：开头、结尾、比较、原因、结果、反驳、证明。写之前先想清楚这段要干什么。",
+    "同一功能准备两三句就够，句句换花样反而显得刻意。",
+    "句式升级的前提是语法正确，长句写错比短句扣分更狠。"
+   ],
+   "types": [
+    "开头：Recently the phenomenon has become a heated topic. / Nowadays there is a growing concern over …",
+    "结尾：From what has been discussed above, we can draw the conclusion that … / All things considered, …",
+    "比较：The advantages far outweigh the disadvantages. / A and B differ in several ways.",
+    "原因：A number of factors are accountable for this situation. / Perhaps the primary factor is that …",
+    "结果：It may give rise to a host of problems. / It will exercise a profound influence upon …",
+    "反驳：It is true that …, but one vital point is being left out. / Contrary to what is widely accepted, I maintain that …",
+    "证明：No one can deny the fact that … / Recent studies indicate that …"
+   ],
+   "examples": [
+    {
+     "q": "开头段想引出话题，用哪句？",
+     "a": "Recently the phenomenon has become a heated topic.",
+     "analysis": "比 Today more and more people 更正式，且不涉及具体人群，任何话题都能套。注意 phenomenon 复数是 phenomena。"
+    },
+    {
+     "q": "结尾段要总结观点，怎么写？",
+     "a": "From what has been discussed above, we can draw the conclusion that …",
+     "analysis": "这句的作用是明确标记“进入结论”，让阅卷老师一眼看到结构。后面必须接一个完整句子，不能接短语。"
+    },
+    {
+     "q": "要写“确实如此，但忽略了一点”，用哪句？",
+     "a": "It is true that …, but one vital point is being left out.",
+     "analysis": "先让步再转折，是四六级议论文最稳的段落结构。left out 是“被忽略”，比 forgotten 更书面。"
+    },
+    {
+     "q": "分析原因时怎么开头？",
+     "a": "A number of factors are accountable for this situation.",
+     "analysis": "accountable for 是“对……负责、是……的原因”，比 cause 更书面。用复数 factors 后面就要真的列两三条，否则显得空。"
+    }
+   ]
   },
   "4.1": {
    "concepts": [],
@@ -409,9 +476,47 @@
    "examples": []
   },
   "4.2": {
-   "concepts": [],
-   "types": [],
-   "examples": []
+   "concepts": [
+    "翻译不是逐字对译：先定主干（谁做什么），再把修饰成分挂上去，句子才立得住。",
+    "四六级翻译的高频结构就那几类：倍数比较、让步对比、条件结果、强调、原因。",
+    "固定表达要成块背，考试时直接调取，比如 with the booming of the economy，而不是临场拼。",
+    "中文喜欢短句并列，英文要靠连接词把逻辑写出来：先想清楚是因果、转折还是并列，再选句型。"
+   ],
+   "types": [
+    "It is + 形容词 + that 结构：It is conceivable that… / It is undeniable that…",
+    "倍数比较：倍数 + as + 形容词 + as；倍数 + more + than",
+    "让步与对比：no more … than；not … but …；rather than",
+    "条件与结果：so/such … that；only to find",
+    "强调与传闻：Nothing is more … than；It is said that；There is no doubt that",
+    "高频固定搭配：with the booming of the economy、play an increasingly important role in、lay a solid foundation for"
+   ],
+   "examples": [
+    {
+     "q": "可想而知，知识在我们的生活中扮演着重要的角色。",
+     "a": "It is conceivable that knowledge plays an important part in our life.",
+     "analysis": "中文的“可想而知”对应 It is conceivable that，比逐字翻成 we can imagine 更符合英文表达习惯。"
+    },
+    {
+     "q": "这个水池是十年前的三倍大。",
+     "a": "The pool is three times as big as it was ten years ago.",
+     "analysis": "倍数放最前，用 as … as 接比较对象。若写成 three times bigger than，在英文里是“大四倍”，意思就错了。"
+    },
+    {
+     "q": "没有比接受教育更重要的事。",
+     "a": "Nothing is more important than to receive education.",
+     "analysis": "Nothing is more … than 是固定强调句式，比 it is the most important thing 更凝练，也是阅卷老师认得的句型。"
+    },
+    {
+     "q": "我们的产品不但要求数量，而且要求质量。",
+     "a": "In production, we demand not only quantity but also quality.",
+     "analysis": "not only … but also 前后要对称，这里是两个名词。若后面接句子，要注意 not only 放句首时前半句倒装。"
+    },
+    {
+     "q": "随着经济的繁荣，人们的生活水平显著提高。",
+     "a": "With the booming of the economy, people's living standard has improved remarkably.",
+     "analysis": "“随着”用 with 加名词短语，不要用 with … , people … 之外再套一个从句，容易写成两个主语。"
+    }
+   ]
   },
   "4.3": {
    "concepts": [],
@@ -434,9 +539,43 @@
    "examples": []
   },
   "5.2": {
-   "concepts": [],
-   "types": [],
-   "examples": []
+   "concepts": [
+    "听力卡住多半不是语法，是场景词反应慢：听到 resume、interview、deadline 要立刻想到职场，而不是逐词翻译。",
+    "按场景成组记比按字母表记快，因为真题里的词是成组出现的：一个对话里往往同时出现三四个同一场景的词。",
+    "同一个词换形式会换词义，这是听力与阅读都爱设的坑：custom 是习俗，customs 是海关；speed 是速度，speeding 是超速。",
+    "听到不认识的名词不要停，把它符号化成一个代号继续跟句子，答案通常靠动词和逻辑词给出。"
+   ],
+   "types": [
+    "职场：employee 雇员、employer 雇主、colleague 同事、supervisor 主管、promotion 晋升、deadline 截止日期、overtime 加班、resume 简历",
+    "经济：inflation 通胀、recession 衰退、consumer 消费者、supply and demand 供求、investment 投资、entrepreneur 企业家、stock 股票、profit 利润",
+    "文化：tradition 传统、customs 风俗、heritage 遗产、diversity 多样性、festival 节日、cuisine 美食、folklore 民间传说",
+    "交通：commute 通勤、pedestrian 行人、public transportation 公共交通、subway 地铁、highway 高速、traffic jam 堵车、parking lot 停车场",
+    "教育：lecture 讲座、degree 学位、research 研究、textbook 教科书、homework 作业、exam 考试",
+    "旅行：passport 护照、visa 签证、itinerary 行程、destination 目的地、reservation 预订、baggage 行李、souvenir 纪念品",
+    "会议与政治：summit 峰会、conference 会议、diplomacy 外交、negotiation 谈判、agreement 协议、delegate 代表、vote 投票"
+   ],
+   "examples": [
+    {
+     "q": "听力里听到 resume，最可能出现在哪类场景？",
+     "a": "职场",
+     "analysis": "resume 作名词是简历，和 interview、promotion、deadline 同组出现。注意它作动词读 /rɪˈzjuːm/ 时是“恢复、继续”，读音和词性都变了。"
+    },
+    {
+     "q": "听到 inflation、recession、supply and demand，这段最可能在谈什么？",
+     "a": "经济",
+     "analysis": "三个词都属于经济场景。这类题不需要听懂每个数字，抓住场景就能排除掉大半选项。"
+    },
+    {
+     "q": "custom 和 customs 在听力里分别是什么意思？",
+     "a": "custom 是风俗，customs 是海关",
+     "analysis": "只多一个 s，意思完全变了。同类还有 speed 速度 / speeding 超速、manner 方式 / manners 礼貌。听到这类词先确认单复数。"
+    },
+    {
+     "q": "对话里出现 passport、visa、itinerary、baggage，最可能在哪儿？",
+     "a": "机场或旅行途中",
+     "analysis": "四个词构成完整的出行场景链。听力里场景一旦确定，即使有个别词没听清，也能靠场景推断答案。"
+    }
+   ]
   },
   "5.3": {
    "concepts": [],
