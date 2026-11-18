@@ -488,7 +488,11 @@ function renderNotes(){
     const rows = ch.sections.map(s=>{
       return `<li data-goto="${s.id}"><span>${s.id} ${s.title}</span></li>`;
     }).join("");
-    host.innerHTML = `<ul class="nlist">${rows}</ul>`;
+    const toolRow = Object.entries(TOOLS).filter(([,t])=>t.chapter===ch.title).map(([id,t])=>
+      `<button class="toolrow" data-tool="${id}"><span class="tooltag">AI 批改</span>`
+      + `<span class="toolname">${esc(t.title)}</span><span class="toolgo">→</span></button>`).join("");
+    host.innerHTML = (toolRow ? `<div class="tools">${toolRow}</div>` : "")
+      + `<ul class="nlist">${rows}</ul>`;
     return;
   }
 
@@ -566,6 +570,73 @@ function renderAddNotes(){
   box.classList.remove("hide");
   box.innerHTML = `<details class="mini"><summary>本节概念 · ${ps.length} 条</summary>`
     + `<div class="mini-body"><ul>${ps.map(x=>`<li>${fmtQ(x)}</li>`).join("")}</ul></div></details>`;
+}
+
+/* ================= 批改工具（四级） ================= */
+const TOOLS = {
+  "write-check": {
+    title: "作文批改",
+    chapter: "写作",
+    fields: [{ id: "essay", label: "把你的作文粘进来", rows: 10,
+               ph: "直接粘贴英文原文，不用标题" }],
+    sys: "你是大学英语四级阅卷老师。按四级写作评分标准（满分 15 分）批改，用中文回答，不客套。",
+    ask: t => `请批改下面这篇四级作文：\n\n${t.essay}\n\n按这个格式输出：\n1. 评分：X/15，一句话说明理由\n2. 错误：逐条列出「原文 → 改为 → 原因」，最多 6 条\n3. 升级：给出 3 处可以写得更好的表达\n4. 建议：接下来最该练的一点`
+  },
+  "trans-check": {
+    title: "翻译批改",
+    chapter: "翻译",
+    fields: [{ id: "src", label: "中文原句", rows: 3, ph: "粘贴题目给的段落" },
+             { id: "mine", label: "你的译文", rows: 4, ph: "粘贴你翻的英文" }],
+    sys: "你是大学英语四级翻译阅卷老师。按四级翻译评分标准（满分 15 分）批改，用中文回答，不客套。",
+    ask: t => `中文原文：\n${t.src}\n\n学生的译文：\n${t.mine}\n\n按这个格式输出：\n1. 评分：X/15，一句话说明理由\n2. 问题：逐条列出漏译、误译、搭配或语法错误，每条给出正确写法\n3. 参考译文：给一个贴近原文的版本\n4. 高频表达：从这段里挑 2-3 个值得记住的搭配`
+  }
+};
+
+function openTool(id){
+  const t = TOOLS[id]; if(!t) return;
+  $("#toolTitle").textContent = t.title;
+  $("#modalTool").dataset.tool = id;
+  $("#toolFields").innerHTML = t.fields.map(f=>
+    `<label class="f">${esc(f.label)}</label><textarea id="tf-${f.id}" rows="${f.rows}" placeholder="${esc(f.ph||"")}" style="min-height:${f.rows*22}px"></textarea>`
+  ).join("");
+  $("#toolOut").classList.add("hide");
+  $("#toolOut").innerHTML = "";
+  $("#modalTool").classList.remove("hide");
+}
+
+async function runTool(){
+  const id = $("#modalTool").dataset.tool;
+  const t = TOOLS[id]; if(!t) return;
+  const val = {};
+  for(const f of t.fields){ val[f.id] = ($("#tf-"+f.id).value || "").trim(); }
+  if(t.fields.some(f=>!val[f.id])){ toast("先把内容填上"); return; }
+
+  const out = $("#toolOut");
+  out.classList.remove("hide");
+  const cfg = apiCfg();
+  if(!(cfg.key && cfg.url && cfg.model)){
+    out.innerHTML = `<p class="toolnote">还没接入模型。点右上「AI 设置」填一个 key，这里就能自动批改。</p>`;
+    return;
+  }
+  out.innerHTML = `<p class="toolnote"><span class="spin"></span>正在批改…</p>`;
+  try{
+    const res = await fetch(normalizeApiUrl(cfg.url), {
+      method:"POST",
+      headers:{"Content-Type":"application/json","Authorization":"Bearer "+cfg.key},
+      body: JSON.stringify({ model: cfg.model, temperature: 0.3,
+        messages:[{role:"system",content:t.sys},{role:"user",content:t.ask(val)}] })
+    });
+    if(!res.ok){
+      const e = await res.text().catch(()=> "");
+      throw new Error(explainApiFailure(res.status, normalizeApiUrl(cfg.url), apiErrorText(e)));
+    }
+    const d = await res.json();
+    const txt = (d.choices && d.choices[0] && d.choices[0].message && d.choices[0].message.content) || "";
+    out.innerHTML = `<p class="toolnote">由 ${esc(cfg.model)} 批改</p>`
+      + `<div class="tooltext">` + esc(txt).replace(/\n/g, "<br>") + `</div>`;
+  }catch(e){
+    out.innerHTML = `<p class="toolnote">批改失败：${esc(String(e.message||e))}</p>`;
+  }
 }
 
 /* ================= 模式 ================= */
@@ -1037,11 +1108,14 @@ function bind(){
     renderShelf();
   };
   $("#btnShelf").addEventListener("click", openShelf);
+  $("#btnRunTool").addEventListener("click", runTool);
+
   $("#modBar").addEventListener("click", e=>{
     const b = e.target.closest("[data-mod]"); if(!b) return;
     openModule(+b.dataset.mod);
   });
   $("#notesCard").addEventListener("click", e=>{
+    const tb = e.target.closest("[data-tool]"); if(tb){ openTool(tb.dataset.tool); return; }
     const b = e.target.closest("[data-back]"); if(!b) return;
     curSec = null; renderModBar(); renderNotes();
   });
