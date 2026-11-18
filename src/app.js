@@ -497,8 +497,15 @@ function renderNotes(){
 
   const concepts = nt.concepts || nt.points || [];
   const ul = arr => (arr && arr.length) ? `<ul>${arr.map(x=>`<li>${fmtQ(x)}</li>`).join("")}</ul>` : "";
+  const isFlash = isExam();
   const exs = (nt.examples||[]).length
-    ? nt.examples.map(e=>{
+    ? (isFlash
+        ? nt.examples.map(e=>`<details class="flash"><summary><span class="fl-q">${fmtQ(e.q)}</span></summary>`
+            + `<div class="fl-body">`
+            + (e.a ? `<p class="fl-a">${fmtQ(e.a)}</p>` : "")
+            + (e.analysis ? `<p class="fl-note">${fmtQ(e.analysis)}</p>` : "")
+            + `</div></details>`).join("")
+        : nt.examples.map(e=>{
         const ans = e.a ? fmtQ(e.a) : "";
         const ana = e.analysis ? fmtQ(e.analysis) : "";
         const inner = ans ? `<details class="ans"><summary>答案</summary>`
@@ -506,7 +513,7 @@ function renderNotes(){
             + (ana ? `<details class="ana"><summary>解析</summary><p class="a">${ana}</p></details>` : "")
             + `</div></details>` : "";
         return `<div class="ex"><p class="q">${fmtQ(e.q)}</p>${inner}</div>`;
-      }).join("")
+      }).join(""))
     : "";
   const typList = (nt.types||[]).map(x=>{
     if(typeof x === "string") return `<div class="typ flat"><div class="typname">${fmtQ(x)}</div></div>`;

@@ -253,6 +253,25 @@ ul.bars li:last-child{border-bottom:none}
 }
 .typ.flat{padding:14px 0;font-size:15px;color:var(--text)}
 
+/* ---------- 记忆卡（四级） ---------- */
+.flash{border-bottom:1px solid var(--line)}
+.flash > summary{
+  list-style:none;cursor:pointer;
+  display:flex;align-items:baseline;gap:12px;
+  padding:14px 0;font-size:15px;line-height:1.7;color:var(--ink);
+}
+.flash > summary::-webkit-details-marker{display:none}
+.flash > summary::after{
+  content:"＋";margin-left:auto;flex:none;
+  color:var(--faint);font-size:12px;
+}
+.flash[open] > summary::after{content:"－"}
+.flash > summary:hover{color:var(--accent)}
+.fl-q{flex:1;min-width:0}
+.fl-body{padding:0 0 18px;max-width:62em}
+.fl-a{font-size:15px;line-height:1.9;color:var(--ink);margin:0}
+.fl-note{font-size:13.5px;line-height:1.9;color:var(--muted);margin:8px 0 0}
+
 /* 例题手风琴：题目 → 答案 → 解析 */
 .ans{margin-top:14px}
 .ans > summary{

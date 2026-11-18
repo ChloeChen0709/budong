@@ -20,42 +20,35 @@
     "sections": [
      {
       "id": "1.1",
-      "title": "变速精听",
+      "title": "十四类关键词",
       "kw": [
-       "变速精听",
-       "听力"
+       "转折",
+       "因果",
+       "关键词"
       ]
      },
      {
       "id": "1.2",
-      "title": "多口音训练",
+      "title": "预读技巧",
       "kw": [
-       "多口音训练",
-       "听力"
+       "预读",
+       "选项"
       ]
      },
      {
       "id": "1.3",
-      "title": "预读选项",
+      "title": "长对话边听边记",
       "kw": [
-       "预读选项",
-       "听力"
+       "长对话",
+       "笔记"
       ]
      },
      {
       "id": "1.4",
-      "title": "信号词标注",
+      "title": "听力场景词",
       "kw": [
-       "信号词标注",
-       "听力"
-      ]
-     },
-     {
-      "id": "1.5",
-      "title": "错题回放",
-      "kw": [
-       "错题回放",
-       "听力"
+       "场景词",
+       "高频词"
       ]
      }
     ]
@@ -67,42 +60,26 @@
     "sections": [
      {
       "id": "2.1",
-      "title": "分题型训练",
+      "title": "做题顺序与三步法",
       "kw": [
-       "分题型训练",
-       "阅读"
+       "定位",
+       "三步法"
       ]
      },
      {
       "id": "2.2",
-      "title": "同义替换库",
+      "title": "同义替换",
       "kw": [
-       "同义替换库",
-       "阅读"
+       "同义替换",
+       "换词"
       ]
      },
      {
       "id": "2.3",
-      "title": "推理题专项",
+      "title": "长难句找主干",
       "kw": [
-       "推理题专项",
-       "阅读"
-      ]
-     },
-     {
-      "id": "2.4",
-      "title": "长难句拆解",
-      "kw": [
-       "长难句拆解",
-       "阅读"
-      ]
-     },
-     {
-      "id": "2.5",
-      "title": "限时做题",
-      "kw": [
-       "限时做题",
-       "阅读"
+       "主干",
+       "引导词"
       ]
      }
     ]
@@ -114,42 +91,26 @@
     "sections": [
      {
       "id": "3.1",
-      "title": "话题素材库",
+      "title": "二十五个题型骨架",
       "kw": [
-       "话题素材库",
-       "写作"
+       "模板",
+       "题型"
       ]
      },
      {
       "id": "3.2",
-      "title": "观点展开训练",
+      "title": "段首中段结尾句",
       "kw": [
-       "观点展开训练",
-       "写作"
+       "功能句",
+       "句型"
       ]
      },
      {
       "id": "3.3",
-      "title": "AI 批改",
+      "title": "提分词替换",
       "kw": [
-       "AI 批改",
-       "写作"
-      ]
-     },
-     {
-      "id": "3.4",
-      "title": "模板化预警",
-      "kw": [
-       "模板化预警",
-       "写作"
-      ]
-     },
-     {
-      "id": "3.5",
-      "title": "句式升级",
-      "kw": [
-       "句式升级",
-       "写作"
+       "替换",
+       "高分词"
       ]
      }
     ]
@@ -161,42 +122,18 @@
     "sections": [
      {
       "id": "4.1",
-      "title": "长句拆分",
+      "title": "必背句型",
       "kw": [
-       "长句拆分",
-       "翻译"
+       "句型",
+       "结构"
       ]
      },
      {
       "id": "4.2",
-      "title": "高频表达库",
+      "title": "高频固定表达",
       "kw": [
-       "高频表达库",
-       "翻译"
-      ]
-     },
-     {
-      "id": "4.3",
-      "title": "中式英语预警",
-      "kw": [
-       "中式英语预警",
-       "翻译"
-      ]
-     },
-     {
-      "id": "4.4",
-      "title": "逐句对照",
-      "kw": [
-       "逐句对照",
-       "翻译"
-      ]
-     },
-     {
-      "id": "4.5",
-      "title": "主题分类训练",
-      "kw": [
-       "主题分类训练",
-       "翻译"
+       "搭配",
+       "词组"
       ]
      }
     ]
@@ -210,134 +147,42 @@
       "id": "5.1",
       "title": "核心 1500 词 · List 1–6",
       "kw": [
-       "词汇",
-       "高频词"
+       "词汇"
       ]
      },
      {
       "id": "5.2",
       "title": "核心 1500 词 · List 7–12",
       "kw": [
-       "词汇",
-       "高频词"
+       "词汇"
       ]
      },
      {
       "id": "5.3",
       "title": "核心 1500 词 · List 13–18",
       "kw": [
-       "词汇",
-       "高频词"
+       "词汇"
       ]
      },
      {
       "id": "5.4",
       "title": "核心 1500 词 · List 19–24",
       "kw": [
-       "词汇",
-       "高频词"
+       "词汇"
       ]
      },
      {
       "id": "5.5",
       "title": "核心 1500 词 · List 25–33",
       "kw": [
-       "词汇",
-       "高频词"
+       "词汇"
       ]
      },
      {
       "id": "5.6",
       "title": "236 高频词组",
       "kw": [
-       "词组",
-       "固定搭配"
-      ]
-     },
-     {
-      "id": "5.7",
-      "title": "听力场景词",
-      "kw": [
-       "听力",
-       "场景词"
-      ]
-     }
-    ]
-   },
-   {
-    "no": "模块六",
-    "title": "真题模考",
-    "note": "保持节奏和手感",
-    "sections": [
-     {
-      "id": "6.1",
-      "title": "限时套卷",
-      "kw": [
-       "限时套卷",
-       "真题模考"
-      ]
-     },
-     {
-      "id": "6.2",
-      "title": "答题卡模式",
-      "kw": [
-       "答题卡模式",
-       "真题模考"
-      ]
-     },
-     {
-      "id": "6.3",
-      "title": "自动判分",
-      "kw": [
-       "自动判分",
-       "真题模考"
-      ]
-     },
-     {
-      "id": "6.4",
-      "title": "模考复盘",
-      "kw": [
-       "模考复盘",
-       "真题模考"
-      ]
-     }
-    ]
-   },
-   {
-    "no": "模块七",
-    "title": "错题诊断",
-    "note": "精准提分",
-    "sections": [
-     {
-      "id": "7.1",
-      "title": "错题归类",
-      "kw": [
-       "错题归类",
-       "错题诊断"
-      ]
-     },
-     {
-      "id": "7.2",
-      "title": "能力雷达图",
-      "kw": [
-       "能力雷达图",
-       "错题诊断"
-      ]
-     },
-     {
-      "id": "7.3",
-      "title": "弱项推荐",
-      "kw": [
-       "弱项推荐",
-       "错题诊断"
-      ]
-     },
-     {
-      "id": "7.4",
-      "title": "每日任务闭环",
-      "kw": [
-       "每日任务闭环",
-       "错题诊断"
+       "词组"
       ]
      }
     ]
@@ -346,29 +191,175 @@
  },
  "notes": {
   "1.1": {
-   "concepts": [],
+   "concepts": [
+    "听力不是逐词听懂，而是抓信号词：转折、因果、定义、建议、强调处最容易出答案。",
+    "段首段尾、设问句、重复出现的实词，都是高频设题点。",
+    "把转折与因果词背成条件反射，听到就有反应。"
+   ],
    "types": [],
-   "examples": []
+   "examples": [
+    {
+     "q": "原则：段首段尾句",
+     "a": "开门见山；首段转折",
+     "analysis": ""
+    },
+    {
+     "q": "原则：总结性信息",
+     "a": "to sum up, in brief, in particular, in short all in all, generally speaking, conclude, conclusion, in a word, so, you se",
+     "analysis": "to sum up；in brief；in particular；in short all in all；generally speaking；conclude；conclusion；in a word；you see in fact；we can say；anyway；in the end"
+    },
+    {
+     "q": "原则：重复性信息",
+     "a": "实词重复",
+     "analysis": ""
+    },
+    {
+     "q": "原则：引用处",
+     "a": "专有名词：人名+机构+职位",
+     "analysis": ""
+    },
+    {
+     "q": "原则：设问句",
+     "a": "一般疑问听升调;特殊疑问 5W+1H",
+     "analysis": ""
+    },
+    {
+     "q": "原则：定义处",
+     "a": "we call it... so called... term be defined that is...",
+     "analysis": "we call it... so called... term be defined that is"
+    },
+    {
+     "q": "原则：建议意见处",
+     "a": "you should, suggest, recommend, tips, advice, had better do, how about, what about, why not, why don’t you, if I were yo",
+     "analysis": "you should；suggest；recommend；tips；advice；had better do；how about；what about；why not；why don；t you；were you how does…sound"
+    },
+    {
+     "q": "原则：强调处",
+     "a": "especially, new theory, indeed, certainly, just remember, and again, most importantly",
+     "analysis": "especially；new theory；indeed；certainly；just remember；and again；most importantly"
+    },
+    {
+     "q": "原则：举例处",
+     "a": "for example, for instance, such as, take…, take…for example",
+     "analysis": "for example；for instance；such as；take；take…for example"
+    },
+    {
+     "q": "原则：解释处",
+     "a": "which means…, that is to say…, meant that, known as, for short",
+     "analysis": "which means；that is to say；meant that；known as；for short"
+    },
+    {
+     "q": "原则：实意重读处",
+     "a": "重读转移(一句话，在不做任何特殊重读时，其重音应该落在这句话最后一个实词的重读音 节处)",
+     "analysis": ""
+    },
+    {
+     "q": "原则：数字信息处",
+     "a": "记录数字，听清单位，比较关系是关键 上文提到的这些关键词希望大家熟练复习，听力考试时应对较快的语速也可以比较从容了。 最后祝大家考试顺利！",
+     "analysis": ""
+    }
+   ]
   },
   "1.2": {
-   "concepts": [],
+   "concepts": [
+    "预读＝录音播放前先扫选项，靠选项猜主题、猜问法、圈定答案范围。",
+    "考场上至少有 8 分钟预读时间（9:55–10:03），每题约 20 秒。",
+    "每题 15 秒作答：8 秒选，剩下 7 秒回看刚才的题。",
+    "三个递进目标：推测主题 → 预判问法 → 锁定或排除答案。",
+    "选项全是动宾短语，多半问“做什么”；选项是名词，多半问“谁/什么”。"
+   ],
    "types": [],
-   "examples": []
+   "examples": [
+    {
+     "q": "选项 A) Trying to sketch a map. B) Painting the dining room. C) Discussing a house plan. D) Cleaning the kitchen.",
+     "a": "主题是房间，问的是动作",
+     "analysis": "dining room、house、kitchen 指向房间；四个都是动宾结构，问法必是“在做什么”。"
+    },
+    {
+     "q": "预读时间从什么时候开始？",
+     "a": "交作文答题卡、停笔那一刻（约 9:55）",
+     "analysis": "别等录音开始才看题。试音和 Direction 的三分钟也是预读时间。"
+    }
+   ]
   },
   "1.3": {
-   "concepts": [],
+   "concepts": [
+    "长对话只播一遍，笔记记的是信息符号，不是整句。",
+    "主题句在开头，建议与决定在结尾，两头都要抓。",
+    "一问一答处最容易出题，答案常在紧接问题的答语里。"
+   ],
    "types": [],
-   "examples": []
+   "examples": [
+    {
+     "q": "抓住首尾句",
+     "a": "主题句常常是在对话的开头，它对整个对话的内容起一个概括和提示的作用，实际上是说话人所谈论的中心话题。长对话中的第一题很可能是针对对话的开头提",
+     "analysis": ""
+    },
+    {
+     "q": "留意对话中的一问一答",
+     "a": "长对话中，对话双方往往出现多个一问一答，而这一恰恰是长对话的一个出题重点，对话后面问题往往就是对话原文中问题的照搬或是同义转述，因此其答案就",
+     "analysis": ""
+    },
+    {
+     "q": "留意重复率较高的词或短语",
+     "a": "对话的主要内容理所当然会得到说话人的强调，而一个非常重要，也是非常明显的强调方式就是重复，而且重复的词语往往能够揭示对话的主题。因此对那些对",
+     "analysis": ""
+    },
+    {
+     "q": "留意选项中的要点内容",
+     "a": "正确选项往往与原文相似，或是原文的同义表达，因此应注意提取选项中的关键点，在听音时留意其是否在文中出现并加以记录。",
+     "analysis": ""
+    },
+    {
+     "q": "留意数字、人名、地名、时间、年代等相关信息",
+     "a": "遇到数字、人名、地名、时间、年代时要对相关信息做简要记录，尤其是选项中出现类似的概念时，在听音时更应重点留意。",
+     "analysis": ""
+    },
+    {
+     "q": "注意使用缩略语",
+     "a": "记笔记一定要迅速，而要想在有限的时间内尽可能比较全面的记录重点信息，使用一定的缩略语和熟悉的符号是十分必要的，主要有以下几种方法：",
+     "analysis": ""
+    }
+   ]
   },
   "1.4": {
-   "concepts": [],
-   "types": [],
-   "examples": []
-  },
-  "1.5": {
-   "concepts": [],
-   "types": [],
-   "examples": []
+   "concepts": [
+    "听力卡住多半不是语法，是场景词反应慢：听到 resume、interview、deadline 要立刻想到职场，而不是逐词翻译。",
+    "按场景成组记比按字母表记快，因为真题里的词是成组出现的：一个对话里往往同时出现三四个同一场景的词。",
+    "同一个词换形式会换词义，这是听力与阅读都爱设的坑：custom 是习俗，customs 是海关；speed 是速度，speeding 是超速。",
+    "听到不认识的名词不要停，把它符号化成一个代号继续跟句子，答案通常靠动词和逻辑词给出。"
+   ],
+   "types": [
+    "职场：employee 雇员、employer 雇主、colleague 同事、supervisor 主管、promotion 晋升、deadline 截止日期、overtime 加班、resume 简历",
+    "经济：inflation 通胀、recession 衰退、consumer 消费者、supply and demand 供求、investment 投资、entrepreneur 企业家、stock 股票、profit 利润",
+    "文化：tradition 传统、customs 风俗、heritage 遗产、diversity 多样性、festival 节日、cuisine 美食、folklore 民间传说",
+    "交通：commute 通勤、pedestrian 行人、public transportation 公共交通、subway 地铁、highway 高速、traffic jam 堵车、parking lot 停车场",
+    "教育：lecture 讲座、degree 学位、research 研究、textbook 教科书、homework 作业、exam 考试",
+    "旅行：passport 护照、visa 签证、itinerary 行程、destination 目的地、reservation 预订、baggage 行李、souvenir 纪念品",
+    "会议与政治：summit 峰会、conference 会议、diplomacy 外交、negotiation 谈判、agreement 协议、delegate 代表、vote 投票"
+   ],
+   "examples": [
+    {
+     "q": "听力里听到 resume，最可能出现在哪类场景？",
+     "a": "职场",
+     "analysis": "resume 作名词是简历，和 interview、promotion、deadline 同组出现。注意它作动词读 /rɪˈzjuːm/ 时是“恢复、继续”，读音和词性都变了。"
+    },
+    {
+     "q": "听到 inflation、recession、supply and demand，这段最可能在谈什么？",
+     "a": "经济",
+     "analysis": "三个词都属于经济场景。这类题不需要听懂每个数字，抓住场景就能排除掉大半选项。"
+    },
+    {
+     "q": "custom 和 customs 在听力里分别是什么意思？",
+     "a": "custom 是风俗，customs 是海关",
+     "analysis": "只多一个 s，意思完全变了。同类还有 speed 速度 / speeding 超速、manner 方式 / manners 礼貌。听到这类词先确认单复数。"
+    },
+    {
+     "q": "对话里出现 passport、visa、itinerary、baggage，最可能在哪儿？",
+     "a": "机场或旅行途中",
+     "analysis": "四个词构成完整的出行场景链。听力里场景一旦确定，即使有个别词没听清，也能靠场景推断答案。"
+    }
+   ]
   },
   "2.1": {
    "concepts": [
@@ -409,24 +400,295 @@
    ]
   },
   "2.2": {
-   "concepts": [],
+   "concepts": [
+    "同义替换是阅读的核心考点：题干与原文换词不换义。",
+    "写作里同一个词反复出现会扣分，换成同义表达立刻加分。",
+    "常见换法：think → harbor the idea that；important → vital / crucial。"
+   ],
    "types": [],
-   "examples": []
+   "examples": [
+    {
+     "q": "good",
+     "a": "beneficial/profitable/helpful/sound/decent/gorgeous/postive/favorable/promising/perfect/pl",
+     "analysis": ""
+    },
+    {
+     "q": "according to",
+     "a": "in the eyes of",
+     "analysis": ""
+    },
+    {
+     "q": "affect",
+     "a": "hinder",
+     "analysis": ""
+    },
+    {
+     "q": "age",
+     "a": "era",
+     "analysis": ""
+    },
+    {
+     "q": "aim",
+     "a": "objective",
+     "analysis": ""
+    },
+    {
+     "q": "and",
+     "a": "alone with/as well as",
+     "analysis": ""
+    },
+    {
+     "q": "and so on",
+     "a": "the like",
+     "analysis": ""
+    },
+    {
+     "q": "appear",
+     "a": "arise",
+     "analysis": ""
+    },
+    {
+     "q": "apply",
+     "a": "put into practice",
+     "analysis": ""
+    },
+    {
+     "q": "ask",
+     "a": "consult",
+     "analysis": ""
+    },
+    {
+     "q": "aspect",
+     "a": "sphere",
+     "analysis": ""
+    },
+    {
+     "q": "acctach",
+     "a": "enclose",
+     "analysis": ""
+    },
+    {
+     "q": "attract",
+     "a": "tempt",
+     "analysis": ""
+    },
+    {
+     "q": "audience",
+     "a": "viewer",
+     "analysis": ""
+    },
+    {
+     "q": "basis",
+     "a": "foundation",
+     "analysis": ""
+    },
+    {
+     "q": "be able to",
+     "a": "be capable to",
+     "analysis": ""
+    },
+    {
+     "q": "be convenient",
+     "a": "at one’s convenience",
+     "analysis": ""
+    },
+    {
+     "q": "be good at",
+     "a": "be skilled at",
+     "analysis": ""
+    },
+    {
+     "q": "be helpful",
+     "a": "be of help",
+     "analysis": ""
+    },
+    {
+     "q": "careful",
+     "a": "attentive",
+     "analysis": ""
+    },
+    {
+     "q": "come from",
+     "a": "derive from",
+     "analysis": ""
+    },
+    {
+     "q": "complain",
+     "a": "place a complain against",
+     "analysis": ""
+    },
+    {
+     "q": "dependon",
+     "a": "be attached to",
+     "analysis": ""
+    },
+    {
+     "q": "difficulty",
+     "a": "barrier",
+     "analysis": ""
+    },
+    {
+     "q": "diligent",
+     "a": "industrious",
+     "analysis": ""
+    },
+    {
+     "q": "do",
+     "a": "going for/carry out",
+     "analysis": ""
+    },
+    {
+     "q": "emphasis",
+     "a": "attach emphasis to",
+     "analysis": ""
+    },
+    {
+     "q": "enable",
+     "a": "failitate",
+     "analysis": ""
+    },
+    {
+     "q": "encourage",
+     "a": "motivate",
+     "analysis": ""
+    },
+    {
+     "q": "engage",
+     "a": "major in",
+     "analysis": ""
+    },
+    {
+     "q": "enjory",
+     "a": "be crazy about",
+     "analysis": ""
+    },
+    {
+     "q": "enough",
+     "a": "adequate",
+     "analysis": ""
+    },
+    {
+     "q": "explain",
+     "a": "account for",
+     "analysis": ""
+    },
+    {
+     "q": "fail",
+     "a": "frustrate",
+     "analysis": ""
+    },
+    {
+     "q": "face",
+     "a": "be faced with",
+     "analysis": ""
+    },
+    {
+     "q": "famous",
+     "a": "prominent/prescribed",
+     "analysis": ""
+    },
+    {
+     "q": "future",
+     "a": "prospective",
+     "analysis": ""
+    },
+    {
+     "q": "global",
+     "a": "universal",
+     "analysis": ""
+    },
+    {
+     "q": "great",
+     "a": "enormous/dramatic prime/utmost",
+     "analysis": ""
+    },
+    {
+     "q": "improvement",
+     "a": "advance",
+     "analysis": ""
+    },
+    {
+     "q": "lower",
+     "a": "inferior",
+     "analysis": ""
+    },
+    {
+     "q": "necessary",
+     "a": "indispensable",
+     "analysis": ""
+    },
+    {
+     "q": "number",
+     "a": "date/statistics",
+     "analysis": ""
+    },
+    {
+     "q": "obvious",
+     "a": "striking",
+     "analysis": ""
+    },
+    {
+     "q": "only",
+     "a": "no more than/sole",
+     "analysis": ""
+    },
+    {
+     "q": "offer",
+     "a": "present to",
+     "analysis": ""
+    },
+    {
+     "q": "pay attention to",
+     "a": "be concerned about/give weight to",
+     "analysis": ""
+    },
+    {
+     "q": "period",
+     "a": "era/phase",
+     "analysis": ""
+    },
+    {
+     "q": "progress",
+     "a": "break through",
+     "analysis": ""
+    },
+    {
+     "q": "purpose",
+     "a": "motive",
+     "analysis": ""
+    },
+    {
+     "q": "reduce",
+     "a": "minimize",
+     "analysis": ""
+    },
+    {
+     "q": "remember",
+     "a": "recall",
+     "analysis": ""
+    }
+   ]
   },
   "2.3": {
-   "concepts": [],
+   "concepts": [
+    "英文是树枝型句子：主干加挂修饰；中文是串钱型，短句并列。",
+    "找主干：先划出所有引导词（that/which/when/what），引导词之后第一个动词是从句谓语，剩下的谓语才是主句谓语。",
+    "定位句是长难句时要高兴——答案通常就在这句里。",
+    "遇到不认识的词先符号化，句子结构比词义更决定能不能做对。"
+   ],
    "types": [],
-   "examples": []
-  },
-  "2.4": {
-   "concepts": [],
-   "types": [],
-   "examples": []
-  },
-  "2.5": {
-   "concepts": [],
-   "types": [],
-   "examples": []
+   "examples": [
+    {
+     "q": "The first time was when the opportunity had to be answered and a proposal was put forward.",
+     "a": "主干：The first time was when …",
+     "analysis": "先划引导词 when，when 到句末是从句；剩下的 The first time was 才是主干。"
+    },
+    {
+     "q": "句子太长读不下去时先做什么？",
+     "a": "划引导词，砍掉从句，只看主干",
+     "analysis": "主干给了谁做什么，细节靠修饰补。先有骨架再填肉。"
+    }
+   ]
   },
   "3.1": {
    "concepts": [
@@ -564,65 +826,426 @@
    ]
   },
   "3.2": {
-   "concepts": [],
-   "types": [],
-   "examples": []
-  },
-  "3.3": {
-   "concepts": [],
-   "types": [],
-   "examples": []
-  },
-  "3.4": {
-   "concepts": [],
-   "types": [],
-   "examples": []
-  },
-  "3.5": {
    "concepts": [
-    "四六级写作正在反模板化：整段套话会被判低分，但功能句仍然有用——它保证句子结构不出错。",
-    "七类功能句各管一段：开头、结尾、比较、原因、结果、反驳、证明。写之前先想清楚这段要干什么。",
-    "同一功能准备两三句就够，句句换花样反而显得刻意。",
-    "句式升级的前提是语法正确，长句写错比短句扣分更狠。"
+    "功能句按位置分三类：段首引题、段中论证、段尾收束。",
+    "背结构不背整段：____ 处必须换成题目内容，照抄整段会被判模板。",
+    "同一位置准备两三句轮换，避免全篇一个腔调。"
    ],
-   "types": [
-    "开头：Recently the phenomenon has become a heated topic. / Nowadays there is a growing concern over …",
-    "结尾：From what has been discussed above, we can draw the conclusion that … / All things considered, …",
-    "比较：The advantages far outweigh the disadvantages. / A and B differ in several ways.",
-    "原因：A number of factors are accountable for this situation. / Perhaps the primary factor is that …",
-    "结果：It may give rise to a host of problems. / It will exercise a profound influence upon …",
-    "反驳：It is true that …, but one vital point is being left out. / Contrary to what is widely accepted, I maintain that …",
-    "证明：No one can deny the fact that … / Recent studies indicate that …"
-   ],
+   "types": [],
    "examples": [
     {
-     "q": "开头段想引出话题，用哪句？",
-     "a": "Recently the phenomenon has become a heated topic.",
-     "analysis": "比 Today more and more people 更正式，且不涉及具体人群，任何话题都能套。注意 phenomenon 复数是 phenomena。"
+     "q": "关于……人们有不同的观点。一些人认为……",
+     "a": "There are different opinions among people as to ____ .Some people suggest that ____.",
+     "analysis": ""
     },
     {
-     "q": "结尾段要总结观点，怎么写？",
-     "a": "From what has been discussed above, we can draw the conclusion that …",
-     "analysis": "这句的作用是明确标记“进入结论”，让阅卷老师一眼看到结构。后面必须接一个完整句子，不能接短语。"
+     "q": "俗话说(常言道)……，它是我们前辈的经历，但是，即使在今天，它在许多场合仍然适用",
+     "a": "There is an old saying______. It\"s the experience of our forefathers，however，it is correct in many cases even today.",
+     "analysis": ""
     },
     {
-     "q": "要写“确实如此，但忽略了一点”，用哪句？",
-     "a": "It is true that …, but one vital point is being left out.",
-     "analysis": "先让步再转折，是四六级议论文最稳的段落结构。left out 是“被忽略”，比 forgotten 更书面。"
+     "q": "现在，……，它们给我们的日常生活带来了许多危害。首先，……;其次，……。更为糟糕的是……",
+     "a": "Today, ____, which have brought a lot of harms in our daily life. First, ____ Second,____. What makes things worse is that______.",
+     "analysis": ""
     },
     {
-     "q": "分析原因时怎么开头？",
-     "a": "A number of factors are accountable for this situation.",
-     "analysis": "accountable for 是“对……负责、是……的原因”，比 cause 更书面。用复数 factors 后面就要真的列两三条，否则显得空。"
+     "q": "现在，……很普遍，许多人喜欢……，因为……，另外(而且)……",
+     "a": "Nowadays，it is common to ______. Many people like ______ because ______. Besides，______.",
+     "analysis": ""
+    },
+    {
+     "q": "任何事物都是有两面性，……也不例外。它既有有利的一面，也有不利的一面",
+     "a": "Everything has two sides and ______ is not an exception，it has both advantages and disadvantages.",
+     "analysis": ""
+    },
+    {
+     "q": "关于……人们的观点各不相同，一些人认为(说)……，在他们看来，……",
+     "a": "People’s opinions about ______ vary from person to person. Some people say that ______.To them,_____.",
+     "analysis": ""
+    },
+    {
+     "q": "人类正面临着一个严重的问题……，这个问题变得越来越严重",
+     "a": "Man is now facing a big problem ______ which is becoming more and more serious.",
+     "analysis": ""
+    },
+    {
+     "q": "……已成为人的关注的热门话题，特别是在年青人当中，将引发激烈的辩论。______",
+     "a": "has become a hot topic among people，especially among the young and heated debates are right on their way.",
+     "analysis": ""
+    },
+    {
+     "q": "……在我们的日常生活中起着越来越重要的作用，它给我们带来了许多好处，但同时也引发一些严重的问题。______",
+     "a": "has been playing an increasingly important role in our day-to-day life.it has brought us a lot of benefits but has created some serious problems as well.",
+     "analysis": ""
+    },
+    {
+     "q": "根据图表/数字/统计数字/表格中的百分比/图表/条形图/成形图可以看出……。很显然……，但是为什么呢?",
+     "a": "According to the figure/number/statistics/percentages in the /chart/bar graph/line/graph，it can be seen that______ while. Obviously，______，but why?",
+     "analysis": ""
+    },
+    {
+     "q": "相反，有一些人赞成……，他们相信……，而且，他们认为……。On",
+     "a": "the contrary，there are some people in favor of ___.At the same time，they say____.",
+     "analysis": ""
+    },
+    {
+     "q": "但是，我认为这不是解决……的好方法，比如……。最糟糕的是……",
+     "a": "But I don\"t think it is a very good way to solve ____.For example，____.Worst of all，___.",
+     "analysis": ""
+    },
+    {
+     "q": "……对我们国家的发展和建设是必不可少的，(也是)非常重要的。首先，……。而且……，最重要的是……______is",
+     "a": "necessary and important to our country\"s development and construction. First，______.What\"s more, _____.Most important of all,______.",
+     "analysis": ""
+    },
+    {
+     "q": "有几个可供我们采纳的方法。首先，我们可以……",
+     "a": "There are several measures for us to adopt. First, we can______",
+     "analysis": ""
+    },
+    {
+     "q": "面临……，我们应该采取一系列行之有效的方法来……。一方面……，另一方面",
+     "a": "Confronted with______，we should take a series of effective measures to______. For one thing，______For another，______",
+     "analysis": ""
+    },
+    {
+     "q": "早就应该拿出行动了。比如说……，另外……。所有这些方法肯定会……。It is",
+     "a": "high time that something was done about it. For example. _____.In addition. _____.All these measures will certainly______.",
+     "analysis": ""
+    },
+    {
+     "q": "为什么……?第一个原因是……;第二个原因是……;第三个原因是……。总的来说，……的主要原因是由于……",
+     "a": "Why______? The first reason is that ______.The second reason is ______.The third is ______.For all this, the main cause of ______due to ______.",
+     "analysis": ""
+    },
+    {
+     "q": "然而，正如任何事物都有好坏两个方面一样，……也有它的不利的一面，象……",
+     "a": "However, just like everything has both its good and bad sides, ______also has its own disadvantages, such as ______.",
+     "analysis": ""
+    },
+    {
+     "q": "尽管如此，我相信……更有利",
+     "a": "Nonetheless, I believe that ______is more advantageous.",
+     "analysis": ""
+    },
+    {
+     "q": "完全同意……这种观点(陈述)，主要理由如下：I",
+     "a": "fully agree with the statement that ______ because______.",
+     "analysis": ""
+    },
+    {
+     "q": "至于我，在某种程度上我同意后面的观点，我认为……As",
+     "a": "far as I am concerned, I agree with the latter opinion to some extent. I think that ____.",
+     "analysis": ""
+    },
+    {
+     "q": "总而言之，整个社会应该密切关注……这个问题。只有这样，我们才能在将来……。In a",
+     "a": "word, the whole society should pay close attention to the problem of ______.Only in this way can ______in the future.",
+     "analysis": ""
+    },
+    {
+     "q": "但是，……和……都有它们各自的优势(好处)。例如，……，而……。然而，把这两者相比较，我更倾向于(喜欢)……",
+     "a": "But ______and ______have their own advantages. For example, _____, while_____. Comparing this with that, however, I prefer to______.",
+     "analysis": ""
+    },
+    {
+     "q": "就我个人而言，我相信……，因此，我坚信美好的未来正等着我们。因为……",
+     "a": "Personally, I believe that_____. Consequently, I’m confident that a bright future is awaiting us because______.",
+     "analysis": ""
+    },
+    {
+     "q": "随着社会的发展，……。因此，迫切需要……。如果每个人都愿为社会贡献自已的一份力量，这个社会将要变得越来越好",
+     "a": "With the development of society, ______.So it\"s urgent and necessary to ____.If every member is willing to contribute himself to the society, it will be better and better.",
+     "analysis": ""
+    },
+    {
+     "q": "至于我(对我来说，就我而言)，我认为……更合理。只有这样，我们才能……",
+     "a": "For my part, I think it reasonable to_____. Only in this way can you _____.",
+     "analysis": ""
+    },
+    {
+     "q": "对我来说，我认为有必要……。原因如下：第一，……; 第二，……;最后……但同样重要的是……In my",
+     "a": "opinion, I think it necessary to____. The reasons are as follows. First _____.Second ______. Last but not least,______.",
+     "analysis": ""
+    },
+    {
+     "q": "在总体上很难说……是好还是坏，因为它在很大程度上取决于……的形势。然而，就我个人而言，我发现……。It is",
+     "a": "difficult to say whether _____is good or not in general as it depends very much on the situation of______. However, from a personal point of view find______.",
+     "analysis": ""
+    },
+    {
+     "q": "综上所述，我们可以清楚地得出结论……",
+     "a": "From what has been discussed above, we may reasonably arrive at the conclusion that____.",
+     "analysis": ""
+    },
+    {
+     "q": "如果我们不采取有效的方法，就可能控制不了这种趋势，就会出现一些意想不到的不良后果，所以，我们应该做的是……If we",
+     "a": "can not take useful means, we may not control this trend, and some undesirable result may come out unexpectedly, so what we should do is_____.",
+     "analysis": ""
+    }
+   ]
+  },
+  "3.3": {
+   "concepts": [
+    "把“好、坏、重要、越来越”这类万能词换掉，是提分最快的一步。",
+    "同一个意思给三档：普通词、升级词、高分搭配。",
+    "换词前提是搭配对，宁可不用生僻词，也别造搭配。"
+   ],
+   "types": [],
+   "examples": [
+    {
+     "q": "good",
+     "a": "beneficial/profitable/helpful/sound/decent/gorgeous/postive/favorable/promising/perfect/pl",
+     "analysis": ""
+    },
+    {
+     "q": "according to",
+     "a": "in the eyes of",
+     "analysis": ""
+    },
+    {
+     "q": "affect",
+     "a": "hinder",
+     "analysis": ""
+    },
+    {
+     "q": "age",
+     "a": "era",
+     "analysis": ""
+    },
+    {
+     "q": "aim",
+     "a": "objective",
+     "analysis": ""
+    },
+    {
+     "q": "and",
+     "a": "alone with/as well as",
+     "analysis": ""
+    },
+    {
+     "q": "and so on",
+     "a": "the like",
+     "analysis": ""
+    },
+    {
+     "q": "appear",
+     "a": "arise",
+     "analysis": ""
+    },
+    {
+     "q": "apply",
+     "a": "put into practice",
+     "analysis": ""
+    },
+    {
+     "q": "ask",
+     "a": "consult",
+     "analysis": ""
+    },
+    {
+     "q": "aspect",
+     "a": "sphere",
+     "analysis": ""
+    },
+    {
+     "q": "acctach",
+     "a": "enclose",
+     "analysis": ""
+    },
+    {
+     "q": "attract",
+     "a": "tempt",
+     "analysis": ""
+    },
+    {
+     "q": "audience",
+     "a": "viewer",
+     "analysis": ""
+    },
+    {
+     "q": "basis",
+     "a": "foundation",
+     "analysis": ""
+    },
+    {
+     "q": "be able to",
+     "a": "be capable to",
+     "analysis": ""
+    },
+    {
+     "q": "be convenient",
+     "a": "at one’s convenience",
+     "analysis": ""
+    },
+    {
+     "q": "be good at",
+     "a": "be skilled at",
+     "analysis": ""
+    },
+    {
+     "q": "be helpful",
+     "a": "be of help",
+     "analysis": ""
+    },
+    {
+     "q": "careful",
+     "a": "attentive",
+     "analysis": ""
+    },
+    {
+     "q": "come from",
+     "a": "derive from",
+     "analysis": ""
+    },
+    {
+     "q": "complain",
+     "a": "place a complain against",
+     "analysis": ""
+    },
+    {
+     "q": "dependon",
+     "a": "be attached to",
+     "analysis": ""
+    },
+    {
+     "q": "difficulty",
+     "a": "barrier",
+     "analysis": ""
+    },
+    {
+     "q": "diligent",
+     "a": "industrious",
+     "analysis": ""
+    },
+    {
+     "q": "do",
+     "a": "going for/carry out",
+     "analysis": ""
+    },
+    {
+     "q": "emphasis",
+     "a": "attach emphasis to",
+     "analysis": ""
+    },
+    {
+     "q": "enable",
+     "a": "failitate",
+     "analysis": ""
+    },
+    {
+     "q": "encourage",
+     "a": "motivate",
+     "analysis": ""
+    },
+    {
+     "q": "engage",
+     "a": "major in",
+     "analysis": ""
+    },
+    {
+     "q": "enjory",
+     "a": "be crazy about",
+     "analysis": ""
+    },
+    {
+     "q": "enough",
+     "a": "adequate",
+     "analysis": ""
+    },
+    {
+     "q": "explain",
+     "a": "account for",
+     "analysis": ""
+    },
+    {
+     "q": "fail",
+     "a": "frustrate",
+     "analysis": ""
+    },
+    {
+     "q": "face",
+     "a": "be faced with",
+     "analysis": ""
+    },
+    {
+     "q": "famous",
+     "a": "prominent/prescribed",
+     "analysis": ""
+    },
+    {
+     "q": "future",
+     "a": "prospective",
+     "analysis": ""
+    },
+    {
+     "q": "global",
+     "a": "universal",
+     "analysis": ""
+    },
+    {
+     "q": "great",
+     "a": "enormous/dramatic prime/utmost",
+     "analysis": ""
+    },
+    {
+     "q": "improvement",
+     "a": "advance",
+     "analysis": ""
+    },
+    {
+     "q": "lower",
+     "a": "inferior",
+     "analysis": ""
+    },
+    {
+     "q": "necessary",
+     "a": "indispensable",
+     "analysis": ""
+    },
+    {
+     "q": "number",
+     "a": "date/statistics",
+     "analysis": ""
+    },
+    {
+     "q": "obvious",
+     "a": "striking",
+     "analysis": ""
+    },
+    {
+     "q": "only",
+     "a": "no more than/sole",
+     "analysis": ""
+    },
+    {
+     "q": "offer",
+     "a": "present to",
+     "analysis": ""
+    },
+    {
+     "q": "pay attention to",
+     "a": "be concerned about/give weight to",
+     "analysis": ""
+    },
+    {
+     "q": "period",
+     "a": "era/phase",
+     "analysis": ""
+    },
+    {
+     "q": "progress",
+     "a": "break through",
+     "analysis": ""
+    },
+    {
+     "q": "purpose",
+     "a": "motive",
+     "analysis": ""
     }
    ]
   },
   "4.1": {
-   "concepts": [],
-   "types": [],
-   "examples": []
-  },
-  "4.2": {
    "concepts": [
     "翻译不是逐字对译：先定主干（谁做什么），再把修饰成分挂上去，句子才立得住。",
     "四六级翻译的高频结构就那几类：倍数比较、让步对比、条件结果、强调、原因。",
@@ -665,60 +1288,410 @@
     }
    ]
   },
-  "4.3": {
-   "concepts": [],
+  "4.2": {
+   "concepts": [
+    "固定表达要成块背：with the booming of the economy，而不是临场拼。",
+    "四六级翻译常考经济、社会、文化三类话题。",
+    "背搭配连介词一起记，play an important role in 的 in 不能漏。"
+   ],
    "types": [],
-   "examples": []
-  },
-  "4.4": {
-   "concepts": [],
-   "types": [],
-   "examples": []
-  },
-  "4.5": {
-   "concepts": [],
-   "types": [],
-   "examples": []
-  },
-  "6.1": {
-   "concepts": [],
-   "types": [],
-   "examples": []
-  },
-  "6.2": {
-   "concepts": [],
-   "types": [],
-   "examples": []
-  },
-  "6.3": {
-   "concepts": [],
-   "types": [],
-   "examples": []
-  },
-  "6.4": {
-   "concepts": [],
-   "types": [],
-   "examples": []
-  },
-  "7.1": {
-   "concepts": [],
-   "types": [],
-   "examples": []
-  },
-  "7.2": {
-   "concepts": [],
-   "types": [],
-   "examples": []
-  },
-  "7.3": {
-   "concepts": [],
-   "types": [],
-   "examples": []
-  },
-  "7.4": {
-   "concepts": [],
-   "types": [],
-   "examples": []
+   "examples": [
+    {
+     "q": "随着经济的繁荣",
+     "a": "with the booming of the economy",
+     "analysis": ""
+    },
+    {
+     "q": "随着 人民生 活 水平的 显著提高",
+     "a": "with the remarkable improvement of",
+     "analysis": ""
+    },
+    {
+     "q": "先进的科学技术",
+     "a": "advanced science and technology",
+     "analysis": ""
+    },
+    {
+     "q": "为我们日常生活增添了情趣",
+     "a": "add much spice / flavor to our daily life",
+     "analysis": ""
+    },
+    {
+     "q": "人们普遍认为",
+     "a": "It is commonly believed that …",
+     "analysis": ""
+    },
+    {
+     "q": "我同意前者(后者)观点",
+     "a": "I give my vote to the former / latter opinion.",
+     "analysis": ""
+    },
+    {
+     "q": "引起了广泛的公众关注",
+     "a": "Sth. has aroused wide public concern. / Sth has",
+     "analysis": ""
+    },
+    {
+     "q": "不可否认",
+     "a": "It is undeniable that …",
+     "analysis": ""
+    },
+    {
+     "q": "热烈的讨论/ 争论",
+     "a": "a heated discussion / debate",
+     "analysis": ""
+    },
+    {
+     "q": "有争议性的问题",
+     "a": "a controversial issue",
+     "analysis": ""
+    },
+    {
+     "q": "就我而言/ 就个人而言",
+     "a": "As far as I am concerned, / Personally,",
+     "analysis": ""
+    },
+    {
+     "q": "有充分的理由支持",
+     "a": "be supported by sound reasons",
+     "analysis": ""
+    },
+    {
+     "q": "双方的论点",
+     "a": "argument on both sides",
+     "analysis": ""
+    },
+    {
+     "q": "发挥日益重要作用",
+     "a": "play an increasingly important role in …",
+     "analysis": ""
+    },
+    {
+     "q": "对…必不可少",
+     "a": "be indispensable to …",
+     "analysis": ""
+    },
+    {
+     "q": "正如谚语所说",
+     "a": "As the proverb goes :",
+     "analysis": ""
+    },
+    {
+     "q": "对…产生有利/不利的影响",
+     "a": "exert positive / negative effects on …",
+     "analysis": ""
+    },
+    {
+     "q": "利远远大于弊",
+     "a": "The advantages far outweigh the disadvantages.",
+     "analysis": ""
+    },
+    {
+     "q": "导致，引起",
+     "a": "lead to / give rise to / contribute to / result in",
+     "analysis": ""
+    },
+    {
+     "q": "复杂的社会现象",
+     "a": "a complicated social phenomenon",
+     "analysis": ""
+    },
+    {
+     "q": "责任感/ 成就感",
+     "a": "sense of responsibility / achievement",
+     "analysis": ""
+    },
+    {
+     "q": "竞争与合作精神",
+     "a": "sense of competition and cooperation",
+     "analysis": ""
+    },
+    {
+     "q": "开阔眼界",
+     "a": "widen one 's hori zon / broaden one 's vision",
+     "analysis": ""
+    },
+    {
+     "q": "学习知识和技能",
+     "a": "acquire knowledge and skills",
+     "analysis": ""
+    },
+    {
+     "q": "经济/心理负担",
+     "a": "financial burden / psychological burden",
+     "analysis": ""
+    },
+    {
+     "q": "考虑到诸多因素",
+     "a": "take many factors into consideration",
+     "analysis": ""
+    },
+    {
+     "q": "从另一个角度",
+     "a": "from another perspective",
+     "analysis": ""
+    },
+    {
+     "q": "做出共同努力",
+     "a": "make joint efforts",
+     "analysis": ""
+    },
+    {
+     "q": "对…有益",
+     "a": "be beneficial to / be conducive to …",
+     "analysis": ""
+    },
+    {
+     "q": "为社会做贡献",
+     "a": "make contributions to the society",
+     "analysis": ""
+    },
+    {
+     "q": "打下坚实的基础",
+     "a": "lay a solid foundation for …",
+     "analysis": ""
+    },
+    {
+     "q": "综合素质",
+     "a": "comprehensive quality",
+     "analysis": ""
+    },
+    {
+     "q": "致力于/ 投身于",
+     "a": "be committed / devoted to …",
+     "analysis": ""
+    },
+    {
+     "q": "应当承认",
+     "a": "Admittedly,",
+     "analysis": ""
+    },
+    {
+     "q": "不可推卸的义务",
+     "a": "unshakable duty",
+     "analysis": ""
+    },
+    {
+     "q": "满足需求",
+     "a": "satisfy / meet the needs of...",
+     "analysis": ""
+    },
+    {
+     "q": "可靠的信息源",
+     "a": "a reliable source of information",
+     "analysis": ""
+    },
+    {
+     "q": "宝贵的自然资源",
+     "a": "valuable natural resources",
+     "analysis": ""
+    },
+    {
+     "q": "因特网",
+     "a": "the Internet (一定要由冠词，字母 I 大写)",
+     "analysis": ""
+    },
+    {
+     "q": "方便快捷",
+     "a": "convenient and efficient",
+     "analysis": ""
+    },
+    {
+     "q": "在人类生活的方方面面",
+     "a": "in all aspects of human life",
+     "analysis": ""
+    },
+    {
+     "q": "环保的材料",
+     "a": "environmentally friendly materials",
+     "analysis": ""
+    },
+    {
+     "q": "社会进步的体现",
+     "a": "a symbol of society progress",
+     "analysis": ""
+    },
+    {
+     "q": "大大方便了人们的生活",
+     "a": "Sth has greatly facilitated people 's lives.",
+     "analysis": ""
+    },
+    {
+     "q": "对这一问题持有不同态度",
+     "a": "hold different attitudes towards this issue",
+     "analysis": ""
+    },
+    {
+     "q": "在一定程度上",
+     "a": "to some e xtent",
+     "analysis": ""
+    },
+    {
+     "q": "理论和实践相结合",
+     "a": "integrate theory with practice",
+     "analysis": ""
+    },
+    {
+     "q": "必然趋势",
+     "a": "an irresistible trend of …",
+     "analysis": ""
+    },
+    {
+     "q": "日益激烈的社会竞争",
+     "a": "the increasingly keen social competition",
+     "analysis": ""
+    },
+    {
+     "q": "眼前利益",
+     "a": "immediate interest / short -term interest",
+     "analysis": ""
+    },
+    {
+     "q": "长远利益",
+     "a": "long-tem interest",
+     "analysis": ""
+    },
+    {
+     "q": "有其自身的优缺点",
+     "a": "has its own merits and demerits / pros and cons",
+     "analysis": ""
+    },
+    {
+     "q": "对…有害",
+     "a": "do harm to / be harmful to / be detrimental to",
+     "analysis": ""
+    },
+    {
+     "q": "交流思想/ 情感/ 信息",
+     "a": "exchange ideas / emotions / information",
+     "analysis": ""
+    },
+    {
+     "q": "跟上… 的 最新发 展",
+     "a": "keep pace with / keep abreast with the latest",
+     "analysis": ""
+    },
+    {
+     "q": "重视",
+     "a": "attach great importance to …",
+     "analysis": ""
+    },
+    {
+     "q": "社会地位",
+     "a": "social status",
+     "analysis": ""
+    },
+    {
+     "q": "把时间和精力放在…上",
+     "a": "focus one 's time and energy on …",
+     "analysis": ""
+    },
+    {
+     "q": "扩大知识面",
+     "a": "expand one 's scope of knowledge",
+     "analysis": ""
+    },
+    {
+     "q": "身心两方面",
+     "a": "both physically and mentally",
+     "analysis": ""
+    },
+    {
+     "q": "有直接/间接关系",
+     "a": "be directly / indirectly related to …",
+     "analysis": ""
+    },
+    {
+     "q": "导致很多问题",
+     "a": "give rise to / lead to / spell various problems",
+     "analysis": ""
+    },
+    {
+     "q": "可以替代",
+     "a": "think 的词 believe, claim, maintain, argue, insist, hold the",
+     "analysis": ""
+    },
+    {
+     "q": "缓解压力/ 减轻负担",
+     "a": "relieve stress / burden",
+     "analysis": ""
+    },
+    {
+     "q": "优先考虑/发展…",
+     "a": "give (top) priority to sth.",
+     "analysis": ""
+    },
+    {
+     "q": "与…比较",
+     "a": "compared with …/ in comparison with",
+     "analysis": ""
+    },
+    {
+     "q": "可降解的/可分解的材料",
+     "a": "degradable / decomposable material",
+     "analysis": ""
+    },
+    {
+     "q": "代替",
+     "a": "replace / substitute / take the place of",
+     "analysis": ""
+    },
+    {
+     "q": "提供就业机会",
+     "a": "offer job opportunities",
+     "analysis": ""
+    },
+    {
+     "q": "反映了社会进步的",
+     "a": "mirror the social progress /advance",
+     "analysis": ""
+    },
+    {
+     "q": "增进相互了解",
+     "a": "enhance / promote mutual understanding",
+     "analysis": ""
+    },
+    {
+     "q": "充分利用",
+     "a": "make full use of / take advantage of",
+     "analysis": ""
+    },
+    {
+     "q": "承受更大的工作 压力",
+     "a": "suffer from heavier work pressure",
+     "analysis": ""
+    },
+    {
+     "q": "保障社会 稳定 和繁荣",
+     "a": "guarantee the stability and prosperity of our",
+     "analysis": ""
+    },
+    {
+     "q": "更多地强调",
+     "a": "put more emphasis on …",
+     "analysis": ""
+    },
+    {
+     "q": "适应社会发展",
+     "a": "adapt oneself to the social development",
+     "analysis": ""
+    },
+    {
+     "q": "实现梦想",
+     "a": "reali ze one 's dream",
+     "analysis": ""
+    },
+    {
+     "q": "主要理由列举如下",
+     "a": "The main / leading reasons are listed as follows :",
+     "analysis": ""
+    },
+    {
+     "q": "我们还有很长的路要走",
+     "a": "We still have a long way to go",
+     "analysis": ""
+    }
+   ]
   },
   "5.1": {
    "concepts": [
@@ -9172,45 +10145,6 @@
      "q": "(be) at an end (=finished)",
      "a": "结束了",
      "analysis": ""
-    }
-   ]
-  },
-  "5.7": {
-   "concepts": [
-    "听力卡住多半不是语法，是场景词反应慢：听到 resume、interview、deadline 要立刻想到职场，而不是逐词翻译。",
-    "按场景成组记比按字母表记快，因为真题里的词是成组出现的：一个对话里往往同时出现三四个同一场景的词。",
-    "同一个词换形式会换词义，这是听力与阅读都爱设的坑：custom 是习俗，customs 是海关；speed 是速度，speeding 是超速。",
-    "听到不认识的名词不要停，把它符号化成一个代号继续跟句子，答案通常靠动词和逻辑词给出。"
-   ],
-   "types": [
-    "职场：employee 雇员、employer 雇主、colleague 同事、supervisor 主管、promotion 晋升、deadline 截止日期、overtime 加班、resume 简历",
-    "经济：inflation 通胀、recession 衰退、consumer 消费者、supply and demand 供求、investment 投资、entrepreneur 企业家、stock 股票、profit 利润",
-    "文化：tradition 传统、customs 风俗、heritage 遗产、diversity 多样性、festival 节日、cuisine 美食、folklore 民间传说",
-    "交通：commute 通勤、pedestrian 行人、public transportation 公共交通、subway 地铁、highway 高速、traffic jam 堵车、parking lot 停车场",
-    "教育：lecture 讲座、degree 学位、research 研究、textbook 教科书、homework 作业、exam 考试",
-    "旅行：passport 护照、visa 签证、itinerary 行程、destination 目的地、reservation 预订、baggage 行李、souvenir 纪念品",
-    "会议与政治：summit 峰会、conference 会议、diplomacy 外交、negotiation 谈判、agreement 协议、delegate 代表、vote 投票"
-   ],
-   "examples": [
-    {
-     "q": "听力里听到 resume，最可能出现在哪类场景？",
-     "a": "职场",
-     "analysis": "resume 作名词是简历，和 interview、promotion、deadline 同组出现。注意它作动词读 /rɪˈzjuːm/ 时是“恢复、继续”，读音和词性都变了。"
-    },
-    {
-     "q": "听到 inflation、recession、supply and demand，这段最可能在谈什么？",
-     "a": "经济",
-     "analysis": "三个词都属于经济场景。这类题不需要听懂每个数字，抓住场景就能排除掉大半选项。"
-    },
-    {
-     "q": "custom 和 customs 在听力里分别是什么意思？",
-     "a": "custom 是风俗，customs 是海关",
-     "analysis": "只多一个 s，意思完全变了。同类还有 speed 速度 / speeding 超速、manner 方式 / manners 礼貌。听到这类词先确认单复数。"
-    },
-    {
-     "q": "对话里出现 passport、visa、itinerary、baggage，最可能在哪儿？",
-     "a": "机场或旅行途中",
-     "analysis": "四个词构成完整的出行场景链。听力里场景一旦确定，即使有个别词没听清，也能靠场景推断答案。"
     }
    ]
   }
