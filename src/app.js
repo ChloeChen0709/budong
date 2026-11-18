@@ -495,7 +495,11 @@ function renderNotes(){
     if(ch.title === "词汇"){
       const w = vocabDue("w"), p = vocabDue("p");
       const weak = vocabAll("weak").length, master = vocabAll("mastered").length;
+      const td = vocabToday();
       host.innerHTML = (toolRow ? `<div class="tools">${toolRow}</div>` : "")
+        + `<div class="vtoday"><span>今天已背 <b>${td.today}</b> 个</span>`
+        + (td.streak > 1 ? `<span>连续 <b>${td.streak}</b> 天</span>` : "")
+        + `</div>`
         + `<div class="vch">`
         + `<button class="vcard" data-vocab="w"><span class="vname">核心词</span>`
         + `<span class="vnum">${w.total} 个</span>`
@@ -651,6 +655,17 @@ function vocabAll(filter){
     });
   });
   return out;
+}
+
+function vocabToday(){
+  const m = DB.vocabDay || {};
+  const day = new Date().toISOString().slice(0,10);
+  let streak = 0, d = new Date();
+  for(;;){
+    const k = d.toISOString().slice(0,10);
+    if((m[k] || 0) > 0){ streak++; d.setDate(d.getDate() - 1); } else break;
+  }
+  return { today: m[day] || 0, streak };
 }
 
 function openVocabList(filter){
