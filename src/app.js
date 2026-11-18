@@ -1785,7 +1785,7 @@ function bind(){
 
   $("#addSec").addEventListener("change", renderAddNotes);
 
-  $("#btnBackup").addEventListener("click", async ()=>{
+  const doBackup = async ()=>{
     const data = await buildBackup();
     const blob = new Blob([JSON.stringify(data)], {type:"application/json"});
     const a = document.createElement("a");
@@ -1795,10 +1795,13 @@ function bind(){
     setTimeout(()=>URL.revokeObjectURL(a.href), 4000);
     localStorage.setItem(BACKUP_AT, String(Date.now()));
     toast("备份已下载（含图片）");
-  });
+  };
+  $("#btnBackup").addEventListener("click", doBackup);
+  $("#btnBackup2").addEventListener("click", doBackup);
 
   $("#btnRestore").addEventListener("click", ()=>$("#fileRestore").click());
-  $("#fileRestore").addEventListener("change", ev=>{
+  $("#btnRestore2").addEventListener("click", ()=>$("#fileRestore2").click());
+  const onRestoreFile = ev=>{
     const f = ev.target.files[0]; if(!f) return;
     const r = new FileReader();
     r.onload = async ()=>{
@@ -1841,7 +1844,9 @@ function bind(){
       ev.target.value = "";
     };
     r.readAsText(f);
-  });
+  };
+  $("#fileRestore").addEventListener("change", onRestoreFile);
+  $("#fileRestore2").addEventListener("change", onRestoreFile);
 
   $("#btnPdf").addEventListener("click", async ()=>{
     await buildPrint();

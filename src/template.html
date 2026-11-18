@@ -50,13 +50,22 @@
     <div class="acts">
       <details class="help">
         <summary>说明</summary>
-        <div class="help-panel">
+        <div class="help-panel" data-help="course">
           <p><b>目录格式</b>　「第X章」为章，「1.2」为节，每行一条</p>
           <p><b>复习间隔</b>　不会 1 天，算错 2 天，审题 3 天</p>
           <p><b>AI</b>　key 存本机，未填时讲解为规则提示</p>
           <p><b>题图</b>　存浏览器数据库，上限约 10GB</p>
           <p><b>版本</b>　{{BUILD}}</p>
           <p><b>备份</b>　清除浏览器数据即清空　<button class="linky" id="btnBackup">下载备份</button>·<button class="linky" id="btnRestore">恢复</button><input type="file" id="fileRestore" accept=".json,application/json" class="hide"></p>
+        </div>
+        <div class="help-panel" data-help="exam">
+          <p><b>背诵</b>　不认识 4 小时后重来，模糊降一级，认识即移出词卡</p>
+          <p><b>目标</b>　默认 30 个，可在词汇页调整</p>
+          <p><b>批改</b>　作文与翻译各一个入口，提示词可改</p>
+          <p><b>AI</b>　key 存本机，两个批改都走它</p>
+          <p><b>导出</b>　打印窗口里取消「页眉和页脚」，PDF 只留内容</p>
+          <p><b>版本</b>　{{BUILD}}</p>
+          <p><b>备份</b>　清除浏览器数据即清空　<button class="linky" id="btnBackup2">下载备份</button>·<button class="linky" id="btnRestore2">恢复</button><input type="file" id="fileRestore2" accept=".json,application/json" class="hide"></p>
         </div>
       </details>
       <button class="ghost" id="btnShelf">书架</button>

@@ -637,6 +637,9 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
 .help summary{list-style:none;cursor:pointer;font-size:13px;color:var(--text)}
 .help summary::-webkit-details-marker{display:none}
 .help[open] summary{opacity:.7}
+body:not(.exam) .help-panel[data-help="exam"]{display:none}
+body.exam .help-panel[data-help="course"]{display:none}
+
 .help-panel{
   position:absolute;right:0;top:calc(100% + 16px);width:340px;
   background:var(--bg);border:1px solid var(--line);border-radius:14px;
