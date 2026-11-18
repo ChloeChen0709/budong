@@ -250,6 +250,7 @@ function renderSidebar(){
   $("#toc").innerHTML = h;
   $$("#toc .sec").forEach(el=>el.addEventListener("click", ()=>{
     curSec = curSec === el.dataset.sec ? null : el.dataset.sec;
+    document.body.classList.remove("toc-open");
     renderSidebar(); renderAll();
   }));
 }
@@ -847,6 +848,10 @@ function bind(){
   $$(".tabs button").forEach(b=>b.addEventListener("click",()=>goTab(b.dataset.tab)));
   $$("[data-close]").forEach(b=>b.addEventListener("click", e=>e.target.closest(".mask").classList.add("hide")));
   $$(".mask").forEach(m=>m.addEventListener("click", e=>{ if(e.target===m) m.classList.add("hide"); }));
+
+  const closeToc = ()=> document.body.classList.remove("toc-open");
+  $("#btnToc").addEventListener("click", ()=> document.body.classList.toggle("toc-open"));
+  $("#tocMask").addEventListener("click", closeToc);
 
   $("#btnImport").addEventListener("click", ()=>{
     $("#tocText").value = DB.book.chapters.map(ch=>`${ch.no} ${ch.title}\n`+ch.sections.map(s=>`${s.id} ${s.title}`).join("\n")).join("\n");
