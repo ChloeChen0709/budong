@@ -281,6 +281,17 @@ ul.bars li:last-child{border-bottom:none}
 .typ.flat{padding:14px 0;font-size:15px;color:var(--text)}
 
 /* ---------- 背单词 ---------- */
+.vgoalbtn{font-size:12.5px;color:var(--accent);margin-left:auto}
+.vgoalbar{height:3px;background:var(--line);margin:0 0 20px;overflow:hidden}
+.vgoalbar i{display:block;height:100%;background:var(--ink);transition:width .3s var(--ease)}
+.vgoals{display:flex;gap:10px;margin:-6px 0 20px}
+.vgoals.hide{display:none}
+.vgoals button{
+  font-size:13px;color:var(--text);padding:6px 14px;
+  border:1px solid var(--line);border-radius:999px;
+}
+.vgoals button.on{border-color:var(--ink);color:var(--ink);font-weight:600}
+
 .vtoday{
   display:flex;gap:26px;align-items:baseline;
   margin:0 0 18px;font-size:13.5px;color:var(--text);
@@ -981,7 +992,7 @@ body.introing > aside, body.introing > main{
           <p><b>复习间隔</b>　不会 1 天，算错 2 天，审题 3 天。</p>
           <p><b>AI</b>　key 存本机；未填时讲解为规则提示。</p>
           <p><b>题图</b>　存在浏览器数据库，上限约 10GB；列表只显示缩略图。</p>
-          <p><b>版本</b>　2026-11-19 00:03 · 188cda</p>
+          <p><b>版本</b>　2026-11-19 00:05 · 9d1f64</p>
           <p><b>备份</b>　清除浏览器数据会清空。<button class="linky" id="btnBackup">下载备份</button> · <button class="linky" id="btnRestore">恢复</button><input type="file" id="fileRestore" accept=".json,application/json" class="hide"></p>
         </div>
       </details>
@@ -1739,9 +1750,18 @@ function renderNotes(){
       const w = vocabDue("w"), p = vocabDue("p");
       const weak = vocabAll("weak").length, master = vocabAll("mastered").length;
       const td = vocabToday();
+      const goal = DB.vocabGoal || 30;
+      const pct = Math.min(100, Math.round(td.today / goal * 100));
+      const hit = td.today >= goal;
       host.innerHTML = (toolRow ? `<div class="tools">${toolRow}</div>` : "")
-        + `<div class="vtoday"><span>今天已背 <b>${td.today}</b> 个</span>`
+        + `<div class="vtoday">`
+        + `<span>今天已背 <b>${td.today}</b> / ${goal}${hit ? "　已达标" : ""}</span>`
         + (td.streak > 1 ? `<span>连续 <b>${td.streak}</b> 天</span>` : "")
+        + `<button class="vgoalbtn" data-goal="1">改目标</button>`
+        + `</div>`
+        + `<div class="vgoalbar"><i style="width:${pct}%"></i></div>`
+        + `<div class="vgoals hide" id="vgoals">`
+        + [10,20,30,50,100].map(g=>`<button data-setgoal="${g}" class="${g===goal?"on":""}">${g}</button>`).join("")
         + `</div>`
         + `<div class="vch">`
         + `<button class="vcard" data-vocab="w"><span class="vname">核心词</span>`
@@ -2548,6 +2568,9 @@ function bind(){
     const tb = e.target.closest("[data-tool]"); if(tb){ openTool(tb.dataset.tool); return; }
     const vb = e.target.closest("[data-vocab]"); if(vb){ openVocab(vb.dataset.vocab); return; }
     const vls = e.target.closest("[data-vlist]"); if(vls){ openVocabList(vls.dataset.vlist); return; }
+    if(e.target.closest("[data-goal]")){ const g = $("#vgoals"); if(g) g.classList.toggle("hide"); return; }
+    const sg = e.target.closest("[data-setgoal]");
+    if(sg){ DB.vocabGoal = +sg.dataset.setgoal; save(); renderNotes(); return; }
     const b = e.target.closest("[data-back]"); if(!b) return;
     curSec = null; renderModBar(); renderNotes();
   });

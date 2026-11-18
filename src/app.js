@@ -496,9 +496,18 @@ function renderNotes(){
       const w = vocabDue("w"), p = vocabDue("p");
       const weak = vocabAll("weak").length, master = vocabAll("mastered").length;
       const td = vocabToday();
+      const goal = DB.vocabGoal || 30;
+      const pct = Math.min(100, Math.round(td.today / goal * 100));
+      const hit = td.today >= goal;
       host.innerHTML = (toolRow ? `<div class="tools">${toolRow}</div>` : "")
-        + `<div class="vtoday"><span>今天已背 <b>${td.today}</b> 个</span>`
+        + `<div class="vtoday">`
+        + `<span>今天已背 <b>${td.today}</b> / ${goal}${hit ? "　已达标" : ""}</span>`
         + (td.streak > 1 ? `<span>连续 <b>${td.streak}</b> 天</span>` : "")
+        + `<button class="vgoalbtn" data-goal="1">改目标</button>`
+        + `</div>`
+        + `<div class="vgoalbar"><i style="width:${pct}%"></i></div>`
+        + `<div class="vgoals hide" id="vgoals">`
+        + [10,20,30,50,100].map(g=>`<button data-setgoal="${g}" class="${g===goal?"on":""}">${g}</button>`).join("")
         + `</div>`
         + `<div class="vch">`
         + `<button class="vcard" data-vocab="w"><span class="vname">核心词</span>`
@@ -1305,6 +1314,9 @@ function bind(){
     const tb = e.target.closest("[data-tool]"); if(tb){ openTool(tb.dataset.tool); return; }
     const vb = e.target.closest("[data-vocab]"); if(vb){ openVocab(vb.dataset.vocab); return; }
     const vls = e.target.closest("[data-vlist]"); if(vls){ openVocabList(vls.dataset.vlist); return; }
+    if(e.target.closest("[data-goal]")){ const g = $("#vgoals"); if(g) g.classList.toggle("hide"); return; }
+    const sg = e.target.closest("[data-setgoal]");
+    if(sg){ DB.vocabGoal = +sg.dataset.setgoal; save(); renderNotes(); return; }
     const b = e.target.closest("[data-back]"); if(!b) return;
     curSec = null; renderModBar(); renderNotes();
   });
