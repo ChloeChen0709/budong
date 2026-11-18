@@ -580,16 +580,17 @@ function switchBook(id){
   toast("已进入「" + packById(id).name + "」");
 }
 
+let openingTimer = null;
 function openBook(id){
+  if(openingTimer) return;                 // 动画期间忽略重复点击
   const card = document.querySelector('[data-book="' + id + '"]');
   if(card) card.classList.add("opening");
   document.body.classList.add("shelf-leaving");
-  setTimeout(()=>{
+  openingTimer = setTimeout(()=>{
+    openingTimer = null;
     if(DB.bookId !== id) switchBook(id);
     else { renderSidebar(); renderAll(); }
     document.body.classList.remove("shelf-open", "shelf-leaving");
-    document.body.classList.add("revealing");
-    setTimeout(()=>document.body.classList.remove("revealing"), 700);
   }, 420);
 }
 
@@ -966,8 +967,14 @@ function bind(){
     const b = e.target.closest("[data-book]"); if(!b) return;
     openBook(b.dataset.book);
   });
-  $("#btnShelf").addEventListener("click", ()=>{ document.body.classList.add("shelf-open"); renderShelf(); });
-  $("#btnShelf2").addEventListener("click", ()=>{ document.body.classList.add("shelf-open"); renderShelf(); });
+  const openShelf = ()=>{
+    if(openingTimer){ clearTimeout(openingTimer); openingTimer = null; }
+    document.body.classList.remove("shelf-leaving");
+    document.body.classList.add("shelf-open");
+    renderShelf();
+  };
+  $("#btnShelf").addEventListener("click", openShelf);
+  $("#btnShelf2").addEventListener("click", openShelf);
   $("#btnImport2").addEventListener("click", ()=> $("#btnImport").click());
   $("#modBar").addEventListener("click", e=>{
     const b = e.target.closest("[data-mod]"); if(!b) return;
@@ -1548,7 +1555,13 @@ function bind(){
 
   // 开场：8 秒，5.4 秒起界面从雾里浮出
   const intro = $("#intro");
-  const afterIntro = ()=>{ document.body.classList.add("shelf-open"); renderShelf(); };
+  let introSettled = false;
+  const afterIntro = ()=>{
+    if(introSettled) return;          // 只放行一次，避免跳过开场后定时器再把书架弹出来
+    introSettled = true;
+    document.body.classList.add("shelf-open");
+    renderShelf();
+  };
   if(intro){
     const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if(reduce){ intro.remove(); afterIntro(); }

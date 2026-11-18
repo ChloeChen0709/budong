@@ -536,7 +536,7 @@ body.exam .head{margin-bottom:26px}
   transition:opacity .34s var(--ease);
 }
 body.shelf-open .shelf{opacity:1;pointer-events:auto}
-body.shelf-leaving .shelf{opacity:0}
+body.shelf-leaving .shelf{opacity:0;pointer-events:none}
 .shelf-in{width:min(940px,100%)}
 .shelf-kicker{
   margin:0;font-size:11.5px;letter-spacing:.18em;
@@ -567,11 +567,6 @@ body.shelf-leaving .shelf{opacity:0}
 .bk-go i{font-style:normal}
 .shelf-note{margin:34px 0 0;font-size:12.5px;color:var(--faint)}
 
-body.revealing aside,body.revealing main{animation:appIn .62s var(--ease) both}
-@keyframes appIn{
-  from{opacity:0;filter:blur(10px)}
-  to{opacity:1;filter:none}
-}
 
 @media (max-width:900px){
   .shelf{padding:40px 20px;align-items:flex-start;padding-top:16vh}

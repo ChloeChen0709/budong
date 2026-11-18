@@ -20,6 +20,7 @@ DEFAULT_PACK = "calculus"
 # 构建产物同步到的位置（存在才复制）
 MIRRORS = [
     ROOT.parent / "错题本.html",
+    ROOT.parent / "budong.html",
     ROOT.parent / "cuotiben-site" / "index.html",
 ]
 
