@@ -484,6 +484,48 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
 .mini .mini-body{margin-top:12px;font-size:12.5px;line-height:1.8;color:var(--muted)}
 .mini .mini-body p{margin:0 0 8px}
 
+/* ================= 四级：模块模式 ================= */
+.only-exam{display:none}
+body.exam .only-exam{display:inline-flex}
+body.exam{grid-template-columns:1fr}
+body.exam aside{display:none}
+body.exam .tabs{display:none}
+body.exam .head{margin-bottom:26px}
+
+.modbar{
+  display:flex;gap:30px;overflow-x:auto;
+  border-bottom:1px solid var(--line);
+  margin:0 0 46px;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+}
+.modbar.hide{display:none}
+.modbar::-webkit-scrollbar{display:none}
+.modbar button{
+  flex:none;
+  font-size:15px;color:var(--muted);
+  padding:0 0 16px;border-bottom:1px solid transparent;margin-bottom:-1px;
+}
+.modbar button:hover{color:var(--text)}
+.modbar button.on{color:var(--ink);font-weight:600;border-bottom-color:var(--ink)}
+
+.modhead{margin-bottom:10px}
+.modhead h2{font-size:30px;line-height:1.3;letter-spacing:-.022em}
+.modnote{font-size:13.5px;line-height:1.8;color:var(--muted);margin-top:10px;max-width:42em}
+
+.backmod{
+  font-size:13px;color:var(--accent);
+  margin-bottom:18px;display:inline-block;
+}
+
+@media (max-width:900px){
+  body.exam main{padding-top:18px}
+  .modbar{gap:22px;margin-bottom:32px}
+  .modbar button{font-size:14px;padding-bottom:13px}
+  .modhead h2{font-size:24px}
+  .modnote{font-size:12.5px}
+}
+
 /* ================= 书架 ================= */
 .shelf{
   position:fixed;inset:0;z-index:120;

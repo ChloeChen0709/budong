@@ -31,6 +31,7 @@ const SAMPLE_ITEMS = [
 const KEY = "cuotiben.v2";
 const APIK = "cuotiben.api.v1";
 let BOOK = null, NOTES = null;
+let curModule = "";
 let DB = { book: null, items: [] };
 
 function packById(id){ return PACKS.find(p=>p.id===id) || PACKS[0]; }
@@ -449,6 +450,18 @@ function renderNotes(){
 
   const countOf = nt => nt ? (nt.concepts||nt.points||[]).length + (nt.types||[]).length + (nt.examples||[]).length : 0;
 
+  if(!curSec && isExam()){
+    const ch = DB.book.chapters.find(c=>c.no===curModule) || DB.book.chapters[0];
+    const rows = ch.sections.map(s=>{
+      const c = countOf(notesOf(s.id));
+      return `<li data-goto="${s.id}"><span>${s.id} ${s.title}</span><span class="m">${c ? c + " 条" : "待补"}</span></li>`;
+    }).join("");
+    host.innerHTML = `<div class="modhead"><h2>${esc(ch.title)}</h2>`
+      + (ch.note ? `<p class="modnote">${esc(ch.note)}</p>` : "")
+      + `</div><ul class="nlist">${rows}</ul>`;
+    return;
+  }
+
   if(!curSec){
     const rows = sections().map(s=>{
       const c = countOf(notesOf(s.id));
@@ -460,8 +473,13 @@ function renderNotes(){
 
   const s = secOf(curSec);
   const nt = notesOf(curSec);
+  const chOf = DB.book.chapters.find(c=>c.no === curModule);
+  const back = isExam()
+    ? `<button class="backmod" data-back="${esc(curModule)}">← ${esc(chOf ? chOf.title : "模块")}</button>`
+    : "";
   const head = `<div class="notes-head"><h2>${s.id} ${s.title}</h2><button class="tiny" data-edit="${s.id}">编辑</button></div>`;
-  if(!nt || !countOf(nt)){ host.innerHTML = head + `<div class="nempty">这一节还没有整理。</div>`; return; }
+  const headWithBack = back ? back + head : head;
+  if(!nt || !countOf(nt)){ host.innerHTML = headWithBack + `<div class="nempty">这一节还没有整理。</div>`; return; }
 
   const concepts = nt.concepts || nt.points || [];
   const ul = arr => (arr && arr.length) ? `<ul>${arr.map(x=>`<li>${fmtQ(x)}</li>`).join("")}</ul>` : "";
@@ -484,7 +502,7 @@ function renderNotes(){
   const typs = typList ? `<div class="typs">${typList}</div>` : "";
   const blk = (t, inner) => inner ? `<div class="nblock"><h3>${t}</h3>${inner}</div>` : "";
 
-  host.innerHTML = head
+  host.innerHTML = headWithBack
     + blk("概念", ul(concepts))
     + blk("重点题型", typs)
     + blk("例题", exs);
@@ -513,6 +531,31 @@ function renderAddNotes(){
     + `<div class="mini-body"><ul>${ps.map(x=>`<li>${fmtQ(x)}</li>`).join("")}</ul></div></details>`;
 }
 
+/* ================= 模式 ================= */
+function isExam(){ return (packById(DB.bookId).mode === "exam"); }
+
+function renderModBar(){
+  const bar = $("#modBar");
+  if(!isExam()){ bar.classList.add("hide"); document.body.classList.remove("exam"); return; }
+  document.body.classList.add("exam");
+  bar.classList.remove("hide");
+  const cur = DB.book.chapters.findIndex(c=>c.sections.some(s=>s.id===curSec));
+  const active = cur >= 0 ? cur : (DB.book.chapters.findIndex(c=>c.no === curModule) >= 0
+                    ? DB.book.chapters.findIndex(c=>c.no === curModule) : 0);
+  bar.innerHTML = DB.book.chapters.map((c,i)=>
+    `<button data-mod="${i}" class="${i===active?"on":""}">${esc(c.title)}</button>`).join("");
+  curModule = DB.book.chapters[active] ? DB.book.chapters[active].no : "";
+}
+
+function openModule(i){
+  const ch = DB.book.chapters[i]; if(!ch) return;
+  curModule = ch.no;
+  curSec = null;
+  renderModBar();
+  goTab("notes");
+  renderNotes();
+}
+
 /* ================= 书架 ================= */
 function renderShelf(){
   const last = localStorage.getItem(KEY + ".last") || "";
@@ -532,6 +575,8 @@ function switchBook(id){
   load(id);
   curSec = null;
   renderSidebar(); renderAll();
+  renderModBar();
+  goTab(isExam() ? "notes" : "map");
   toast("已进入「" + packById(id).name + "」");
 }
 
@@ -893,7 +938,9 @@ function goTab(name){
   tab = name;
   $$(".tabs button").forEach(b=>b.classList.toggle("on", b.dataset.tab===name));
   ["map","items","review","notes"].forEach(t=>$("#tab-"+t).classList.toggle("hide", t!==name));
-  $("#hdTitle").textContent = name==="map"?"薄弱点":name==="items"?"错题":name==="notes"?"知识点":"复习";
+  $("#hdTitle").textContent = isExam()
+    ? packById(DB.bookId).name
+    : (name==="map"?"薄弱点":name==="items"?"错题":name==="notes"?"知识点":"复习");
 }
 const QUOTA = 5000000;   // Chrome localStorage 实测约 5.05M 字符
 
@@ -920,6 +967,16 @@ function bind(){
     openBook(b.dataset.book);
   });
   $("#btnShelf").addEventListener("click", ()=>{ document.body.classList.add("shelf-open"); renderShelf(); });
+  $("#btnShelf2").addEventListener("click", ()=>{ document.body.classList.add("shelf-open"); renderShelf(); });
+  $("#btnImport2").addEventListener("click", ()=> $("#btnImport").click());
+  $("#modBar").addEventListener("click", e=>{
+    const b = e.target.closest("[data-mod]"); if(!b) return;
+    openModule(+b.dataset.mod);
+  });
+  $("#notesCard").addEventListener("click", e=>{
+    const b = e.target.closest("[data-back]"); if(!b) return;
+    curSec = null; renderModBar(); renderNotes();
+  });
 
   const closeToc = ()=> document.body.classList.remove("toc-open");
   $("#btnToc").addEventListener("click", ()=> document.body.classList.toggle("toc-open"));
@@ -1487,7 +1544,7 @@ function bind(){
   if(!DB.items.length && !localStorage.getItem(KEY+".seeded")){
     seed(); try{localStorage.setItem(KEY+".seeded","1");}catch(e){}
   }
-  bind(); goTab("map"); renderAll(); renderShelf();
+  bind(); renderModBar(); goTab(isExam() ? "notes" : "map"); renderAll(); renderShelf();
 
   // 开场：8 秒，5.4 秒起界面从雾里浮出
   const intro = $("#intro");
