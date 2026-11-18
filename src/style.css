@@ -343,7 +343,7 @@ ul.bars li:last-child{border-bottom:none}
 }
 .prow:last-child{border-bottom:none}
 .pq{color:var(--ink);font-weight:500}
-.pa{color:var(--text)}
+.pa{color:var(--text);overflow-wrap:anywhere;word-break:break-word}
 @media (max-width:900px){
   .prow{grid-template-columns:1fr;gap:3px}
   .pq{font-size:15px}

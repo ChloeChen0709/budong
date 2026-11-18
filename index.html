@@ -370,7 +370,7 @@ ul.bars li:last-child{border-bottom:none}
 }
 .prow:last-child{border-bottom:none}
 .pq{color:var(--ink);font-weight:500}
-.pa{color:var(--text)}
+.pa{color:var(--text);overflow-wrap:anywhere;word-break:break-word}
 @media (max-width:900px){
   .prow{grid-template-columns:1fr;gap:3px}
   .pq{font-size:15px}
@@ -967,7 +967,7 @@ body.introing > aside, body.introing > main{
           <p><b>复习间隔</b>　不会 1 天，算错 2 天，审题 3 天。</p>
           <p><b>AI</b>　key 存本机；未填时讲解为规则提示。</p>
           <p><b>题图</b>　存在浏览器数据库，上限约 10GB；列表只显示缩略图。</p>
-          <p><b>版本</b>　2026-11-18 23:52 · f9b5d5</p>
+          <p><b>版本</b>　2026-11-18 23:53 · ee87f5</p>
           <p><b>备份</b>　清除浏览器数据会清空。<button class="linky" id="btnBackup">下载备份</button> · <button class="linky" id="btnRestore">恢复</button><input type="file" id="fileRestore" accept=".json,application/json" class="hide"></p>
         </div>
       </details>
@@ -1796,7 +1796,7 @@ function renderNotes(){
   host.innerHTML = headWithBack
     + blk("概念", ul(concepts))
     + blk("重点题型", typs)
-    + blk((packById(DB.bookId).labels || {}).ex || "例题", exs);
+    + blk(isPlain ? "对照表" : ((packById(DB.bookId).labels || {}).ex || "例题"), exs);
 }
 
 function openNotesEditor(id){
