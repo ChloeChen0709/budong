@@ -156,6 +156,16 @@ function load(id){
 function syncNotes(){
   if(typeof CONTENT_VER === "undefined") return;
   const fresh = (DB.contentVer !== CONTENT_VER);
+
+  /* 目录（章、节名）也来自内容包。用户没自己导入过目录时，
+     内容一更新就把目录一起换成新的，否则旧标题会一直留在本地快照里。 */
+  if(fresh && !DB.custom){
+    DB.book = deepClone(BOOK);
+    const alive = new Set(Object.keys(NOTES));
+    Object.keys(DB.notes || {}).forEach(k=>{ if(!alive.has(k)) delete DB.notes[k]; });
+    if(curSec && !alive.has(curSec)) curSec = null;
+  }
+
   DB.notes = DB.notes || {};
   for(const id in NOTES){
     const cur = DB.notes[id];
