@@ -120,6 +120,14 @@
        "主题词",
        "写作"
       ]
+     },
+     {
+      "id": "3.5",
+      "title": "写作高分词",
+      "kw": [
+       "高分词",
+       "替换"
+      ]
      }
     ]
    },
@@ -11071,6 +11079,227 @@
      "q": "(be) at an end (=finished)",
      "a": "结束了",
      "analysis": ""
+    }
+   ],
+   "plain": true
+  },
+  "3.5": {
+   "concepts": [
+    "按词性分四组共 42 条：动词、形容词、副词与连接、名词。",
+    "左边是作文里最常重复的普通词，右边是可以直接替换掉的进阶表达。",
+    "换词只换词，不动句子结构：The number of cars increased 换成 soared，其余照样。"
+   ],
+   "types": [],
+   "examples": [
+    {
+     "q": "think",
+     "a": "reckon, assume, suppose, contend, maintain",
+     "analysis": "动词"
+    },
+    {
+     "q": "believe",
+     "a": "admit, acknowledge",
+     "analysis": "动词"
+    },
+    {
+     "q": "cause",
+     "a": "trigger, give rise to, contribute to, bring about, lead to",
+     "analysis": "动词"
+    },
+    {
+     "q": "solve",
+     "a": "counteract, figure out, address, settle, face up to",
+     "analysis": "动词"
+    },
+    {
+     "q": "face",
+     "a": "confront",
+     "analysis": "动词"
+    },
+    {
+     "q": "use",
+     "a": "make use of, take advantage of",
+     "analysis": "动词"
+    },
+    {
+     "q": "reduce",
+     "a": "alleviate, lighten, relieve, mitigate",
+     "analysis": "动词"
+    },
+    {
+     "q": "get",
+     "a": "attain, achieve, accomplish, acquire",
+     "analysis": "动词"
+    },
+    {
+     "q": "show",
+     "a": "mirror, reflect, reveal, bring to light",
+     "analysis": "动词"
+    },
+    {
+     "q": "explain",
+     "a": "shed light on, illuminate, account for",
+     "analysis": "动词"
+    },
+    {
+     "q": "encourage",
+     "a": "motivate, stimulate, inspire",
+     "analysis": "动词"
+    },
+    {
+     "q": "replace",
+     "a": "take the place of, displace, substitute",
+     "analysis": "动词"
+    },
+    {
+     "q": "protect",
+     "a": "preserve, conserve, maintain",
+     "analysis": "动词"
+    },
+    {
+     "q": "promote",
+     "a": "facilitate, enhance, elevate",
+     "analysis": "动词"
+    },
+    {
+     "q": "need",
+     "a": "involve, engage, entail",
+     "analysis": "动词"
+    },
+    {
+     "q": "develop",
+     "a": "foster, cultivate, nurture",
+     "analysis": "动词"
+    },
+    {
+     "q": "good",
+     "a": "advantageous; promising, extraordinary",
+     "analysis": "形容词"
+    },
+    {
+     "q": "bad",
+     "a": "adverse, undesirable, negative, detrimental, dreadful",
+     "analysis": "形容词"
+    },
+    {
+     "q": "difficult",
+     "a": "demanding, laborious, strenuous, arduous, head-scratching",
+     "analysis": "形容词"
+    },
+    {
+     "q": "worrying",
+     "a": "disturbing, troubling, worrisome",
+     "analysis": "形容词"
+    },
+    {
+     "q": "serious",
+     "a": "grave, severe, acute",
+     "analysis": "形容词"
+    },
+    {
+     "q": "certain",
+     "a": "inevitable, unavoidable, there is no denying, undoubtedly",
+     "analysis": "形容词"
+    },
+    {
+     "q": "important",
+     "a": "major, vital, crucial, critical, indispensable",
+     "analysis": "形容词"
+    },
+    {
+     "q": "many",
+     "a": "a great deal of, many a, heaps of, loads of",
+     "analysis": "形容词"
+    },
+    {
+     "q": "lively",
+     "a": "dynamic, vigorous, energetic",
+     "analysis": "形容词"
+    },
+    {
+     "q": "reasonable",
+     "a": "sensible, sound",
+     "analysis": "形容词"
+    },
+    {
+     "q": "common",
+     "a": "general, universal, widespread, pervasive",
+     "analysis": "形容词"
+    },
+    {
+     "q": "big",
+     "a": "massive, tremendous",
+     "analysis": "形容词"
+    },
+    {
+     "q": "helpful",
+     "a": "rewarding, beneficial, favorable",
+     "analysis": "形容词"
+    },
+    {
+     "q": "developed",
+     "a": "advanced, sophisticated, cutting edge",
+     "analysis": "形容词"
+    },
+    {
+     "q": "clear",
+     "a": "obvious, manifest, apparent, transparent",
+     "analysis": "形容词"
+    },
+    {
+     "q": "very",
+     "a": "extremely, fairly, quite; extraordinarily, exceedingly",
+     "analysis": "副词与连接"
+    },
+    {
+     "q": "clearly",
+     "a": "obviously, apparently, evidently",
+     "analysis": "副词与连接"
+    },
+    {
+     "q": "immediately",
+     "a": "instantly, promptly",
+     "analysis": "副词与连接"
+    },
+    {
+     "q": "so",
+     "a": "accordingly, consequently, hence",
+     "analysis": "副词与连接"
+    },
+    {
+     "q": "moreover",
+     "a": "on top of that, plus, simultaneously, in the meanwhile",
+     "analysis": "副词与连接"
+    },
+    {
+     "q": "nowadays",
+     "a": "in contemporary society / present-day society / current society",
+     "analysis": "副词与连接"
+    },
+    {
+     "q": "side",
+     "a": "respect, aspect, facet",
+     "analysis": "名词"
+    },
+    {
+     "q": "advantage",
+     "a": "strength, upside, edge, merit, virtue",
+     "analysis": "名词"
+    },
+    {
+     "q": "disadvantage",
+     "a": "shortcoming, deficiency, defect, drawback, downside",
+     "analysis": "名词"
+    },
+    {
+     "q": "ability",
+     "a": "capability, capacity, competence",
+     "analysis": "名词"
+    },
+    {
+     "q": "old people",
+     "a": "the old / the elderly / the aged; senior citizen",
+     "analysis": "名词"
     }
    ],
    "plain": true
