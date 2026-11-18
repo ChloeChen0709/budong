@@ -20,7 +20,7 @@
     "sections": [
      {
       "id": "1.1",
-      "title": "十四类关键词",
+      "title": "听力信号点",
       "kw": [
        "转折",
        "因果",
@@ -29,7 +29,7 @@
      },
      {
       "id": "1.2",
-      "title": "预读技巧",
+      "title": "听前预读选项",
       "kw": [
        "预读",
        "选项"
@@ -37,7 +37,7 @@
      },
      {
       "id": "1.3",
-      "title": "长对话边听边记",
+      "title": "长对话记什么",
       "kw": [
        "长对话",
        "笔记"
@@ -45,7 +45,7 @@
      },
      {
       "id": "1.4",
-      "title": "听力场景词",
+      "title": "听力场景词表",
       "kw": [
        "场景词",
        "高频词"
@@ -60,7 +60,7 @@
     "sections": [
      {
       "id": "2.1",
-      "title": "做题顺序与三步法",
+      "title": "阅读流程与常见坑",
       "kw": [
        "定位",
        "三步法"
@@ -68,7 +68,7 @@
      },
      {
       "id": "2.2",
-      "title": "同义替换",
+      "title": "同义替换词表",
       "kw": [
        "同义替换",
        "换词"
@@ -76,7 +76,7 @@
      },
      {
       "id": "2.3",
-      "title": "长难句找主干",
+      "title": "长难句拆主干",
       "kw": [
        "主干",
        "引导词"
@@ -91,7 +91,7 @@
     "sections": [
      {
       "id": "3.1",
-      "title": "二十五个题型骨架",
+      "title": "作文模板二十五类",
       "kw": [
        "模板",
        "题型"
@@ -99,7 +99,7 @@
      },
      {
       "id": "3.2",
-      "title": "段首中段结尾句",
+      "title": "作文功能句",
       "kw": [
        "功能句",
        "句型"
@@ -107,7 +107,7 @@
      },
      {
       "id": "3.3",
-      "title": "提分词替换",
+      "title": "提分词与搭配",
       "kw": [
        "替换",
        "高分词"
@@ -122,7 +122,7 @@
     "sections": [
      {
       "id": "4.1",
-      "title": "必背句型",
+      "title": "翻译句型三十例",
       "kw": [
        "句型",
        "结构"
@@ -130,7 +130,7 @@
      },
      {
       "id": "4.2",
-      "title": "高频固定表达",
+      "title": "翻译固定表达",
       "kw": [
        "搭配",
        "词组"
@@ -145,42 +145,42 @@
     "sections": [
      {
       "id": "5.1",
-      "title": "核心 1500 词 · List 1–6",
+      "title": "核心词 List 1–6",
       "kw": [
        "词汇"
       ]
      },
      {
       "id": "5.2",
-      "title": "核心 1500 词 · List 7–12",
+      "title": "核心词 List 7–12",
       "kw": [
        "词汇"
       ]
      },
      {
       "id": "5.3",
-      "title": "核心 1500 词 · List 13–18",
+      "title": "核心词 List 13–18",
       "kw": [
        "词汇"
       ]
      },
      {
       "id": "5.4",
-      "title": "核心 1500 词 · List 19–24",
+      "title": "核心词 List 19–24",
       "kw": [
        "词汇"
       ]
      },
      {
       "id": "5.5",
-      "title": "核心 1500 词 · List 25–33",
+      "title": "核心词 List 25–33",
       "kw": [
        "词汇"
       ]
      },
      {
       "id": "5.6",
-      "title": "236 高频词组",
+      "title": "高频词组 236 条",
       "kw": [
        "词组"
       ]
@@ -199,62 +199,62 @@
    "types": [],
    "examples": [
     {
-     "q": "原则：段首段尾句",
+     "q": "原则一：段首段尾句",
      "a": "开门见山；首段转折",
      "analysis": ""
     },
     {
-     "q": "原则：总结性信息",
-     "a": "to sum up, in brief, in particular, in short all in all, generally speaking, conclude, conclusion, in a word, so, you se",
+     "q": "原则二：总结性信息",
+     "a": "to sum up, in brief, in particular, in short all in all, generally speaking, conclude, conclusion, in a word, ",
      "analysis": "to sum up；in brief；in particular；in short all in all；generally speaking；conclude；conclusion；in a word；you see in fact；we can say；anyway；in the end"
     },
     {
-     "q": "原则：重复性信息",
+     "q": "原则三：重复性信息",
      "a": "实词重复",
      "analysis": ""
     },
     {
-     "q": "原则：引用处",
+     "q": "原则四：引用处",
      "a": "专有名词：人名+机构+职位",
      "analysis": ""
     },
     {
-     "q": "原则：设问句",
+     "q": "原则五：设问句",
      "a": "一般疑问听升调;特殊疑问 5W+1H",
      "analysis": ""
     },
     {
-     "q": "原则：定义处",
+     "q": "原则八：定义处",
      "a": "we call it... so called... term be defined that is...",
      "analysis": "we call it... so called... term be defined that is"
     },
     {
-     "q": "原则：建议意见处",
-     "a": "you should, suggest, recommend, tips, advice, had better do, how about, what about, why not, why don’t you, if I were yo",
+     "q": "原则九：建议意见处",
+     "a": "you should, suggest, recommend, tips, advice, had better do, how about, what about, why not, why don’t you, if",
      "analysis": "you should；suggest；recommend；tips；advice；had better do；how about；what about；why not；why don；t you；were you how does…sound"
     },
     {
-     "q": "原则：强调处",
+     "q": "原则十：强调处",
      "a": "especially, new theory, indeed, certainly, just remember, and again, most importantly",
      "analysis": "especially；new theory；indeed；certainly；just remember；and again；most importantly"
     },
     {
-     "q": "原则：举例处",
+     "q": "原则十一：举例处",
      "a": "for example, for instance, such as, take…, take…for example",
      "analysis": "for example；for instance；such as；take；take…for example"
     },
     {
-     "q": "原则：解释处",
+     "q": "原则十二：解释处",
      "a": "which means…, that is to say…, meant that, known as, for short",
      "analysis": "which means；that is to say；meant that；known as；for short"
     },
     {
-     "q": "原则：实意重读处",
+     "q": "原则十三：实意重读处",
      "a": "重读转移(一句话，在不做任何特殊重读时，其重音应该落在这句话最后一个实词的重读音 节处)",
      "analysis": ""
     },
     {
-     "q": "原则：数字信息处",
+     "q": "原则十四：数字信息处",
      "a": "记录数字，听清单位，比较关系是关键 上文提到的这些关键词希望大家熟练复习，听力考试时应对较快的语速也可以比较从容了。 最后祝大家考试顺利！",
      "analysis": ""
     }
@@ -987,304 +987,571 @@
   },
   "3.3": {
    "concepts": [
-    "把“好、坏、重要、越来越”这类万能词换掉，是提分最快的一步。",
-    "同一个意思给三档：普通词、升级词、高分搭配。",
-    "换词前提是搭配对，宁可不用生僻词，也别造搭配。"
+    "作文里反复出现 good / bad / important 会被判词汇贫乏。",
+    "这里换成四六级常用的进阶词，带例句与派生词。",
+    "换词只在意思对得上时用，位置和句式别动。"
    ],
    "types": [],
    "examples": [
     {
-     "q": "good",
-     "a": "beneficial/profitable/helpful/sound/decent/gorgeous/postive/favorable/promising/perfect/pl",
+     "q": "account  n.",
+     "a": "账户、考虑",
+     "analysis": "【考】take sth. into account 把…考虑在内"
+    },
+    {
+     "q": "accustom  vt.",
+     "a": "使习惯",
+     "analysis": "【考】be accustomed to"
+    },
+    {
+     "q": "adapt  vi.",
+     "a": "适应",
+     "analysis": "【考】adapt to…适应"
+    },
+    {
+     "q": "adjust  vi.",
+     "a": "适应",
+     "analysis": "【考】adjust to...适应…"
+    },
+    {
+     "q": "advocate  vt.",
+     "a": "宣扬",
      "analysis": ""
     },
     {
-     "q": "according to",
-     "a": "in the eyes of",
+     "q": "affluent  a.",
+     "a": "富裕的",
+     "analysis": "【派】affluence n.富裕"
+    },
+    {
+     "q": "annoy  vt.",
+     "a": "使烦恼, 使恼怒",
+     "analysis": "【派】annoying a. 令人恼人的; annoyance n. 烦恼;annoyed a.颇为生气的"
+    },
+    {
+     "q": "ascribe  vt.",
+     "a": "把…归咎于",
+     "analysis": "【考】ascribe..to 归因于"
+    },
+    {
+     "q": "assess  vt.",
+     "a": "评估",
+     "analysis": "【派】assessment n. 评估"
+    },
+    {
+     "q": "assign  vt.",
+     "a": "指派，选派;分配，布置(作业)",
+     "analysis": "【派】assignment 作业"
+    },
+    {
+     "q": "assume  vt.",
+     "a": "假象、假定",
      "analysis": ""
     },
     {
-     "q": "affect",
-     "a": "hinder",
+     "q": "attain  vt.",
+     "a": "获得",
+     "analysis": "【考】attain one's ideal 达到理想"
+    },
+    {
+     "q": "attribute  vt.",
+     "a": "把…归因于",
+     "analysis": "【考】attribute sth. to 把...归咎于"
+    },
+    {
+     "q": "attribute  vt.",
+     "a": "归咎于",
+     "analysis": "【考】be attributed to attribute sth. to …"
+    },
+    {
+     "q": "boost  vt.",
+     "a": "提高，推动，使增长 n. 推动，增长",
+     "analysis": "【例】boost the economy 推动经济增长 【派】booster n.支持者，推动器"
+    },
+    {
+     "q": "brilliant  a.",
+     "a": "光辉的、辉煌的",
+     "analysis": "【派】brilliance n."
+    },
+    {
+     "q": "collaborate  vi.",
+     "a": "合作",
+     "analysis": "【考】collaborate with. sb."
+    },
+    {
+     "q": "comprehensive  a.",
+     "a": "综合的",
+     "analysis": "【考】综合性大学"
+    },
+    {
+     "q": "conscious  a.",
+     "a": "有意识的",
+     "analysis": "【考】be conscious of sth. 对 …有意识"
+    },
+    {
+     "q": "conserve  vt.",
+     "a": "保存、节省",
+     "analysis": "【考】conserve energy 保护能源"
+    },
+    {
+     "q": "considerate  a.",
+     "a": "考虑周到的",
      "analysis": ""
     },
     {
-     "q": "age",
-     "a": "era",
+     "q": "contribute  vt.",
+     "a": "贡献",
+     "analysis": "【考】contribute to 导致、带来、为…贡献"
+    },
+    {
+     "q": "convenient  a.",
+     "a": "方便的 n.convenience 方便",
      "analysis": ""
     },
     {
-     "q": "aim",
-     "a": "objective",
+     "q": "cooperate  vt.",
+     "a": "合作",
+     "analysis": "【考】cooperative a.合作的"
+    },
+    {
+     "q": "coordinate  vt.",
+     "a": "合作",
      "analysis": ""
     },
     {
-     "q": "and",
-     "a": "alone with/as well as",
+     "q": "cultivate  vt.",
+     "a": "培养",
      "analysis": ""
     },
     {
-     "q": "and so on",
-     "a": "the like",
+     "q": "derive  vt.",
+     "a": "出自、源于",
+     "analysis": "【考】derive from …"
+    },
+    {
+     "q": "despair  vi.",
+     "a": "绝望; n. 绝望",
+     "analysis": "【考】despair of 绝望; sb. be in despair 某人处于绝望中"
+    },
+    {
+     "q": "disapprove  vt.",
+     "a": "不批准、不赞同",
+     "analysis": "【派】disapproval n. 不赞同 【考】 express strong disapproval"
+    },
+    {
+     "q": "dismiss  vt.",
+     "a": "撤销、免职",
+     "analysis": "【考】be dismissed by one's company 被公司解雇"
+    },
+    {
+     "q": "distinguish  vt.",
+     "a": "辨别",
+     "analysis": "【派】distinguished a. 突出的"
+    },
+    {
+     "q": "distribute  vt.",
+     "a": "分配、分发",
+     "analysis": "【考】distribution n.分配、分发"
+    },
+    {
+     "q": "dominate  vt.",
+     "a": "支配、统治",
+     "analysis": "【考】male-dominated society 男性主导社会"
+    },
+    {
+     "q": "embarrass  vt.",
+     "a": "使窘迫, 使尴尬",
+     "analysis": "【派】embarrassed a.(某人)尴尬的; embarrassment n. 沮丧 embarrassing a."
+    },
+    {
+     "q": "employ  vt.",
+     "a": "雇佣;使用",
+     "analysis": "【考】in the employ of 受雇于 【派】 employer n. 雇主 ;employee n. 雇员  employment n. 雇佣 , 工作"
+    },
+    {
+     "q": "engage  vt.",
+     "a": "从事、订婚",
+     "analysis": "【考】be engaged in sth. 从事…"
+    },
+    {
+     "q": "enhance  vt.",
+     "a": "加强",
      "analysis": ""
     },
     {
-     "q": "appear",
-     "a": "arise",
+     "q": "enroll  vt.",
+     "a": "注册、使…入会",
+     "analysis": "【派】enrollment"
+    },
+    {
+     "q": "evacuate  vt.",
+     "a": "撤走、疏散",
      "analysis": ""
     },
     {
-     "q": "apply",
-     "a": "put into practice",
+     "q": "evaluate  vt.",
+     "a": "评价、估计",
+     "analysis": "【派】evaluation n."
+    },
+    {
+     "q": "excessive  a.",
+     "a": "过度的",
      "analysis": ""
     },
     {
-     "q": "ask",
-     "a": "consult",
+     "q": "frustrate  vt.",
+     "a": "使沮丧, 使灰心",
+     "analysis": "【派】frustration n. 挫折; frustrating a. 令人沮丧的"
+    },
+    {
+     "q": "genetic  a.",
+     "a": "遗传的",
      "analysis": ""
     },
     {
-     "q": "aspect",
-     "a": "sphere",
+     "q": "guarantee  vt.",
+     "a": "保证",
      "analysis": ""
     },
     {
-     "q": "acctach",
-     "a": "enclose",
+     "q": "identify  vt.",
+     "a": "鉴别、验明",
+     "analysis": "【考】identify theft 辨别偷窃"
+    },
+    {
+     "q": "immigrate  vt.",
+     "a": "移民",
+     "analysis": "【派】immigrant n.移民 immigration"
+    },
+    {
+     "q": "implement  vt.",
+     "a": "实施",
+     "analysis": "【派】implementation n."
+    },
+    {
+     "q": "incline  vi.",
+     "a": "倾向",
+     "analysis": "【考】be inclined to do sth. 倾向于做某事"
+    },
+    {
+     "q": "inferior  a.",
+     "a": "下级的、下等的",
+     "analysis": "【考】be inferior to 比…低级"
+    },
+    {
+     "q": "injure  vt.",
+     "a": "受伤",
+     "analysis": "【派】injured a.受伤的; injury n. 受伤"
+    },
+    {
+     "q": "inquire  vi.",
+     "a": "询问",
      "analysis": ""
     },
     {
-     "q": "attract",
-     "a": "tempt",
+     "q": "instinct  n.",
+     "a": "本能、直觉",
+     "analysis": "【考】human instinct 人类本能"
+    },
+    {
+     "q": "integrate  vt.",
+     "a": "使结合、使一体化",
+     "analysis": "【派】integral a.一体的;integration n.一体 【考】as an integral whole 作为一个整体 global economic integration 全"
+    },
+    {
+     "q": "internship  n.",
+     "a": "实习",
      "analysis": ""
     },
     {
-     "q": "audience",
-     "a": "viewer",
+     "q": "inverse  a.",
+     "a": "倒转的、反转的",
      "analysis": ""
     },
     {
-     "q": "basis",
-     "a": "foundation",
+     "q": "justify  vt.",
+     "a": "证明…是正当的",
      "analysis": ""
     },
     {
-     "q": "be able to",
-     "a": "be capable to",
+     "q": "launch  vt.",
+     "a": "发射、开展",
+     "analysis": "【考】launch the spacecraft 发射飞船 launch a movement 发起一项运动"
+    },
+    {
+     "q": "negative  a.",
+     "a": "消极的",
      "analysis": ""
     },
     {
-     "q": "be convenient",
-     "a": "at one’s convenience",
+     "q": "notify  vt.",
+     "a": "通知、告诉",
+     "analysis": "【派】notification n."
+    },
+    {
+     "q": "obligation  n.",
+     "a": "责任、义务",
+     "analysis": "【考】legal obligation 法律责任"
+    },
+    {
+     "q": "obstacle  n.",
+     "a": "障碍",
      "analysis": ""
     },
     {
-     "q": "be good at",
-     "a": "be skilled at",
+     "q": "optimistic  a.",
+     "a": "乐观的",
+     "analysis": "【考】be optimistic about sth.对…很乐观"
+    },
+    {
+     "q": "originate  vt.",
+     "a": "由…产生",
+     "analysis": "【考】originate from 由…产生"
+    },
+    {
+     "q": "overcome  vt.",
+     "a": "战胜, 克服",
+     "analysis": "【例】overcome difficulties 克服困难"
+    },
+    {
+     "q": "phenomenon  n.",
+     "a": "现象",
      "analysis": ""
     },
     {
-     "q": "be helpful",
-     "a": "be of help",
+     "q": "positive  a.",
+     "a": "积极的",
      "analysis": ""
     },
     {
-     "q": "careful",
-     "a": "attentive",
+     "q": "potential  a.",
+     "a": "潜在的",
+     "analysis": "【考】potential customer 潜在客户"
+    },
+    {
+     "q": "preferable  a.",
+     "a": "更好的",
      "analysis": ""
     },
     {
-     "q": "come from",
-     "a": "derive from",
+     "q": "prevail  vt.",
+     "a": "压倒、胜过",
+     "analysis": "【派】prevailling a. 流行的"
+    },
+    {
+     "q": "priority  n.",
+     "a": "优先",
+     "analysis": "【考】sth. is the top priority 优先考虑…"
+    },
+    {
+     "q": "proceed  vi.",
+     "a": "进行、着手",
      "analysis": ""
     },
     {
-     "q": "complain",
-     "a": "place a complain against",
+     "q": "prompt  vt.",
+     "a": "刺激、推动",
+     "analysis": "【考】prompt sb. to do sth."
+    },
+    {
+     "q": "proportion  n.",
+     "a": "比例",
+     "analysis": "【派】proportional a.相应的、成比例的"
+    },
+    {
+     "q": "pursue  vt.",
+     "a": "追求",
+     "analysis": "【派】pursuit n. 追求 【考】pursue one's dream 【考】qualify for sth. 使具有…的资格 【派】qualification n.资格，条件;qualified a.有资格的"
+    },
+    {
+     "q": "recommend  vt.",
+     "a": "推荐",
      "analysis": ""
     },
     {
-     "q": "dependon",
-     "a": "be attached to",
+     "q": "reference  n.",
+     "a": "参考",
      "analysis": ""
     },
     {
-     "q": "difficulty",
-     "a": "barrier",
-     "analysis": ""
+     "q": "remind  vt.",
+     "a": "提醒某人注意",
+     "analysis": "【考】be reminded of sth."
     },
     {
-     "q": "diligent",
-     "a": "industrious",
-     "analysis": ""
+     "q": "relevant  a.",
+     "a": "有关的，切题的",
+     "analysis": "【考】be relevant to 与…有关 【派】relevance n. 有关，相关;irrelevant a. 不相关的;不切题的"
     },
     {
-     "q": "do",
-     "a": "going for/carry out",
-     "analysis": ""
+     "q": "restore  vt.",
+     "a": "恢复、修复",
+     "analysis": "【考】restore reputation 恢复名誉"
     },
     {
-     "q": "emphasis",
-     "a": "attach emphasis to",
-     "analysis": ""
-    },
-    {
-     "q": "enable",
-     "a": "failitate",
-     "analysis": ""
-    },
-    {
-     "q": "encourage",
-     "a": "motivate",
-     "analysis": ""
-    },
-    {
-     "q": "engage",
-     "a": "major in",
-     "analysis": ""
-    },
-    {
-     "q": "enjory",
-     "a": "be crazy about",
-     "analysis": ""
-    },
-    {
-     "q": "enough",
-     "a": "adequate",
-     "analysis": ""
-    },
-    {
-     "q": "explain",
-     "a": "account for",
-     "analysis": ""
-    },
-    {
-     "q": "fail",
-     "a": "frustrate",
-     "analysis": ""
-    },
-    {
-     "q": "face",
-     "a": "be faced with",
-     "analysis": ""
-    },
-    {
-     "q": "famous",
-     "a": "prominent/prescribed",
-     "analysis": ""
-    },
-    {
-     "q": "future",
-     "a": "prospective",
-     "analysis": ""
-    },
-    {
-     "q": "global",
-     "a": "universal",
-     "analysis": ""
-    },
-    {
-     "q": "great",
-     "a": "enormous/dramatic prime/utmost",
-     "analysis": ""
-    },
-    {
-     "q": "improvement",
-     "a": "advance",
-     "analysis": ""
-    },
-    {
-     "q": "lower",
-     "a": "inferior",
-     "analysis": ""
-    },
-    {
-     "q": "necessary",
-     "a": "indispensable",
-     "analysis": ""
-    },
-    {
-     "q": "number",
-     "a": "date/statistics",
-     "analysis": ""
-    },
-    {
-     "q": "obvious",
-     "a": "striking",
-     "analysis": ""
-    },
-    {
-     "q": "only",
-     "a": "no more than/sole",
-     "analysis": ""
-    },
-    {
-     "q": "offer",
-     "a": "present to",
-     "analysis": ""
-    },
-    {
-     "q": "pay attention to",
-     "a": "be concerned about/give weight to",
-     "analysis": ""
-    },
-    {
-     "q": "period",
-     "a": "era/phase",
-     "analysis": ""
-    },
-    {
-     "q": "progress",
-     "a": "break through",
-     "analysis": ""
-    },
-    {
-     "q": "purpose",
-     "a": "motive",
-     "analysis": ""
+     "q": "restrain  vt.",
+     "a": "遏制",
+     "analysis": "【考】be restrained to do sth."
     }
    ]
   },
   "4.1": {
    "concepts": [
-    "翻译不是逐字对译：先定主干（谁做什么），再把修饰成分挂上去，句子才立得住。",
-    "四六级翻译的高频结构就那几类：倍数比较、让步对比、条件结果、强调、原因。",
-    "固定表达要成块背，考试时直接调取，比如 with the booming of the economy，而不是临场拼。",
-    "中文喜欢短句并列，英文要靠连接词把逻辑写出来：先想清楚是因果、转折还是并列，再选句型。"
+    "四六级翻译考的是把中文句子搭成英文结构，句型就是脚手架。",
+    "先定主干，再看这个意思属于哪一类：比较、让步、条件、强调、传闻。",
+    "背句型要连同它的固定词一起记：It is conceivable that 后面的 that 不能省。"
    ],
-   "types": [
-    "It is + 形容词 + that 结构：It is conceivable that… / It is undeniable that…",
-    "倍数比较：倍数 + as + 形容词 + as；倍数 + more + than",
-    "让步与对比：no more … than；not … but …；rather than",
-    "条件与结果：so/such … that；only to find",
-    "强调与传闻：Nothing is more … than；It is said that；There is no doubt that",
-    "高频固定搭配：with the booming of the economy、play an increasingly important role in、lay a solid foundation for"
-   ],
+   "types": [],
    "examples": [
     {
-     "q": "可想而知，知识在我们的生活中扮演着重要的角色。",
-     "a": "It is conceivable that knowledge plays an important part in our life.",
-     "analysis": "中文的“可想而知”对应 It is conceivable that，比逐字翻成 we can imagine 更符合英文表达习惯。"
+     "q": "It is ＋形容词＋ that…",
+     "a": "It is conceivable that knowledge plays animportant part in our",
+     "analysis": "可想而知，知识在我们的生活中扮演着一个重要的角色。"
     },
     {
-     "q": "这个水池是十年前的三倍大。",
-     "a": "The pool is three times as big as it was ten years ago.",
-     "analysis": "倍数放最前，用 as … as 接比较对象。若写成 three times bigger than，在英文里是“大四倍”，意思就错了。"
+     "q": "It is ＋形容词＋ to do/ doing",
+     "a": "She had said what it was necessary to say.",
+     "analysis": "她已经说了一切有必要说的话。"
     },
     {
-     "q": "没有比接受教育更重要的事。",
-     "a": "Nothing is more important than to receive education.",
-     "analysis": "Nothing is more … than 是固定强调句式，比 it is the most important thing 更凝练，也是阅卷老师认得的句型。"
+     "q": "祈使句／名词＋ and/or",
+     "a": "Work hard, and you will finally be able toreach your goal.",
+     "analysis": "努力工作，你就能实现自己的目标。"
     },
     {
-     "q": "我们的产品不但要求数量，而且要求质量。",
-     "a": "In production, we demand not only quantity but also quality.",
-     "analysis": "not only … but also 前后要对称，这里是两个名词。若后面接句子，要注意 not only 放句首时前半句倒装。"
+     "q": "as ＋ many/much ＋名词＋ as",
+     "a": "It is said that visitors spend only half asmuch money in a day",
+     "analysis": "据说，游客每天在利兹的花销仅为在伦敦的一半。"
     },
     {
-     "q": "随着经济的繁荣，人们的生活水平显著提高。",
-     "a": "With the booming of the economy, people's living standard has improved remarkably.",
-     "analysis": "“随着”用 with 加名词短语，不要用 with … , people … 之外再套一个从句，容易写成两个主语。"
+     "q": "倍数词＋ as ＋形容词＋ as",
+     "a": "The pool is three times as big as it wasten years ago.",
+     "analysis": "这个水池的面积是十年前的三倍。"
+    },
+    {
+     "q": "倍数词＋ more ＋名词／形容词＋ than",
+     "a": "Smoking  is  so  harmful  to  physical  healththat  it  kills  seven",
+     "analysis": "吸烟对人体健康的危害极大，每年死于吸烟的人比死于车祸的人多七"
+    },
+    {
+     "q": "（not）as/ so...as 和……（不）一样",
+     "a": "The  environmental  pollution  is  not  asserious  as  they",
+     "analysis": "环境污染没有他们在报告中说得那么严重。"
+    },
+    {
+     "q": "no more...than 与……一样不",
+     "a": "She is no more fit to be a manager than aschoolgirl would be.",
+     "analysis": "一个女学生固然不宜当经理，她也同样不宜。"
+    },
+    {
+     "q": "Nothing is more...than（没有比……更……的；……是最……",
+     "a": "Nothing is more important than to receiveeducation.",
+     "analysis": "的）"
+    },
+    {
+     "q": "感官动词＋ of ＋名词",
+     "a": "They hurriedly escaped into a cave thatsmelt of terror.",
+     "analysis": "他们仓皇地逃入一个充满恐怖气氛的山洞。"
+    },
+    {
+     "q": "without/not so much as（甚至没有）",
+     "a": "Disappointed with her husband, Monica lefthome without so",
+     "analysis": "出于对丈夫的失望，莫妮卡离开了家，甚至都没有回头看他一眼。"
+    },
+    {
+     "q": "may/might as well（...as）与其……还不如……",
+     "a": "One  may  as  well  not  know  a  thing  at  all  asknow  but",
+     "analysis": "与其一知半解还不如彻底蒙在鼓里。"
+    },
+    {
+     "q": "too...to（太……而不能……；极其地）",
+     "a": "It  was  not  too  bright  of  them  to  settle  inan  area  where",
+     "analysis": "他们选择在地震多发的地区定居，这可不是个明智的决定。"
+    },
+    {
+     "q": "only to find/see（结果却；没想到会）",
+     "a": "He spent almost all his money to buy thehen which was said",
+     "analysis": "为了买那只据说能下金蛋的母鸡，他几乎倾家荡产，没想到这只鸡根"
+    },
+    {
+     "q": "It is undoubted that/ There is no doubt that （毫无疑问 ，",
+     "a": "There is no doubt that war can be avoidedif we get down to",
+     "analysis": "毫无疑问，如果我们肯认真和谈就能避免战争。"
+    },
+    {
+     "q": "rather than（而不是……）",
+     "a": "Rather than pursue  money  to achievehappiness,  we should",
+     "analysis": "我们应该集中精力改善自我，而不是追求金钱的享乐。"
+    },
+    {
+     "q": "not...until（直到……才）",
+     "a": "We can’t release the film until we have theapproval from the",
+     "analysis": "直到获得有关当局的批准我们才能发行那部电影。"
+    },
+    {
+     "q": "so/such（...）that（如此……以至于）",
+     "a": "With the rumor spreading fast, theiran xiety was such that they",
+     "analysis": "在谣言迅速散播的情况下，他们焦虑异常，无法入睡。"
+    },
+    {
+     "q": "(The) chances are that（很可能……）",
+     "a": "Chances are that she has already known it,and there is no",
+     "analysis": "她很可能已经知道了，所以我们没有必要再保守这个秘密。"
+    },
+    {
+     "q": "It occurred to sb. that（突然想到……）",
+     "a": "It  had  never  occurred  to  Cinderella  shewould  become  a",
+     "analysis": "辛德瑞拉从来没有想到有朝一日她会成为一位王妃。"
+    },
+    {
+     "q": "not...but...（不是……而是……）",
+     "a": "To our disappointment, the plan caused notdevelopment but",
+     "analysis": "让我们失望的是，这个计划带来的不是进步而是破坏。"
+    },
+    {
+     "q": "It is taken for granted that（……被认为是理所当然的）",
+     "a": "It has been taken for granted that womenshould take on all",
+     "analysis": "人们一直理所当然地认为，女性应当承担全部家务。"
+    },
+    {
+     "q": "It is/was said that（据说）",
+     "a": "It is said that man is the leastbiologically determined species",
+     "analysis": "据说人类是生物学上最难归类的物种，因为人类拥有其他天然物种所"
+    },
+    {
+     "q": "When it comes to...（提及；当提到……的时候）",
+     "a": "When it comes to photography, I’m not anadept.",
+     "analysis": "要说照相，我不是内行。"
+    },
+    {
+     "q": "be not much of a...（是个不太好的……）",
+     "a": "Mike is not much of a teacher for he oftenskips from one",
+     "analysis": "麦克不是个好老师，因为他总是从一个话题跳转到另一个话题。"
+    },
+    {
+     "q": "As far as sb./sth. is concerned（就……而言，在……看来）",
+     "a": "As far as I am concerned, fashion belongsto women.",
+     "analysis": "在我看来，时尚是属于女性的。"
+    },
+    {
+     "q": "not only...but also...（不但……而且……）",
+     "a": "In production, we demand not only quantitybut also quality.",
+     "analysis": "我们的产品不但要求数量多，而且要求质量高。"
+    },
+    {
+     "q": "(n) either...(n) or... （既不……也不……；或者……或者…",
+     "a": "Most single parents are either divorced orseparated.",
+     "analysis": "大多数单身父母要么离婚了, 要么分居了。"
+    },
+    {
+     "q": "no sooner than/ hardly when/ scarcely when （刚……就",
+     "a": "I had hardly opened the door when he rushedin.",
+     "analysis": "我刚开门他就冲进来了。"
+    },
+    {
+     "q": "the more...the more（越……越……）",
+     "a": "The more she learns, the more she wants tolearn.",
+     "analysis": "她越学越想学。"
     }
    ]
   },
