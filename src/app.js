@@ -534,9 +534,13 @@ function renderNotes(){
 
   const concepts = nt.concepts || nt.points || [];
   const ul = arr => (arr && arr.length) ? `<ul>${arr.map(x=>`<li>${fmtQ(x)}</li>`).join("")}</ul>` : "";
-  const isFlash = isExam();
+  const isPlain = !!nt.plain;
+  const isFlash = isExam() && !isPlain;
   const exs = (nt.examples||[]).length
-    ? (isFlash
+    ? (isPlain
+        ? nt.examples.map(e=>`<div class="prow"><span class="pq">${fmtQ(e.q)}</span>`
+            + `<span class="pa">${fmtQ(e.a || "")}</span></div>`).join("")
+        : isFlash
         ? nt.examples.map(e=>`<details class="flash"><summary><span class="fl-q">${fmtQ(e.q)}</span></summary>`
             + `<div class="fl-body">`
             + (e.a ? `<p class="fl-a">${fmtQ(e.a)}</p>` : "")

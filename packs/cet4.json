@@ -670,7 +670,8 @@
      "a": "recall",
      "analysis": ""
     }
-   ]
+   ],
+   "plain": true
   },
   "2.3": {
    "concepts": [

@@ -29,7 +29,7 @@ def public_notes(notes):
     """去掉只给校验脚本用的 verify 字段。"""
     out = {}
     for sid, sec in notes.items():
-        out[sid] = {
+        item = {
             "concepts": sec.get("concepts", sec.get("points", [])),
             "types": sec["types"],
             "examples": [
@@ -37,6 +37,9 @@ def public_notes(notes):
                 for e in sec["examples"]
             ],
         }
+        if sec.get("plain"):
+            item["plain"] = True
+        out[sid] = item
     return out
 
 
