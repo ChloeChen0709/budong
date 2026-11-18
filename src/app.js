@@ -498,10 +498,10 @@ function renderNotes(){
         + `<div class="vch"> ` +
           `<button class="vcard" data-vocab="w"><span class="vname">核心词</span>`
         + `<span class="vnum">${w.total} 个</span>`
-        + `<span class="vsub">待复习 ${w.due.length} · 未学 ${w.fresh.length}</span></button>`
+        + `<span class="vsub">已学 ${w.learned} · 待复习 ${w.due.length} · 未学 ${w.fresh.length}</span></button>`
         + `<button class="vcard" data-vocab="p"><span class="vname">高频词组</span>`
         + `<span class="vnum">${p.total} 条</span>`
-        + `<span class="vsub">待复习 ${p.due.length} · 未学 ${p.fresh.length}</span></button>`
+        + `<span class="vsub">已学 ${p.learned} · 待复习 ${p.due.length} · 未学 ${p.fresh.length}</span></button>`
         + `</div>`;
       return;
     }
@@ -593,6 +593,14 @@ let VOCAB = { pool: [], idx: 0, key: "", shown: false, done: 0 };
 function vocabState(){ DB.srs = DB.srs || {}; return DB.srs; }
 function vocabKey(kind, q){ return kind + ":" + q; }
 
+function shuffle(a){
+  for(let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 function vocabDue(kind){
   const st = vocabState(), now = Date.now();
   const src = DB.notes[kind === "w" ? "5.1" : "5.2"];
@@ -608,7 +616,7 @@ function vocabDue(kind){
 
 function openVocab(kind){
   const d = vocabDue(kind);
-  const pool = d.due.concat(d.fresh).slice(0, 20);
+  const pool = shuffle(d.due.slice()).concat(shuffle(d.fresh.slice())).slice(0, 20);
   if(!pool.length){ toast("今天这部分都复习完了"); return; }
   VOCAB = { pool, idx: 0, key: kind, shown: false, done: 0 };
   $("#vocabTitle").textContent = kind === "w" ? "核心词" : "高频词组";
@@ -628,7 +636,15 @@ function vocabMark(mark){
   const h = EBB[rec.stage];
   rec.due = Date.now() + h * 3600 * 1000;
   st[k] = rec;
+  const day = new Date().toISOString().slice(0, 10);
+  DB.vocabDay = DB.vocabDay || {};
+  DB.vocabDay[day] = (DB.vocabDay[day] || 0) + 1;
   save();
+  toast(mark === "again" ? "已记下，4 小时后会再出现"
+        : mark === "hard" ? "已记下，下次提前复习"
+        : "已记下，" + EBB[rec.stage] + " 小时后复习");
+  // 不认识的词，本轮末尾再出现一次（和背单词软件一致）
+  if(mark === "again" && VOCAB.pool.length < 40) VOCAB.pool.push(item);
   VOCAB.idx++; VOCAB.done++;
   if(VOCAB.idx >= VOCAB.pool.length){ finishVocab(); return; }
   drawVocab();
@@ -640,7 +656,7 @@ function finishVocab(){
   $("#vocabAct").classList.add("hide");
   $("#vocabTap").classList.add("hide");
   $("#vocabMeta").innerHTML = `这一轮完成，共 ${VOCAB.done} 个。`
-    + `<br>剩余待复习 ${d.due.length}，未学 ${d.fresh.length}。`;
+    + `<br>已记录，到期会自动回到队列：待复习 ${d.due.length}，未学 ${d.fresh.length}。`;
   $("#vocabBar").style.width = "100%";
   setTimeout(()=>{ $("#modalVocab").classList.add("hide"); renderNotes(); }, 1200);
 }
@@ -658,7 +674,9 @@ function drawVocab(){
   const pct = Math.round(VOCAB.idx / VOCAB.pool.length * 100);
   $("#vocabBar").style.width = pct + "%";
   const d = vocabDue(VOCAB.key);
-  $("#vocabMeta").textContent = `${VOCAB.idx + 1} / ${VOCAB.pool.length}　待复习 ${d.due.length} · 未学 ${d.fresh.length}`;
+  const today = (DB.vocabDay || {})[new Date().toISOString().slice(0,10)] || 0;
+  $("#vocabMeta").textContent = `${VOCAB.idx + 1} / ${VOCAB.pool.length}　`
+    + `已学 ${d.learned} · 待复习 ${d.due.length} · 未学 ${d.fresh.length}　今天 ${today} 个`;
 }
 
 function vocabShowBack(){
