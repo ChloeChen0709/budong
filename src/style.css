@@ -64,10 +64,15 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 
 .tiny{
   display:inline-flex;align-items:center;
-  font-size:13px;color:var(--text);
-  padding:7px 14px;border:1px solid var(--line);border-radius:999px;
+  font-size:13px;color:var(--muted);
+  padding:2px 0;border:0;border-radius:0;background:none;
 }
-.tiny:hover{border-color:var(--faint);color:var(--ink)}
+.tiny:hover{color:var(--ink)}
+.tiny.primary{
+  color:#fff;background:var(--ink);border:0;border-radius:999px;
+  padding:9px 20px;
+}
+.tiny.primary:hover{background:#000;color:#fff}
 
 .ghost, .link{font-size:13px;color:var(--text);padding:4px 0}
 .ghost:hover, .link:hover{opacity:.7}
@@ -84,7 +89,7 @@ aside{
 .bk{padding:40px 28px 28px}
 .bk .t{font-size:17px;line-height:1.4;font-weight:600;letter-spacing:-.02em}
 .bk .m{font-size:12.5px;color:var(--muted);margin-top:6px}
-.bk .row{margin-top:22px}
+.bk .row{margin-top:18px;display:flex;gap:18px}
 .tocbtn,.tocmask{display:none}
 
 .toc{overflow:auto;padding:0 16px 48px;flex:1}
@@ -137,7 +142,7 @@ main{overflow:auto;padding:64px 72px 160px;-webkit-overflow-scrolling:touch}
 .lead .s{display:block;font-size:14px;line-height:1.7;color:var(--muted);margin-top:20px;font-weight:400;letter-spacing:0}
 
 .comp{margin-top:44px}
-.cbar{display:flex;height:4px;background:var(--line);overflow:hidden}
+.cbar{display:flex;height:3px;background:var(--line);overflow:hidden;opacity:.85}
 .cbar span{display:block;height:100%}
 .cleg{display:flex;gap:28px;flex-wrap:wrap;margin-top:16px;font-size:12.5px;color:var(--muted)}
 .cleg i{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:8px;vertical-align:1px}
@@ -263,10 +268,11 @@ ul.bars li:last-child{border-bottom:none}
 .vgoals{display:flex;gap:10px;margin:-6px 0 20px}
 .vgoals.hide{display:none}
 .vgoals button{
-  font-size:13px;color:var(--text);padding:6px 14px;
-  border:1px solid var(--line);border-radius:999px;
+  font-size:13px;color:var(--muted);padding:7px 16px;
+  border:0;border-radius:999px;background:var(--bg-soft);
 }
-.vgoals button.on{border-color:var(--ink);color:var(--ink);font-weight:600}
+.vgoals button:hover{color:var(--ink)}
+.vgoals button.on{background:var(--ink);color:#fff;font-weight:500}
 
 /* 背诵月历 */
 .calhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;font-size:14px;color:var(--text)}
@@ -528,11 +534,12 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
 
 /* ---------- 拍照区 ---------- */
 .drop{
-  border:1px dashed var(--line);border-radius:10px;padding:22px;text-align:center;
+  border:0;border-radius:16px;padding:26px;text-align:center;
+  background:var(--bg-soft);
   color:var(--muted);font-size:13px;cursor:pointer;margin-top:10px;
-  transition:border-color .2s var(--ease), color .2s var(--ease);
+  transition:background-color .2s var(--ease), color .2s var(--ease);
 }
-.drop:hover,.drop.over{border-color:var(--faint);color:var(--text)}
+.drop:hover,.drop.over{background:#f5f5f7;color:var(--text)}
 .drop.on{border-style:solid;text-align:left}
 .drop .pick{color:var(--accent);margin-right:8px}
 .drop .inner{display:flex;gap:20px;align-items:center;width:100%}
@@ -703,12 +710,12 @@ body.shelf-leaving .shelf{opacity:0;pointer-events:none}
 }
 .bookcard{
   display:flex;flex-direction:column;align-items:flex-start;text-align:left;
-  padding:34px 30px 28px;
-  border:1px solid var(--line);border-radius:20px;
-  background:var(--bg);
-  transition:border-color .24s var(--ease), transform .24s var(--ease), opacity .3s var(--ease);
+  padding:38px 34px 32px;
+  border:0;border-radius:22px;
+  background:var(--bg-soft);
+  transition:background-color .24s var(--ease), opacity .3s var(--ease);
 }
-.bookcard:hover{border-color:var(--faint);transform:translateY(-3px)}
+.bookcard:hover{background:#f5f5f7}
 .bookcard.opening{transform:scale(.965);opacity:0}
 .bk-mark{
   font-size:44px;line-height:1;color:var(--line);
