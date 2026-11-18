@@ -281,8 +281,11 @@ ul.bars li:last-child{border-bottom:none}
 .typ.flat{padding:14px 0;font-size:15px;color:var(--text)}
 
 /* ---------- 背单词 ---------- */
-.vgoalbtn{font-size:12.5px;color:var(--accent);margin-left:auto}
-.vgoalbar{height:3px;background:var(--line);margin:0 0 20px;overflow:hidden}
+.vlinks{margin-left:auto;display:inline-flex;align-items:center;gap:8px}
+.vlinks button{font-size:12.5px;color:var(--muted)}
+.vlinks button:hover{color:var(--ink)}
+.vlinks i{font-style:normal;color:var(--line);font-size:12px}
+.vgoalbar{height:2px;background:var(--line);margin:2px 0 26px;overflow:hidden}
 .vgoalbar i{display:block;height:100%;background:var(--ink);transition:width .3s var(--ease)}
 .vgoals{display:flex;gap:10px;margin:-6px 0 20px}
 .vgoals.hide{display:none}
@@ -315,14 +318,15 @@ ul.bars li:last-child{border-bottom:none}
 
 .vch{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
 .vcard{
-  display:flex;flex-direction:column;gap:10px;align-items:flex-start;
-  padding:30px 28px;border:1px solid var(--line);border-radius:20px;background:var(--bg);
-  transition:border-color .2s var(--ease), transform .2s var(--ease);
+  display:flex;flex-direction:column;align-items:flex-start;
+  padding:36px 32px 32px;
+  border:0;border-radius:22px;background:var(--bg-soft);
+  transition:background-color .25s var(--ease);
 }
-.vcard:hover{border-color:var(--faint);transform:translateY(-2px)}
-.vname{font-size:26px;font-weight:600;letter-spacing:-.02em;color:var(--ink)}
-.vnum{font-size:13px;color:var(--muted)}
-.vsub{font-size:13px;color:var(--text);margin-top:6px}
+.vcard:hover{background:#f5f5f7}
+.vname{font-size:27px;font-weight:600;letter-spacing:-.025em;color:var(--ink)}
+.vnum{font-size:12.5px;color:var(--muted);margin-top:6px}
+.vsub{font-size:12.5px;color:var(--muted);margin-top:18px;line-height:1.7}
 
 .modal.vocab{width:min(620px,100%)}
 .vocabhead{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px}
@@ -357,14 +361,14 @@ ul.bars li:last-child{border-bottom:none}
 }
 
 /* 生词本 / 已掌握 */
-.vlist{display:flex;gap:14px;margin-top:18px}
+.vlist{margin-top:26px;border-top:1px solid var(--line)}
 .vlbtn{
-  flex:1;display:flex;align-items:center;justify-content:space-between;
-  padding:16px 20px;border:1px solid var(--line);border-radius:14px;
-  font-size:14px;color:var(--text);
+  display:flex;align-items:baseline;justify-content:space-between;width:100%;
+  padding:18px 2px;border:0;border-bottom:1px solid var(--line);border-radius:0;
+  font-size:14.5px;color:var(--text);background:none;
 }
-.vlbtn:hover{border-color:var(--faint);color:var(--ink)}
-.vlbtn b{font-weight:600;color:var(--ink)}
+.vlbtn:hover{color:var(--ink)}
+.vlbtn b{font-weight:500;color:var(--muted);font-size:13px}
 .vlbody{max-height:56vh;overflow:auto}
 .vlrow{display:flex;gap:16px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line)}
 .vlrow:last-child{border-bottom:none}
@@ -1007,7 +1011,7 @@ body.introing > aside, body.introing > main{
           <p><b>复习间隔</b>　不会 1 天，算错 2 天，审题 3 天。</p>
           <p><b>AI</b>　key 存本机；未填时讲解为规则提示。</p>
           <p><b>题图</b>　存在浏览器数据库，上限约 10GB；列表只显示缩略图。</p>
-          <p><b>版本</b>　2026-11-19 00:10 · 653f89</p>
+          <p><b>版本</b>　2026-11-19 00:12 · 94524e</p>
           <p><b>备份</b>　清除浏览器数据会清空。<button class="linky" id="btnBackup">下载备份</button> · <button class="linky" id="btnRestore">恢复</button><input type="file" id="fileRestore" accept=".json,application/json" class="hide"></p>
         </div>
       </details>
@@ -1788,8 +1792,7 @@ function renderNotes(){
         + `<div class="vtoday">`
         + `<span>今天已背 <b>${td.today}</b> / ${goal}${hit ? "　已达标" : ""}</span>`
         + (td.streak > 1 ? `<span>连续 <b>${td.streak}</b> 天</span>` : "")
-        + `<button class="vgoalbtn" data-goal="1">改目标</button>`
-        + `<button class="vgoalbtn" data-cal="1">记录</button>`
+        + `<span class="vlinks"><button data-goal="1">改目标</button><i>·</i><button data-cal="1">记录</button></span>`
         + `</div>`
         + `<div class="vgoalbar"><i style="width:${pct}%"></i></div>`
         + `<div class="vgoals hide" id="vgoals">`
@@ -1803,8 +1806,10 @@ function renderNotes(){
         + `<span class="vnum">${p.total} 条</span>`
         + `<span class="vsub">待复习 ${p.due.length} · 生词 ${p.weak.length} · 未学 ${p.fresh.length}</span></button>`
         + `</div>`
-        + `<div class="vlist"><button class="vlbtn" data-vlist="weak"><span>生词本</span><b>${weak}</b></button>`
-        + `<button class="vlbtn" data-vlist="mastered"><span>已掌握</span><b>${master}</b></button></div>`;
+        + `<div class="vlist">`
+        + `<button class="vlbtn" data-vlist="weak"><span>生词本</span><b>${weak}</b></button>`
+        + `<button class="vlbtn" data-vlist="mastered"><span>已掌握</span><b>${master}</b></button>`
+        + `</div>`;
       return;
     }
     host.innerHTML = (toolRow ? `<div class="tools">${toolRow}</div>` : "")

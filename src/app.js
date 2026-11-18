@@ -503,8 +503,7 @@ function renderNotes(){
         + `<div class="vtoday">`
         + `<span>今天已背 <b>${td.today}</b> / ${goal}${hit ? "　已达标" : ""}</span>`
         + (td.streak > 1 ? `<span>连续 <b>${td.streak}</b> 天</span>` : "")
-        + `<button class="vgoalbtn" data-goal="1">改目标</button>`
-        + `<button class="vgoalbtn" data-cal="1">记录</button>`
+        + `<span class="vlinks"><button data-goal="1">改目标</button><i>·</i><button data-cal="1">记录</button></span>`
         + `</div>`
         + `<div class="vgoalbar"><i style="width:${pct}%"></i></div>`
         + `<div class="vgoals hide" id="vgoals">`
@@ -518,8 +517,10 @@ function renderNotes(){
         + `<span class="vnum">${p.total} 条</span>`
         + `<span class="vsub">待复习 ${p.due.length} · 生词 ${p.weak.length} · 未学 ${p.fresh.length}</span></button>`
         + `</div>`
-        + `<div class="vlist"><button class="vlbtn" data-vlist="weak"><span>生词本</span><b>${weak}</b></button>`
-        + `<button class="vlbtn" data-vlist="mastered"><span>已掌握</span><b>${master}</b></button></div>`;
+        + `<div class="vlist">`
+        + `<button class="vlbtn" data-vlist="weak"><span>生词本</span><b>${weak}</b></button>`
+        + `<button class="vlbtn" data-vlist="mastered"><span>已掌握</span><b>${master}</b></button>`
+        + `</div>`;
       return;
     }
     host.innerHTML = (toolRow ? `<div class="tools">${toolRow}</div>` : "")
