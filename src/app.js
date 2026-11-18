@@ -250,7 +250,7 @@ function renderSidebar(){
   $("#bkTitle").textContent = DB.book.title;
   const ns = sections().length;
   const lb = (packById(DB.bookId).labels) || {};
-  $("#bkMeta").textContent = `${DB.book.chapters.length} ${lb.unit || "章"} · ${ns} 项 · ${DB.items.length} 道错题`;
+  $("#bkMeta").textContent = `${DB.book.chapters.length} ${lb.unit || "章"} · ${ns} ${lb.sec || "节"} · ${DB.items.length} 道错题`;
   const tocBtn = $("#btnToc");
   if(tocBtn) tocBtn.textContent = lb.toc || "目录";
 
@@ -974,8 +974,6 @@ function bind(){
     renderShelf();
   };
   $("#btnShelf").addEventListener("click", openShelf);
-  $("#btnShelf2").addEventListener("click", openShelf);
-  $("#btnImport2").addEventListener("click", ()=> $("#btnImport").click());
   $("#modBar").addEventListener("click", e=>{
     const b = e.target.closest("[data-mod]"); if(!b) return;
     openModule(+b.dataset.mod);

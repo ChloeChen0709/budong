@@ -512,8 +512,6 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
 .mini .mini-body p{margin:0 0 8px}
 
 /* ================= 四级：模块模式 ================= */
-.only-exam{display:none}
-body.exam .only-exam{display:inline-flex}
 body.exam{grid-template-columns:1fr}
 body.exam aside{display:none}
 body.exam .tabs{display:none}
@@ -747,7 +745,7 @@ body.introing > aside, body.introing > main{
   .head{display:block;margin-bottom:14px}
   h1{font-size:30px;line-height:1.15}
   .acts{
-    gap:20px;padding-top:0;margin-top:14px;
+    gap:16px;padding-top:0;margin-top:14px;
     flex-wrap:wrap;
   }
   .acts .ghost,.acts summary{font-size:12px;color:var(--muted)}
@@ -835,10 +833,6 @@ body.introing > aside, body.introing > main{
   <div class="bk">
     <div class="t" id="bkTitle">微积分（新文科）</div>
     <div class="m" id="bkMeta">8 章 · 25 节 · 8 道错题</div>
-    <div class="row">
-      <button class="tiny" id="btnShelf">书架</button>
-      <button class="tiny" id="btnImport">导入目录</button>
-    </div>
     <div class="usage" id="usage"></div>
     <button class="tocbtn" id="btnToc" aria-label="目录">目录</button>
   </div>
@@ -860,12 +854,12 @@ body.introing > aside, body.introing > main{
           <p><b>复习间隔</b>　不会 1 天，算错 2 天，审题 3 天。</p>
           <p><b>AI</b>　key 存本机；未填时讲解为规则提示。</p>
           <p><b>题图</b>　存在浏览器数据库，上限约 10GB；列表只显示缩略图。</p>
-          <p><b>版本</b>　2026-11-18 21:10 · 234931</p>
+          <p><b>版本</b>　2026-11-18 21:16 · 111c1a</p>
           <p><b>备份</b>　清除浏览器数据会清空。<button class="linky" id="btnBackup">下载备份</button> · <button class="linky" id="btnRestore">恢复</button><input type="file" id="fileRestore" accept=".json,application/json" class="hide"></p>
         </div>
       </details>
-      <button class="ghost only-exam" id="btnShelf2">书架</button>
-      <button class="ghost only-exam" id="btnImport2">导入</button>
+      <button class="ghost" id="btnShelf">书架</button>
+      <button class="ghost" id="btnImport">导入目录</button>
       <button class="ghost" id="btnPdf">导出 PDF</button>
       <button class="ghost" id="btnApi">AI 设置</button>
       <button class="ghost" id="btnReset">清空错题</button>
@@ -1324,7 +1318,7 @@ function renderSidebar(){
   $("#bkTitle").textContent = DB.book.title;
   const ns = sections().length;
   const lb = (packById(DB.bookId).labels) || {};
-  $("#bkMeta").textContent = `${DB.book.chapters.length} ${lb.unit || "章"} · ${ns} 项 · ${DB.items.length} 道错题`;
+  $("#bkMeta").textContent = `${DB.book.chapters.length} ${lb.unit || "章"} · ${ns} ${lb.sec || "节"} · ${DB.items.length} 道错题`;
   const tocBtn = $("#btnToc");
   if(tocBtn) tocBtn.textContent = lb.toc || "目录";
 
@@ -2048,8 +2042,6 @@ function bind(){
     renderShelf();
   };
   $("#btnShelf").addEventListener("click", openShelf);
-  $("#btnShelf2").addEventListener("click", openShelf);
-  $("#btnImport2").addEventListener("click", ()=> $("#btnImport").click());
   $("#modBar").addEventListener("click", e=>{
     const b = e.target.closest("[data-mod]"); if(!b) return;
     openModule(+b.dataset.mod);
