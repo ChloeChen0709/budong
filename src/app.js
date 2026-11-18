@@ -519,7 +519,7 @@ function renderNotes(){
   host.innerHTML = headWithBack
     + blk("概念", ul(concepts))
     + blk("重点题型", typs)
-    + blk("例题", exs);
+    + blk((packById(DB.bookId).labels || {}).ex || "例题", exs);
 }
 
 function openNotesEditor(id){
