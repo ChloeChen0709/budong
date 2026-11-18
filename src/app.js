@@ -504,6 +504,7 @@ function renderNotes(){
         + `<span>今天已背 <b>${td.today}</b> / ${goal}${hit ? "　已达标" : ""}</span>`
         + (td.streak > 1 ? `<span>连续 <b>${td.streak}</b> 天</span>` : "")
         + `<button class="vgoalbtn" data-goal="1">改目标</button>`
+        + `<button class="vgoalbtn" data-cal="1">记录</button>`
         + `</div>`
         + `<div class="vgoalbar"><i style="width:${pct}%"></i></div>`
         + `<div class="vgoals hide" id="vgoals">`
@@ -675,6 +676,38 @@ function vocabToday(){
     if((m[k] || 0) > 0){ streak++; d.setDate(d.getDate() - 1); } else break;
   }
   return { today: m[day] || 0, streak };
+}
+
+let calOffset = 0;
+function openCal(){ calOffset = 0; drawCal(); $("#modalVocabCal").classList.remove("hide"); }
+
+function drawCal(){
+  const m = DB.vocabDay || {};
+  const now = new Date();
+  const d = new Date(now.getFullYear(), now.getMonth() + calOffset, 1);
+  const y = d.getFullYear(), mon = d.getMonth();
+  $("#calMonth").textContent = `${y} 年 ${mon + 1} 月`;
+
+  const first = new Date(y, mon, 1);
+  const start = (first.getDay() + 6) % 7;          // 周一为一周之首
+  const days = new Date(y, mon + 1, 0).getDate();
+  const cells = [];
+  for(let i = 0; i < start; i++) cells.push(`<div class="calcell empty"></div>`);
+  let total = 0, active = 0;
+  for(let day = 1; day <= days; day++){
+    const key = `${y}-${String(mon + 1).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
+    const n = m[key] || 0;
+    total += n; if(n > 0) active++;
+    const isToday = key === new Date().toISOString().slice(0,10);
+    cells.push(`<div class="calcell${n ? " has" : ""}${isToday ? " today" : ""}">`
+      + `<span class="cd">${day}</span>`
+      + (n ? `<span class="cn">${n}</span>` : "")
+      + `</div>`);
+  }
+  $("#calGrid").innerHTML = `<div class="calwk">` +
+    ["一","二","三","四","五","六","日"].map(w=>`<span>${w}</span>`).join("") + `</div>`
+    + `<div class="calbody">${cells.join("")}</div>`;
+  $("#calMeta").textContent = active ? `本月共背 ${total} 个，学习 ${active} 天` : "这个月还没开始背。";
 }
 
 function openVocabList(filter){
@@ -1300,6 +1333,8 @@ function bind(){
     if(e.target.closest("[data-close]")) renderNotes();
   });
   $("#vocabShow").addEventListener("click", vocabShowBack);
+  $("#calPrev").addEventListener("click", ()=>{ calOffset--; drawCal(); });
+  $("#calNext").addEventListener("click", ()=>{ calOffset++; drawCal(); });
   $("#vocabCard").addEventListener("click", ()=>{ if(!VOCAB.shown) vocabShowBack(); });
   $("#vocabAct").addEventListener("click", e=>{
     const b = e.target.closest("[data-mark]"); if(!b) return;
@@ -1314,6 +1349,7 @@ function bind(){
     const tb = e.target.closest("[data-tool]"); if(tb){ openTool(tb.dataset.tool); return; }
     const vb = e.target.closest("[data-vocab]"); if(vb){ openVocab(vb.dataset.vocab); return; }
     const vls = e.target.closest("[data-vlist]"); if(vls){ openVocabList(vls.dataset.vlist); return; }
+    if(e.target.closest("[data-cal]")){ openCal(); return; }
     if(e.target.closest("[data-goal]")){ const g = $("#vgoals"); if(g) g.classList.toggle("hide"); return; }
     const sg = e.target.closest("[data-setgoal]");
     if(sg){ DB.vocabGoal = +sg.dataset.setgoal; save(); renderNotes(); return; }

@@ -265,6 +265,21 @@ ul.bars li:last-child{border-bottom:none}
 }
 .vgoals button.on{border-color:var(--ink);color:var(--ink);font-weight:600}
 
+/* 背诵月历 */
+.calhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;font-size:14px;color:var(--text)}
+.calgrid{font-size:12px}
+.calwk{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:8px;color:var(--muted);text-align:center}
+.calbody{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.calcell{
+  aspect-ratio:1/1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  border-radius:10px;color:var(--muted);position:relative;
+}
+.calcell.has{background:var(--bg-soft);color:var(--ink);font-weight:600}
+.calcell.today{box-shadow:inset 0 0 0 1px var(--ink)}
+.calcell.empty{background:none}
+.cd{font-size:12.5px}
+.cn{font-size:10px;color:var(--accent);margin-top:2px}
+
 .vtoday{
   display:flex;gap:26px;align-items:baseline;
   margin:0 0 18px;font-size:13.5px;color:var(--text);

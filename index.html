@@ -292,6 +292,21 @@ ul.bars li:last-child{border-bottom:none}
 }
 .vgoals button.on{border-color:var(--ink);color:var(--ink);font-weight:600}
 
+/* 背诵月历 */
+.calhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;font-size:14px;color:var(--text)}
+.calgrid{font-size:12px}
+.calwk{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:8px;color:var(--muted);text-align:center}
+.calbody{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.calcell{
+  aspect-ratio:1/1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  border-radius:10px;color:var(--muted);position:relative;
+}
+.calcell.has{background:var(--bg-soft);color:var(--ink);font-weight:600}
+.calcell.today{box-shadow:inset 0 0 0 1px var(--ink)}
+.calcell.empty{background:none}
+.cd{font-size:12.5px}
+.cn{font-size:10px;color:var(--accent);margin-top:2px}
+
 .vtoday{
   display:flex;gap:26px;align-items:baseline;
   margin:0 0 18px;font-size:13.5px;color:var(--text);
@@ -992,7 +1007,7 @@ body.introing > aside, body.introing > main{
           <p><b>复习间隔</b>　不会 1 天，算错 2 天，审题 3 天。</p>
           <p><b>AI</b>　key 存本机；未填时讲解为规则提示。</p>
           <p><b>题图</b>　存在浏览器数据库，上限约 10GB；列表只显示缩略图。</p>
-          <p><b>版本</b>　2026-11-19 00:05 · 9d1f64</p>
+          <p><b>版本</b>　2026-11-19 00:06 · 51139a</p>
           <p><b>备份</b>　清除浏览器数据会清空。<button class="linky" id="btnBackup">下载备份</button> · <button class="linky" id="btnRestore">恢复</button><input type="file" id="fileRestore" accept=".json,application/json" class="hide"></p>
         </div>
       </details>
@@ -1106,6 +1121,22 @@ body.introing > aside, body.introing > main{
       <button data-close>取消</button>
       <button class="primary" id="btnSaveNotes">保存</button>
     </div>
+  </div>
+</div>
+
+<div class="mask hide" id="modalVocabCal">
+  <div class="modal vocab">
+    <div class="vocabhead">
+      <span class="vocabtitle">背诵记录</span>
+      <button class="ghost" data-close>关闭</button>
+    </div>
+    <div class="calhead">
+      <button class="ghost" id="calPrev">←</button>
+      <span id="calMonth"></span>
+      <button class="ghost" id="calNext">→</button>
+    </div>
+    <div class="calgrid" id="calGrid"></div>
+    <div class="vocabmeta" id="calMeta"></div>
   </div>
 </div>
 
@@ -1758,6 +1789,7 @@ function renderNotes(){
         + `<span>今天已背 <b>${td.today}</b> / ${goal}${hit ? "　已达标" : ""}</span>`
         + (td.streak > 1 ? `<span>连续 <b>${td.streak}</b> 天</span>` : "")
         + `<button class="vgoalbtn" data-goal="1">改目标</button>`
+        + `<button class="vgoalbtn" data-cal="1">记录</button>`
         + `</div>`
         + `<div class="vgoalbar"><i style="width:${pct}%"></i></div>`
         + `<div class="vgoals hide" id="vgoals">`
@@ -1929,6 +1961,38 @@ function vocabToday(){
     if((m[k] || 0) > 0){ streak++; d.setDate(d.getDate() - 1); } else break;
   }
   return { today: m[day] || 0, streak };
+}
+
+let calOffset = 0;
+function openCal(){ calOffset = 0; drawCal(); $("#modalVocabCal").classList.remove("hide"); }
+
+function drawCal(){
+  const m = DB.vocabDay || {};
+  const now = new Date();
+  const d = new Date(now.getFullYear(), now.getMonth() + calOffset, 1);
+  const y = d.getFullYear(), mon = d.getMonth();
+  $("#calMonth").textContent = `${y} 年 ${mon + 1} 月`;
+
+  const first = new Date(y, mon, 1);
+  const start = (first.getDay() + 6) % 7;          // 周一为一周之首
+  const days = new Date(y, mon + 1, 0).getDate();
+  const cells = [];
+  for(let i = 0; i < start; i++) cells.push(`<div class="calcell empty"></div>`);
+  let total = 0, active = 0;
+  for(let day = 1; day <= days; day++){
+    const key = `${y}-${String(mon + 1).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
+    const n = m[key] || 0;
+    total += n; if(n > 0) active++;
+    const isToday = key === new Date().toISOString().slice(0,10);
+    cells.push(`<div class="calcell${n ? " has" : ""}${isToday ? " today" : ""}">`
+      + `<span class="cd">${day}</span>`
+      + (n ? `<span class="cn">${n}</span>` : "")
+      + `</div>`);
+  }
+  $("#calGrid").innerHTML = `<div class="calwk">` +
+    ["一","二","三","四","五","六","日"].map(w=>`<span>${w}</span>`).join("") + `</div>`
+    + `<div class="calbody">${cells.join("")}</div>`;
+  $("#calMeta").textContent = active ? `本月共背 ${total} 个，学习 ${active} 天` : "这个月还没开始背。";
 }
 
 function openVocabList(filter){
@@ -2554,6 +2618,8 @@ function bind(){
     if(e.target.closest("[data-close]")) renderNotes();
   });
   $("#vocabShow").addEventListener("click", vocabShowBack);
+  $("#calPrev").addEventListener("click", ()=>{ calOffset--; drawCal(); });
+  $("#calNext").addEventListener("click", ()=>{ calOffset++; drawCal(); });
   $("#vocabCard").addEventListener("click", ()=>{ if(!VOCAB.shown) vocabShowBack(); });
   $("#vocabAct").addEventListener("click", e=>{
     const b = e.target.closest("[data-mark]"); if(!b) return;
@@ -2568,6 +2634,7 @@ function bind(){
     const tb = e.target.closest("[data-tool]"); if(tb){ openTool(tb.dataset.tool); return; }
     const vb = e.target.closest("[data-vocab]"); if(vb){ openVocab(vb.dataset.vocab); return; }
     const vls = e.target.closest("[data-vlist]"); if(vls){ openVocabList(vls.dataset.vlist); return; }
+    if(e.target.closest("[data-cal]")){ openCal(); return; }
     if(e.target.closest("[data-goal]")){ const g = $("#vgoals"); if(g) g.classList.toggle("hide"); return; }
     const sg = e.target.closest("[data-setgoal]");
     if(sg){ DB.vocabGoal = +sg.dataset.setgoal; save(); renderNotes(); return; }
