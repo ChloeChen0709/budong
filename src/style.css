@@ -801,7 +801,7 @@ body.introing > aside, body.introing > main{
 /* ---------- 打印 ---------- */
 .printonly{display:none}
 @media print{
-  @page{margin:18mm 16mm}
+  @page{margin:16mm 15mm}
   body{display:block!important;background:#fff!important;height:auto!important;overflow:visible!important}
   aside,.tabs,.head,.toast,.mask,.viewer,.intro{display:none!important}
   main{display:none!important}

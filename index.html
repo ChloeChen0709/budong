@@ -828,7 +828,7 @@ body.introing > aside, body.introing > main{
 /* ---------- 打印 ---------- */
 .printonly{display:none}
 @media print{
-  @page{margin:18mm 16mm}
+  @page{margin:16mm 15mm}
   body{display:block!important;background:#fff!important;height:auto!important;overflow:visible!important}
   aside,.tabs,.head,.toast,.mask,.viewer,.intro{display:none!important}
   main{display:none!important}
@@ -1018,7 +1018,7 @@ body.introing > aside, body.introing > main{
           <p><b>复习间隔</b>　不会 1 天，算错 2 天，审题 3 天。</p>
           <p><b>AI</b>　key 存本机；未填时讲解为规则提示。</p>
           <p><b>题图</b>　存在浏览器数据库，上限约 10GB；列表只显示缩略图。</p>
-          <p><b>版本</b>　2026-11-19 00:14 · d1ee67</p>
+          <p><b>版本</b>　2026-11-19 00:17 · 3b3d53</p>
           <p><b>备份</b>　清除浏览器数据会清空。<button class="linky" id="btnBackup">下载备份</button> · <button class="linky" id="btnRestore">恢复</button><input type="file" id="fileRestore" accept=".json,application/json" class="hide"></p>
         </div>
       </details>
@@ -2561,7 +2561,7 @@ async function buildPrint(){
       });
     });
     host.innerHTML = `<div class="p-title">${esc(DB.book.title)} · 知识点</div>`
-      + `<div class="p-meta">导出时间 ${new Date().toLocaleString("zh-CN")}</div>` + out.join("");
+      + out.join("");
     return;
   }
   const items = [...DB.items].sort((a,b)=> String(a.sec).localeCompare(String(b.sec)));
@@ -2577,8 +2577,7 @@ async function buildPrint(){
       + `<div class="p-s">${esc(secTitle(it.sec))} · ${CM[it.cause].name}</div>`
       + (src ? `<img src="${src}" alt="">` : "") + `</div>`);
   }
-  host.innerHTML = `<div class="p-title">${esc(DB.book.title)} · 错题（${items.length}）</div>`
-    + `<div class="p-meta">导出时间 ${new Date().toLocaleString("zh-CN")}</div>` + parts.join("");
+  host.innerHTML = `<div class="p-title">${esc(DB.book.title)} · 错题（${items.length}）</div>` + parts.join("");
 }
 
 /* ================= 事件 ================= */
@@ -3047,7 +3046,16 @@ function bind(){
 
   $("#btnPdf").addEventListener("click", async ()=>{
     await buildPrint();
-    setTimeout(()=>window.print(), 120);
+    if(!localStorage.getItem("cuotiben.printTip")){
+      toast("打印窗口里把「页眉和页脚」取消勾选，导出的 PDF 就只有内容");
+      localStorage.setItem("cuotiben.printTip", "1");
+    }
+    const oldTitle = document.title;
+    document.title = "";
+    setTimeout(()=>{
+      window.print();
+      document.title = oldTitle;
+    }, 220);
   });
 
   $("#btnApi").addEventListener("click", ()=>{

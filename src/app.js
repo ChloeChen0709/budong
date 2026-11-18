@@ -1265,7 +1265,7 @@ async function buildPrint(){
       });
     });
     host.innerHTML = `<div class="p-title">${esc(DB.book.title)} · 知识点</div>`
-      + `<div class="p-meta">导出时间 ${new Date().toLocaleString("zh-CN")}</div>` + out.join("");
+      + out.join("");
     return;
   }
   const items = [...DB.items].sort((a,b)=> String(a.sec).localeCompare(String(b.sec)));
@@ -1281,8 +1281,7 @@ async function buildPrint(){
       + `<div class="p-s">${esc(secTitle(it.sec))} · ${CM[it.cause].name}</div>`
       + (src ? `<img src="${src}" alt="">` : "") + `</div>`);
   }
-  host.innerHTML = `<div class="p-title">${esc(DB.book.title)} · 错题（${items.length}）</div>`
-    + `<div class="p-meta">导出时间 ${new Date().toLocaleString("zh-CN")}</div>` + parts.join("");
+  host.innerHTML = `<div class="p-title">${esc(DB.book.title)} · 错题（${items.length}）</div>` + parts.join("");
 }
 
 /* ================= 事件 ================= */
@@ -1751,7 +1750,16 @@ function bind(){
 
   $("#btnPdf").addEventListener("click", async ()=>{
     await buildPrint();
-    setTimeout(()=>window.print(), 120);
+    if(!localStorage.getItem("cuotiben.printTip")){
+      toast("打印窗口里把「页眉和页脚」取消勾选，导出的 PDF 就只有内容");
+      localStorage.setItem("cuotiben.printTip", "1");
+    }
+    const oldTitle = document.title;
+    document.title = "";
+    setTimeout(()=>{
+      window.print();
+      document.title = oldTitle;
+    }, 220);
   });
 
   $("#btnApi").addEventListener("click", ()=>{
