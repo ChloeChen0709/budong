@@ -531,13 +531,11 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
 .mini .mini-body p{margin:0 0 8px}
 
 /* ================= 四级：模块模式 ================= */
-body.exam{grid-template-columns:1fr}
-body.exam aside{display:none}
 body.exam .tabs{display:none}
 body.exam .head{margin-bottom:26px}
 
 .modbar{
-  display:flex;gap:30px;overflow-x:auto;
+  display:flex;gap:32px;overflow-x:auto;
   border-bottom:1px solid var(--line);
   margin:0 0 46px;
   scrollbar-width:none;
@@ -563,7 +561,6 @@ body.exam .head{margin-bottom:26px}
 }
 
 @media (max-width:900px){
-  body.exam main{padding-top:18px}
   .modbar{gap:22px;margin-bottom:32px}
   .modbar button{font-size:14px;padding-bottom:13px}
   .modhead h2{font-size:24px}
@@ -873,7 +870,7 @@ body.introing > aside, body.introing > main{
           <p><b>复习间隔</b>　不会 1 天，算错 2 天，审题 3 天。</p>
           <p><b>AI</b>　key 存本机；未填时讲解为规则提示。</p>
           <p><b>题图</b>　存在浏览器数据库，上限约 10GB；列表只显示缩略图。</p>
-          <p><b>版本</b>　2026-11-18 23:17 · 098157</p>
+          <p><b>版本</b>　2026-11-18 23:19 · 9396db</p>
           <p><b>备份</b>　清除浏览器数据会清空。<button class="linky" id="btnBackup">下载备份</button> · <button class="linky" id="btnRestore">恢复</button><input type="file" id="fileRestore" accept=".json,application/json" class="hide"></p>
         </div>
       </details>
@@ -1367,7 +1364,11 @@ function renderSidebar(){
   if(tocBtn) tocBtn.textContent = lb.toc || "目录";
 
   let h = "";
-  DB.book.chapters.forEach(ch=>{
+  const chs = isExam()
+    ? DB.book.chapters.filter(c=>c.no === curModule || (curModule === "" && c === DB.book.chapters[0]))
+    : DB.book.chapters;
+  if(isExam() && chs.length === 0) chs.push(DB.book.chapters[0]);
+  chs.forEach(ch=>{
     const cn = sum(ch.sections.map(s=>cnt(s.id)));
     h += `<div class="ch">${ch.no} ${ch.title}${cn?` <span style="color:#b23a2f;font-weight:500">·${cn}</span>`:""}</div>`;
     if(ch.note) h += `<div class="chnote">${esc(ch.note)}</div>`;
@@ -1568,9 +1569,8 @@ function renderNotes(){
       const c = countOf(notesOf(s.id));
       return `<li data-goto="${s.id}"><span>${s.id} ${s.title}</span><span class="m">${c ? c + " 条" : "待补"}</span></li>`;
     }).join("");
-    host.innerHTML = `<div class="modhead"><h2>${esc(ch.title)}</h2>`
-      + (ch.note ? `<p class="modnote">${esc(ch.note)}</p>` : "")
-      + `</div><ul class="nlist">${rows}</ul>`;
+    host.innerHTML = (ch.note ? `<p class="modnote">${esc(ch.note)}</p>` : "")
+      + `<ul class="nlist">${rows}</ul>`;
     return;
   }
 
@@ -1705,12 +1705,13 @@ function openBook(id){
   const card = document.querySelector('[data-book="' + id + '"]');
   if(card) card.classList.add("opening");
   document.body.classList.add("shelf-leaving");
+  // 先在封面背后把内容换成目标书，等渲染完成再散场，避免露出上一本书
+  if(DB.bookId !== id) switchBook(id);
+  else { renderSidebar(); renderAll(); }
   openingTimer = setTimeout(()=>{
     openingTimer = null;
-    if(DB.bookId !== id) switchBook(id);
-    else { renderSidebar(); renderAll(); }
     document.body.classList.remove("shelf-open", "shelf-leaving");
-  }, 420);
+  }, 320);
 }
 
 function showShelf(){
@@ -2058,9 +2059,13 @@ function goTab(name){
   tab = name;
   $$(".tabs button").forEach(b=>b.classList.toggle("on", b.dataset.tab===name));
   ["map","items","review","notes"].forEach(t=>$("#tab-"+t).classList.toggle("hide", t!==name));
-  $("#hdTitle").textContent = isExam()
-    ? packById(DB.bookId).name
-    : (name==="map"?"薄弱点":name==="items"?"错题":name==="notes"?"知识点":"复习");
+  if(isExam()){
+    const ch = DB.book.chapters.find(c=>c.no === curModule);
+    const sec = curSec ? sections().find(x=>x.id === curSec) : null;
+    $("#hdTitle").textContent = sec ? sec.title : (ch ? ch.title : packById(DB.bookId).name);
+  }else{
+    $("#hdTitle").textContent = name==="map"?"薄弱点":name==="items"?"错题":name==="notes"?"知识点":"复习";
+  }
 }
 const QUOTA = 5000000;   // Chrome localStorage 实测约 5.05M 字符
 

@@ -279,7 +279,11 @@ function renderSidebar(){
   if(tocBtn) tocBtn.textContent = lb.toc || "目录";
 
   let h = "";
-  DB.book.chapters.forEach(ch=>{
+  const chs = isExam()
+    ? DB.book.chapters.filter(c=>c.no === curModule || (curModule === "" && c === DB.book.chapters[0]))
+    : DB.book.chapters;
+  if(isExam() && chs.length === 0) chs.push(DB.book.chapters[0]);
+  chs.forEach(ch=>{
     const cn = sum(ch.sections.map(s=>cnt(s.id)));
     h += `<div class="ch">${ch.no} ${ch.title}${cn?` <span style="color:#b23a2f;font-weight:500">·${cn}</span>`:""}</div>`;
     if(ch.note) h += `<div class="chnote">${esc(ch.note)}</div>`;
@@ -480,9 +484,8 @@ function renderNotes(){
       const c = countOf(notesOf(s.id));
       return `<li data-goto="${s.id}"><span>${s.id} ${s.title}</span><span class="m">${c ? c + " 条" : "待补"}</span></li>`;
     }).join("");
-    host.innerHTML = `<div class="modhead"><h2>${esc(ch.title)}</h2>`
-      + (ch.note ? `<p class="modnote">${esc(ch.note)}</p>` : "")
-      + `</div><ul class="nlist">${rows}</ul>`;
+    host.innerHTML = (ch.note ? `<p class="modnote">${esc(ch.note)}</p>` : "")
+      + `<ul class="nlist">${rows}</ul>`;
     return;
   }
 
@@ -617,12 +620,13 @@ function openBook(id){
   const card = document.querySelector('[data-book="' + id + '"]');
   if(card) card.classList.add("opening");
   document.body.classList.add("shelf-leaving");
+  // 先在封面背后把内容换成目标书，等渲染完成再散场，避免露出上一本书
+  if(DB.bookId !== id) switchBook(id);
+  else { renderSidebar(); renderAll(); }
   openingTimer = setTimeout(()=>{
     openingTimer = null;
-    if(DB.bookId !== id) switchBook(id);
-    else { renderSidebar(); renderAll(); }
     document.body.classList.remove("shelf-open", "shelf-leaving");
-  }, 420);
+  }, 320);
 }
 
 function showShelf(){
@@ -970,9 +974,13 @@ function goTab(name){
   tab = name;
   $$(".tabs button").forEach(b=>b.classList.toggle("on", b.dataset.tab===name));
   ["map","items","review","notes"].forEach(t=>$("#tab-"+t).classList.toggle("hide", t!==name));
-  $("#hdTitle").textContent = isExam()
-    ? packById(DB.bookId).name
-    : (name==="map"?"薄弱点":name==="items"?"错题":name==="notes"?"知识点":"复习");
+  if(isExam()){
+    const ch = DB.book.chapters.find(c=>c.no === curModule);
+    const sec = curSec ? sections().find(x=>x.id === curSec) : null;
+    $("#hdTitle").textContent = sec ? sec.title : (ch ? ch.title : packById(DB.bookId).name);
+  }else{
+    $("#hdTitle").textContent = name==="map"?"薄弱点":name==="items"?"错题":name==="notes"?"知识点":"复习";
+  }
 }
 const QUOTA = 5000000;   // Chrome localStorage 实测约 5.05M 字符
 

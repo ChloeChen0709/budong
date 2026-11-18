@@ -504,13 +504,11 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
 .mini .mini-body p{margin:0 0 8px}
 
 /* ================= 四级：模块模式 ================= */
-body.exam{grid-template-columns:1fr}
-body.exam aside{display:none}
 body.exam .tabs{display:none}
 body.exam .head{margin-bottom:26px}
 
 .modbar{
-  display:flex;gap:30px;overflow-x:auto;
+  display:flex;gap:32px;overflow-x:auto;
   border-bottom:1px solid var(--line);
   margin:0 0 46px;
   scrollbar-width:none;
@@ -536,7 +534,6 @@ body.exam .head{margin-bottom:26px}
 }
 
 @media (max-width:900px){
-  body.exam main{padding-top:18px}
   .modbar{gap:22px;margin-bottom:32px}
   .modbar button{font-size:14px;padding-bottom:13px}
   .modhead h2{font-size:24px}
