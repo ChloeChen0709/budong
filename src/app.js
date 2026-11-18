@@ -322,7 +322,7 @@ function renderMap(){
 
   if(!total){
     const stale = document.getElementById("compBar"); if(stale) stale.remove();
-    $("#mapLead").innerHTML = curSec ? "这一节还没有错题。" : "还没有错题。";
+    $("#mapLead").innerHTML = curSec ? "本节暂无错题" : "暂无错题";
     $("#matrix").innerHTML = ""; $("#mastery").innerHTML = "";
     return;
   }
@@ -545,7 +545,7 @@ function renderNotes(){
     : "";
   const head = `<div class="notes-head"><h2>${s.id} ${s.title}</h2><button class="tiny" data-edit="${s.id}">编辑</button></div>`;
   const headWithBack = back ? back + head : head;
-  if(!nt || !countOf(nt)){ host.innerHTML = headWithBack + `<div class="nempty">这一节还没有整理。</div>`; return; }
+  if(!nt || !countOf(nt)){ host.innerHTML = headWithBack + `<div class="nempty">本节暂无内容</div>`; return; }
 
   const concepts = nt.concepts || nt.points || [];
   const ul = arr => (arr && arr.length) ? `<ul>${arr.map(x=>`<li>${fmtQ(x)}</li>`).join("")}</ul>` : "";
@@ -714,7 +714,7 @@ function drawCal(){
 function openVocabList(filter){
   const list = vocabAll(filter);
   $("#vlTitle").textContent = filter === "weak" ? "生词本" : "已掌握";
-  $("#vlMeta").textContent = list.length ? `${list.length} 个` : "还没有";
+  $("#vlMeta").textContent = list.length ? `${list.length} 个` : "暂无";
   $("#vlBody").innerHTML = list.length
     ? list.map(e=>`<div class="vlrow"><span class="vlw">${esc(e.q)}</span><span class="vlm">${esc(e.a || "")}</span></div>`).join("")
     : `<p class="toolnote">${filter === "weak" ? "背词时标「不认识」或「模糊」的词会出现在这里。" : "标「认识」的词会收进这里。"}</p>`;
@@ -724,7 +724,7 @@ function openVocabList(filter){
 function openVocab(kind){
   const d = vocabDue(kind);
   const pool = shuffle(d.due.slice()).concat(shuffle(d.fresh.slice())).slice(0, 20);
-  if(!pool.length){ toast("今天这部分都复习完了"); return; }
+  if(!pool.length){ toast("今日已复习完"); return; }
   VOCAB = { pool, idx: 0, key: kind, shown: false, done: 0 };
   $("#vocabTitle").textContent = kind === "w" ? "核心词" : "高频词组";
   $("#modalVocab").classList.remove("hide");
@@ -830,7 +830,7 @@ async function runTool(){
   const t = TOOLS[id]; if(!t) return;
   const val = {};
   for(const f of t.fields){ val[f.id] = ($("#tf-"+f.id).value || "").trim(); }
-  if(t.fields.some(f=>!val[f.id])){ toast("先把内容填上"); return; }
+  if(t.fields.some(f=>!val[f.id])){ toast("内容为空"); return; }
 
   const out = $("#toolOut");
   out.classList.remove("hide");
@@ -1367,7 +1367,7 @@ function bind(){
   });
   $("#btnParse").addEventListener("click", ()=>{
     const chs = parseTOC($("#tocText").value);
-    if(!chs.length) return toast("没识别出章节，检查一下行首是不是“第X章”或“1.2”");
+    if(!chs.length) return toast("未识别出目录，检查「第X章」与「1.2」的写法");
     DB = { book:{title:DB.book.title, chapters:chs}, items:[], custom:true };
     curSec=null; save(); $("#modalImport").classList.add("hide");
     renderAll(); toast(`换成新目录：${chs.length} 章 ${chs.flatMap(c=>c.sections).length} 节`);
@@ -1417,11 +1417,11 @@ function bind(){
 
   async function handleImage(file){
     if(!file) return;
-    if(!/^image\//.test(file.type)) return toast("请选图片文件");
+    if(!/^image\//.test(file.type)) return toast("请选择图片");
     const cut = await openCrop(file);
     if(!cut) return;
     let imgs;
-    try{ imgs = await shrink(cut); }catch(e){ return toast("图片读不出来，换一张试试"); }
+    try{ imgs = await shrink(cut); }catch(e){ return toast("图片读取失败"); }
     pendingImg = imgs;
     setDropState(true);
     $("#imgPrev").src = imgs.thumb;
@@ -1647,7 +1647,7 @@ function bind(){
 
   $("#btnSaveItem").addEventListener("click", async ()=>{
     const q = qText();
-    if(!qPlainText() && !pendingImg) return toast("写个题目，或者传一张照片");
+    if(!qPlainText() && !pendingImg) return toast("需要题目或照片");
     const sec = $("#addSec").value || sections()[0].id;
     const id = "u"+Date.now();
     const item = { id, sec, cause:addCause, due:0, lapses:0,
@@ -1658,7 +1658,7 @@ function bind(){
       else { item.img = pendingImg.thumb; }   // IndexedDB 不可用就退回整张存本地
     }
     DB.items.unshift(item);
-    if(!save()) toast("文本空间满了：先把旧错题删几条");
+    if(!save()) toast("存储已满");
     pendingImg = null;
     renderAll(); $("#modalAdd").classList.add("hide");
     toast(`已记下：${secTitle(sec)}`);
@@ -1698,7 +1698,7 @@ function bind(){
       }).filter(e=>e.q)
     };
     DB.notes[id].edited = true;
-    if(!save()) toast("本地空间满了");
+    if(!save()) toast("存储已满");
     $("#modalNotes").classList.add("hide");
     renderNotes(); renderAddNotes(); toast("已保存");
   });
@@ -1742,7 +1742,7 @@ function bind(){
                notesVer: o.notesVer || 3, custom: !!o.custom };
         save(); renderAll();
         toast(`已恢复 ${items.length} 道错题`);
-      }catch(e){ toast("这个文件读不出来"); }
+      }catch(e){ toast("文件无法读取"); }
       ev.target.value = "";
     };
     r.readAsText(f);

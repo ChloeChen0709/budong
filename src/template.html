@@ -20,7 +20,6 @@
   <div class="shelf-in">
     <p class="shelf-kicker">选择书目</p>
     <div class="shelf-list" id="shelfList"></div>
-    <p class="shelf-note">每本书的错题与整理内容各自独立，互不影响。</p>
   </div>
 </div>
 
@@ -52,13 +51,12 @@
       <details class="help">
         <summary>说明</summary>
         <div class="help-panel">
-          <p><b>导入目录</b>　「第X章」为章，「1.2」为节，每行一条。</p>
-          <p><b>拍照记题</b>　图片先转文字；未填识图模型时只存图，文字手填。</p>
-          <p><b>复习间隔</b>　不会 1 天，算错 2 天，审题 3 天。</p>
-          <p><b>AI</b>　key 存本机；未填时讲解为规则提示。</p>
-          <p><b>题图</b>　存在浏览器数据库，上限约 10GB；列表只显示缩略图。</p>
+          <p><b>目录格式</b>　「第X章」为章，「1.2」为节，每行一条</p>
+          <p><b>复习间隔</b>　不会 1 天，算错 2 天，审题 3 天</p>
+          <p><b>AI</b>　key 存本机，未填时讲解为规则提示</p>
+          <p><b>题图</b>　存浏览器数据库，上限约 10GB</p>
           <p><b>版本</b>　{{BUILD}}</p>
-          <p><b>备份</b>　清除浏览器数据会清空。<button class="linky" id="btnBackup">下载备份</button> · <button class="linky" id="btnRestore">恢复</button><input type="file" id="fileRestore" accept=".json,application/json" class="hide"></p>
+          <p><b>备份</b>　清除浏览器数据即清空　<button class="linky" id="btnBackup">下载备份</button>·<button class="linky" id="btnRestore">恢复</button><input type="file" id="fileRestore" accept=".json,application/json" class="hide"></p>
         </div>
       </details>
       <button class="ghost" id="btnShelf">书架</button>
@@ -141,7 +139,7 @@
       </div>
     </details>
     <textarea id="tocText" spellcheck="false"></textarea>
-    <div class="note">导入会清空现有错题。</div>
+    <div class="note">导入将清空现有错题</div>
     <div class="modalfoot">
       <button data-close>取消</button>
       <button class="primary" id="btnParse">解析并替换</button>
@@ -248,7 +246,7 @@
       <div class="crop-box hide" id="cropBox"></div>
     </div>
     <div class="crop-actions">
-      <span class="hint">在图上拖拽，框出要保留的部分</span>
+      <span class="hint">拖拽框选保留区域</span>
       <button class="ghost" id="cropCancel">取消</button>
       <button class="ghost" id="cropAll">整张</button>
       <button class="primary" id="cropOk">确定</button>
@@ -264,7 +262,7 @@
     </div>
     <label class="f">题目照片（可选）</label>
     <div class="drop" id="dropZone">
-      <div id="dropIdle"><span class="pick">选择照片</span>手机可从相册选或直接拍，电脑可拖入或粘贴</div>
+      <div id="dropIdle"><span class="pick">选择照片</span>可拖入、粘贴或拍照</div>
       <div class="inner hide" id="dropOn">
         <img id="imgPrev" alt="题目照片">
         <div class="st" id="imgSt"></div>
@@ -274,7 +272,7 @@
     <input type="file" id="filePick" accept="image/*" class="hide">
     <label class="f" style="margin-top:14px">题目</label>
     <div id="addQ" class="mathinput" contenteditable="true" spellcheck="false" data-ph="例：∫ x·eˣ dx"></div>
-    <div class="hintbox" id="addHint">还没输入题目</div>
+    <div class="hintbox" id="addHint">未输入题目</div>
     <button type="button" class="kbtoggle" id="kbToggle">符号键盘</button>
     <div class="kb hide" id="kb"></div>
     <label class="f">错因</label>
@@ -298,8 +296,7 @@
     <details class="mini">
       <summary>说明</summary>
       <div class="mini-body">
-        <p>key 存在本机浏览器，直接发给你填的接口地址，不经过其他服务器。</p>
-        <p>不填也能用，讲解改为规则提示。</p>
+        <p>key 存本机，只发送到你填的接口地址。</p>
       </div>
     </details>
     <label class="f">选一家（会自动填好地址和模型）</label>
@@ -307,17 +304,17 @@
     <label class="f">接口地址（OpenAI 兼容，只填域名也行）</label>
     <input id="apiBase" placeholder="https://api.deepseek.com/v1/chat/completions">
     <label class="f">模型名（用来写讲解）</label>
-    <input id="apiModel" placeholder="点下面的「拉取模型列表」，从你账号里有的模型里选">
+    <input id="apiModel" placeholder="可拉取列表后选择">
     <div class="modelrow">
       <button type="button" class="ghost" id="btnModels">拉取模型列表</button>
       <span class="modelhint" id="modelHint"></span>
     </div>
     <div class="models hide" id="modelList"></div>
     <label class="f">识图模型（可选，填了才能用拍照识别）</label>
-    <input id="apiVision" placeholder="要支持看图的模型，例如 qwen-vl-max、glm-4v、gpt-4o">
+    <input id="apiVision" placeholder="如 qwen-vl-max、glm-4v">
     <label class="f">API Key</label>
     <input id="apiKey" type="password" placeholder="sk-...">
-    <div class="apitest" id="apiTest">还没测过。填完点「测试连接」，它会真的发一次请求。</div>
+    <div class="apitest" id="apiTest">未测试</div>
     <div class="modalfoot">
       <button class="ghost" data-close>取消</button>
       <button class="ghost" id="btnTest">测试连接</button>
