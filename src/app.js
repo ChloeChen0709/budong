@@ -491,6 +491,20 @@ function renderNotes(){
     const toolRow = Object.entries(TOOLS).filter(([,t])=>t.chapter===ch.title).map(([id,t])=>
       `<button class="toolrow" data-tool="${id}"><span class="tooltag">AI 批改</span>`
       + `<span class="toolname">${esc(t.title)}</span><span class="toolgo">→</span></button>`).join("");
+
+    if(ch.title === "词汇"){
+      const w = vocabDue("w"), p = vocabDue("p");
+      host.innerHTML = (toolRow ? `<div class="tools">${toolRow}</div>` : "")
+        + `<div class="vch"> ` +
+          `<button class="vcard" data-vocab="w"><span class="vname">核心词</span>`
+        + `<span class="vnum">${w.total} 个</span>`
+        + `<span class="vsub">待复习 ${w.due.length} · 未学 ${w.fresh.length}</span></button>`
+        + `<button class="vcard" data-vocab="p"><span class="vname">高频词组</span>`
+        + `<span class="vnum">${p.total} 条</span>`
+        + `<span class="vsub">待复习 ${p.due.length} · 未学 ${p.fresh.length}</span></button>`
+        + `</div>`;
+      return;
+    }
     host.innerHTML = (toolRow ? `<div class="tools">${toolRow}</div>` : "")
       + `<ul class="nlist">${rows}</ul>`;
     return;
@@ -570,6 +584,88 @@ function renderAddNotes(){
   box.classList.remove("hide");
   box.innerHTML = `<details class="mini"><summary>本节概念 · ${ps.length} 条</summary>`
     + `<div class="mini-body"><ul>${ps.map(x=>`<li>${fmtQ(x)}</li>`).join("")}</ul></div></details>`;
+}
+
+/* ================= 背单词（艾宾浩斯） ================= */
+const EBB = [4, 24, 48, 96, 168, 360, 720];   // 小时后：4h 1d 2d 4d 7d 15d 30d
+let VOCAB = { pool: [], idx: 0, key: "", shown: false, done: 0 };
+
+function vocabState(){ DB.srs = DB.srs || {}; return DB.srs; }
+function vocabKey(kind, q){ return kind + ":" + q; }
+
+function vocabDue(kind){
+  const st = vocabState(), now = Date.now();
+  const src = DB.notes[kind === "w" ? "5.1" : "5.2"];
+  const all = (src && src.examples) || [];
+  const due = [], fresh = [];
+  all.forEach(e=>{
+    const rec = st[vocabKey(kind, e.q)];
+    if(!rec) fresh.push(e);
+    else if(rec.due <= now) due.push(e);
+  });
+  return { due, fresh, total: all.length, learned: all.length - fresh.length };
+}
+
+function openVocab(kind){
+  const d = vocabDue(kind);
+  const pool = d.due.concat(d.fresh).slice(0, 20);
+  if(!pool.length){ toast("今天这部分都复习完了"); return; }
+  VOCAB = { pool, idx: 0, key: kind, shown: false, done: 0 };
+  $("#vocabTitle").textContent = kind === "w" ? "核心词" : "高频词组";
+  $("#modalVocab").classList.remove("hide");
+  drawVocab();
+}
+
+function vocabMark(mark){
+  const st = vocabState();
+  const item = VOCAB.pool[VOCAB.idx]; if(!item) return;
+  const k = vocabKey(VOCAB.key, item.q);
+  const rec = st[k] || { stage: 0, seen: 0 };
+  rec.seen++;
+  if(mark === "again") rec.stage = 0;
+  else if(mark === "hard") rec.stage = Math.max(0, rec.stage - 1);
+  else rec.stage = Math.min(EBB.length - 1, rec.stage + 1);
+  const h = EBB[rec.stage];
+  rec.due = Date.now() + h * 3600 * 1000;
+  st[k] = rec;
+  save();
+  VOCAB.idx++; VOCAB.done++;
+  if(VOCAB.idx >= VOCAB.pool.length){ finishVocab(); return; }
+  drawVocab();
+}
+
+function finishVocab(){
+  const d = vocabDue(VOCAB.key);
+  $("#vocabCard").classList.add("hide");
+  $("#vocabAct").classList.add("hide");
+  $("#vocabTap").classList.add("hide");
+  $("#vocabMeta").innerHTML = `这一轮完成，共 ${VOCAB.done} 个。`
+    + `<br>剩余待复习 ${d.due.length}，未学 ${d.fresh.length}。`;
+  $("#vocabBar").style.width = "100%";
+  setTimeout(()=>{ $("#modalVocab").classList.add("hide"); renderNotes(); }, 1200);
+}
+
+function drawVocab(){
+  const it = VOCAB.pool[VOCAB.idx]; if(!it) return;
+  VOCAB.shown = false;
+  $("#vocabCard").classList.remove("hide");
+  $("#vocabAct").classList.add("hide");
+  $("#vocabTap").classList.remove("hide");
+  $("#vocabWord").textContent = it.q;
+  $("#vocabMean").textContent = it.a || "";
+  $("#vocabNote").textContent = it.analysis || "";
+  $("#vocabBack").classList.add("hide");
+  const pct = Math.round(VOCAB.idx / VOCAB.pool.length * 100);
+  $("#vocabBar").style.width = pct + "%";
+  const d = vocabDue(VOCAB.key);
+  $("#vocabMeta").textContent = `${VOCAB.idx + 1} / ${VOCAB.pool.length}　待复习 ${d.due.length} · 未学 ${d.fresh.length}`;
+}
+
+function vocabShowBack(){
+  VOCAB.shown = true;
+  $("#vocabBack").classList.remove("hide");
+  $("#vocabTap").classList.add("hide");
+  $("#vocabAct").classList.remove("hide");
 }
 
 /* ================= 批改工具（四级） ================= */
@@ -1109,6 +1205,12 @@ function bind(){
   };
   $("#btnShelf").addEventListener("click", openShelf);
   $("#btnRunTool").addEventListener("click", runTool);
+  $("#vocabShow").addEventListener("click", vocabShowBack);
+  $("#vocabCard").addEventListener("click", ()=>{ if(!VOCAB.shown) vocabShowBack(); });
+  $("#vocabAct").addEventListener("click", e=>{
+    const b = e.target.closest("[data-mark]"); if(!b) return;
+    vocabMark(b.dataset.mark);
+  });
 
   $("#modBar").addEventListener("click", e=>{
     const b = e.target.closest("[data-mod]"); if(!b) return;
@@ -1116,6 +1218,7 @@ function bind(){
   });
   $("#notesCard").addEventListener("click", e=>{
     const tb = e.target.closest("[data-tool]"); if(tb){ openTool(tb.dataset.tool); return; }
+    const vb = e.target.closest("[data-vocab]"); if(vb){ openVocab(vb.dataset.vocab); return; }
     const b = e.target.closest("[data-back]"); if(!b) return;
     curSec = null; renderModBar(); renderNotes();
   });

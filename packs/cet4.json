@@ -161,42 +161,14 @@
     "sections": [
      {
       "id": "5.1",
-      "title": "核心词 List 1–6",
+      "title": "核心词",
       "kw": [
        "词汇"
       ]
      },
      {
       "id": "5.2",
-      "title": "核心词 List 7–12",
-      "kw": [
-       "词汇"
-      ]
-     },
-     {
-      "id": "5.3",
-      "title": "核心词 List 13–18",
-      "kw": [
-       "词汇"
-      ]
-     },
-     {
-      "id": "5.4",
-      "title": "核心词 List 19–24",
-      "kw": [
-       "词汇"
-      ]
-     },
-     {
-      "id": "5.5",
-      "title": "核心词 List 25–33",
-      "kw": [
-       "词汇"
-      ]
-     },
-     {
-      "id": "5.6",
-      "title": "高频词组 236 条",
+      "title": "高频词组",
       "kw": [
        "词组"
       ]
@@ -1991,11 +1963,701 @@
     }
    ]
   },
+  "3.4": {
+   "concepts": [
+    "按七个主题收录 79 组固定译法，写作文时直接调取，不要临场拼。",
+    "主题词的价值在于准确：文化融合是 cultural integration，不是 culture mix。",
+    "图表作文的趋势词分四档：升、降、波动、不变，用词要分开，不能都写 change。"
+   ],
+   "types": [],
+   "examples": [
+    {
+     "q": "砍伐森林",
+     "a": "deforestation",
+     "analysis": "环境污染与保护"
+    },
+    {
+     "q": "过度捕捞",
+     "a": "overfishing",
+     "analysis": "环境污染与保护"
+    },
+    {
+     "q": "节约资源",
+     "a": "conserve / save resources",
+     "analysis": "环境污染与保护"
+    },
+    {
+     "q": "资源短缺",
+     "a": "resource shortage",
+     "analysis": "环境污染与保护"
+    },
+    {
+     "q": "资源枯竭",
+     "a": "resources exhaustion",
+     "analysis": "环境污染与保护"
+    },
+    {
+     "q": "破坏环境",
+     "a": "damage environment",
+     "analysis": "环境污染与保护"
+    },
+    {
+     "q": "餐厅卫生",
+     "a": "restaurant sanitary",
+     "analysis": "环境污染与保护"
+    },
+    {
+     "q": "汽车限购",
+     "a": "vehicle purchase restriction",
+     "analysis": "环境污染与保护"
+    },
+    {
+     "q": "交通堵塞",
+     "a": "traffic jam / congestion",
+     "analysis": "环境污染与保护"
+    },
+    {
+     "q": "环境恶化",
+     "a": "environmental deterioration",
+     "analysis": "环境污染与保护"
+    },
+    {
+     "q": "一次性塑料袋",
+     "a": "disposable plastic bags",
+     "analysis": "环境污染与保护"
+    },
+    {
+     "q": "文化融合",
+     "a": "cultural integration / fusion / blending",
+     "analysis": "文化类"
+    },
+    {
+     "q": "文化多样性",
+     "a": "cultural diversity",
+     "analysis": "文化类"
+    },
+    {
+     "q": "文化交流",
+     "a": "cultural exchange / interaction",
+     "analysis": "文化类"
+    },
+    {
+     "q": "外国文化",
+     "a": "alien culture",
+     "analysis": "文化类"
+    },
+    {
+     "q": "文化遗产",
+     "a": "cultural heritage",
+     "analysis": "文化类"
+    },
+    {
+     "q": "民间艺术",
+     "a": "folk art",
+     "analysis": "文化类"
+    },
+    {
+     "q": "东西方文化",
+     "a": "oriental and occidental cultures",
+     "analysis": "文化类"
+    },
+    {
+     "q": "强化文化认同",
+     "a": "strengthen cultural identity",
+     "analysis": "文化类"
+    },
+    {
+     "q": "保护珍惜传统",
+     "a": "preserve and cherish tradition",
+     "analysis": "文化类"
+    },
+    {
+     "q": "文化创新",
+     "a": "cultural innovation",
+     "analysis": "文化类"
+    },
+    {
+     "q": "人工智能",
+     "a": "Artificial Intelligence",
+     "analysis": "科技类"
+    },
+    {
+     "q": "网络暴力",
+     "a": "cyber violence / crime / bullying",
+     "analysis": "科技类"
+    },
+    {
+     "q": "共享经济",
+     "a": "sharing economy",
+     "analysis": "科技类"
+    },
+    {
+     "q": "自动驾驶",
+     "a": "auto-pilot",
+     "analysis": "科技类"
+    },
+    {
+     "q": "团购",
+     "a": "group purchasing",
+     "analysis": "科技类"
+    },
+    {
+     "q": "网络购物",
+     "a": "online shopping",
+     "analysis": "科技类"
+    },
+    {
+     "q": "潜在风险",
+     "a": "potential risks",
+     "analysis": "科技类"
+    },
+    {
+     "q": "与时俱进",
+     "a": "keep abreast with the times",
+     "analysis": "科技类"
+    },
+    {
+     "q": "心理健康",
+     "a": "mental / psychological health",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "孝顺",
+     "a": "fulfill filial duty",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "互相理解",
+     "a": "mutual understanding",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "代际关系",
+     "a": "generational relationship",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "代沟",
+     "a": "generation gap",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "证书",
+     "a": "certificate",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "创业",
+     "a": "start a business",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "出国深造",
+     "a": "study abroad; go abroad for further education",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "就业压力",
+     "a": "employment pressure",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "溺爱",
+     "a": "spoil; dote on",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "履行责任",
+     "a": "fulfill / perform responsibility or duty",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "老龄化社会",
+     "a": "aging society",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "啃老族",
+     "a": "the NEET group (Not in Education, Employment or Training)",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "高考",
+     "a": "college entrance examination",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "全面发展",
+     "a": "well-round development",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "传授知识",
+     "a": "impart knowledge",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "开阔眼界",
+     "a": "broaden one's horizon / vision",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "盲目崇拜",
+     "a": "blind worship",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "道德意识",
+     "a": "moral awareness",
+     "analysis": "社会热点类"
+    },
+    {
+     "q": "乐观",
+     "a": "optimism",
+     "analysis": "品质类"
+    },
+    {
+     "q": "悲观",
+     "a": "pessimism",
+     "analysis": "品质类"
+    },
+    {
+     "q": "勤奋",
+     "a": "diligence",
+     "analysis": "品质类"
+    },
+    {
+     "q": "耐心",
+     "a": "patience",
+     "analysis": "品质类"
+    },
+    {
+     "q": "创新",
+     "a": "innovation",
+     "analysis": "品质类"
+    },
+    {
+     "q": "感恩",
+     "a": "be grateful",
+     "analysis": "品质类"
+    },
+    {
+     "q": "奉献",
+     "a": "contribution",
+     "analysis": "品质类"
+    },
+    {
+     "q": "节约",
+     "a": "thrift",
+     "analysis": "品质类"
+    },
+    {
+     "q": "谨慎",
+     "a": "prudence",
+     "analysis": "品质类"
+    },
+    {
+     "q": "坚持",
+     "a": "persistence / perseverance",
+     "analysis": "品质类"
+    },
+    {
+     "q": "自信",
+     "a": "self-confidence; self-assurance",
+     "analysis": "品质类"
+    },
+    {
+     "q": "谦虚",
+     "a": "modesty",
+     "analysis": "品质类"
+    },
+    {
+     "q": "尊老爱幼",
+     "a": "respect the old and care for the young",
+     "analysis": "品质类"
+    },
+    {
+     "q": "成功无捷径",
+     "a": "There is no shortcut to success.",
+     "analysis": "品质类"
+    },
+    {
+     "q": "宜居城市",
+     "a": "livable city",
+     "analysis": "记述与写景"
+    },
+    {
+     "q": "湖光山色",
+     "a": "a landscape of lakes and mountains",
+     "analysis": "记述与写景"
+    },
+    {
+     "q": "避暑胜地",
+     "a": "summer resort",
+     "analysis": "记述与写景"
+    },
+    {
+     "q": "风景如画的",
+     "a": "picturesque",
+     "analysis": "记述与写景"
+    },
+    {
+     "q": "全景",
+     "a": "panorama",
+     "analysis": "记述与写景"
+    },
+    {
+     "q": "当地美食",
+     "a": "local cuisine",
+     "analysis": "记述与写景"
+    },
+    {
+     "q": "美味零食",
+     "a": "mouth-watering snacks",
+     "analysis": "记述与写景"
+    },
+    {
+     "q": "苗条的",
+     "a": "skinny, slim, slender",
+     "analysis": "记述与写景"
+    },
+    {
+     "q": "强壮的",
+     "a": "well-built",
+     "analysis": "记述与写景"
+    },
+    {
+     "q": "包容的",
+     "a": "tolerant",
+     "analysis": "记述与写景"
+    },
+    {
+     "q": "自信的",
+     "a": "self-assured",
+     "analysis": "记述与写景"
+    },
+    {
+     "q": "教养",
+     "a": "have good upbringing",
+     "analysis": "记述与写景"
+    },
+    {
+     "q": "值得信赖的",
+     "a": "reliable / credible",
+     "analysis": "记述与写景"
+    },
+    {
+     "q": "表上升",
+     "a": "increase, climb, rise, jump, rocket, spike, soar, surge",
+     "analysis": "图表趋势"
+    },
+    {
+     "q": "表下降",
+     "a": "drop, fall, reduce, decline, diminish, descend, plunge, plummet, slump",
+     "analysis": "图表趋势"
+    },
+    {
+     "q": "表波动",
+     "a": "fluctuate; slightly increase / decrease",
+     "analysis": "图表趋势"
+    },
+    {
+     "q": "表不变",
+     "a": "remain stable / steady / constant; stay the same",
+     "analysis": "图表趋势"
+    }
+   ]
+  },
+  "4.3": {
+   "concepts": [
+    "按《中国文化概况》的五大部分抽了 55 组主题词：国家概况、文学宗教艺术、教育科技体育、民俗风情、旅游览胜。",
+    "这本书的正文是英文散文，不适合整段背；翻译题真正要用的是这些主题的固定译法。",
+    "专有名词首字母要大写：the Great Wall、the Spring Festival、the Silk Road。",
+    "文化类翻译的万能句型：… dates back to … ／ … is regarded as … ／ … has been passed down for centuries。"
+   ],
+   "types": [],
+   "examples": [
+    {
+     "q": "中华人民共和国",
+     "a": "the People's Republic of China",
+     "analysis": "国家概况"
+    },
+    {
+     "q": "宪法",
+     "a": "the Constitution",
+     "analysis": "国家概况"
+    },
+    {
+     "q": "全国人民代表大会",
+     "a": "the National People's Congress (NPC)",
+     "analysis": "国家概况"
+    },
+    {
+     "q": "自治区",
+     "a": "autonomous region",
+     "analysis": "国家概况"
+    },
+    {
+     "q": "一国两制",
+     "a": "one country, two systems",
+     "analysis": "国家概况"
+    },
+    {
+     "q": "改革开放",
+     "a": "reform and opening-up",
+     "analysis": "国家概况"
+    },
+    {
+     "q": "青藏铁路",
+     "a": "the Qinghai-Tibet Railway",
+     "analysis": "国家概况"
+    },
+    {
+     "q": "西部大开发",
+     "a": "the Western Development Strategy",
+     "analysis": "国家概况"
+    },
+    {
+     "q": "民族团结",
+     "a": "ethnic unity",
+     "analysis": "国家概况"
+    },
+    {
+     "q": "基础设施",
+     "a": "infrastructure",
+     "analysis": "国家概况"
+    },
+    {
+     "q": "儒家思想",
+     "a": "Confucianism",
+     "analysis": "文学宗教艺术"
+    },
+    {
+     "q": "道家",
+     "a": "Taoism",
+     "analysis": "文学宗教艺术"
+    },
+    {
+     "q": "佛教",
+     "a": "Buddhism",
+     "analysis": "文学宗教艺术"
+    },
+    {
+     "q": "孔子",
+     "a": "Confucius",
+     "analysis": "文学宗教艺术"
+    },
+    {
+     "q": "四大名著",
+     "a": "the Four Great Classical Novels",
+     "analysis": "文学宗教艺术"
+    },
+    {
+     "q": "《红楼梦》",
+     "a": "A Dream of Red Mansions",
+     "analysis": "文学宗教艺术"
+    },
+    {
+     "q": "唐诗",
+     "a": "Tang poetry",
+     "analysis": "文学宗教艺术"
+    },
+    {
+     "q": "书法",
+     "a": "calligraphy",
+     "analysis": "文学宗教艺术"
+    },
+    {
+     "q": "京剧",
+     "a": "Peking Opera",
+     "analysis": "文学宗教艺术"
+    },
+    {
+     "q": "水墨画",
+     "a": "ink and wash painting",
+     "analysis": "文学宗教艺术"
+    },
+    {
+     "q": "中医",
+     "a": "Traditional Chinese Medicine (TCM)",
+     "analysis": "文学宗教艺术"
+    },
+    {
+     "q": "针灸",
+     "a": "acupuncture",
+     "analysis": "文学宗教艺术"
+    },
+    {
+     "q": "科举制度",
+     "a": "the imperial examination system",
+     "analysis": "教育科技体育"
+    },
+    {
+     "q": "四大发明",
+     "a": "the Four Great Inventions",
+     "analysis": "教育科技体育"
+    },
+    {
+     "q": "造纸术",
+     "a": "papermaking",
+     "analysis": "教育科技体育"
+    },
+    {
+     "q": "火药",
+     "a": "gunpowder",
+     "analysis": "教育科技体育"
+    },
+    {
+     "q": "指南针",
+     "a": "the compass",
+     "analysis": "教育科技体育"
+    },
+    {
+     "q": "活字印刷",
+     "a": "movable-type printing",
+     "analysis": "教育科技体育"
+    },
+    {
+     "q": "天宫空间站",
+     "a": "the Tiangong space station",
+     "analysis": "教育科技体育"
+    },
+    {
+     "q": "嫦娥探月工程",
+     "a": "the Chang'e lunar probe program",
+     "analysis": "教育科技体育"
+    },
+    {
+     "q": "玉兔号月球车",
+     "a": "the Yutu lunar rover",
+     "analysis": "教育科技体育"
+    },
+    {
+     "q": "孔子学院",
+     "a": "the Confucius Institute",
+     "analysis": "教育科技体育"
+    },
+    {
+     "q": "太极拳",
+     "a": "Tai Chi",
+     "analysis": "教育科技体育"
+    },
+    {
+     "q": "武术",
+     "a": "martial arts",
+     "analysis": "教育科技体育"
+    },
+    {
+     "q": "春节",
+     "a": "the Spring Festival",
+     "analysis": "民俗风情"
+    },
+    {
+     "q": "中秋节",
+     "a": "the Mid-Autumn Festival",
+     "analysis": "民俗风情"
+    },
+    {
+     "q": "端午节",
+     "a": "the Dragon Boat Festival",
+     "analysis": "民俗风情"
+    },
+    {
+     "q": "元宵节",
+     "a": "the Lantern Festival",
+     "analysis": "民俗风情"
+    },
+    {
+     "q": "二十四节气",
+     "a": "the 24 Solar Terms",
+     "analysis": "民俗风情"
+    },
+    {
+     "q": "十二生肖",
+     "a": "the Chinese zodiac",
+     "analysis": "民俗风情"
+    },
+    {
+     "q": "剪纸",
+     "a": "paper-cutting",
+     "analysis": "民俗风情"
+    },
+    {
+     "q": "舞龙舞狮",
+     "a": "dragon and lion dance",
+     "analysis": "民俗风情"
+    },
+    {
+     "q": "饺子",
+     "a": "dumplings",
+     "analysis": "民俗风情"
+    },
+    {
+     "q": "月饼",
+     "a": "mooncakes",
+     "analysis": "民俗风情"
+    },
+    {
+     "q": "春联",
+     "a": "Spring Festival couplets",
+     "analysis": "民俗风情"
+    },
+    {
+     "q": "长城",
+     "a": "the Great Wall",
+     "analysis": "旅游览胜"
+    },
+    {
+     "q": "故宫",
+     "a": "the Palace Museum / the Forbidden City",
+     "analysis": "旅游览胜"
+    },
+    {
+     "q": "兵马俑",
+     "a": "the Terracotta Warriors",
+     "analysis": "旅游览胜"
+    },
+    {
+     "q": "丝绸之路",
+     "a": "the Silk Road",
+     "analysis": "旅游览胜"
+    },
+    {
+     "q": "西湖",
+     "a": "the West Lake",
+     "analysis": "旅游览胜"
+    },
+    {
+     "q": "苏州园林",
+     "a": "Suzhou gardens",
+     "analysis": "旅游览胜"
+    },
+    {
+     "q": "泰山",
+     "a": "Mount Tai",
+     "analysis": "旅游览胜"
+    },
+    {
+     "q": "大熊猫",
+     "a": "the giant panda",
+     "analysis": "旅游览胜"
+    },
+    {
+     "q": "世界文化遗产",
+     "a": "World Cultural Heritage",
+     "analysis": "旅游览胜"
+    },
+    {
+     "q": "茶文化",
+     "a": "tea culture",
+     "analysis": "旅游览胜"
+    }
+   ]
+  },
   "5.1": {
    "concepts": [
-    "本组共 480 词，来自四级核心 1500 词 List 1–6。",
-    "先看单词自己回想意思，再点开核对——这样才是记忆，不是浏览。",
-    "带 ☞ 的派生词与原词同源，一起记能一次记住两三个。"
+    "四级核心 1489 词，按艾宾浩斯间隔复习。",
+    "先自己回想，再点开看释义；认识/模糊/不认识会决定下次出现的时间。"
    ],
    "types": [],
    "examples": [
@@ -4398,17 +5060,7 @@
      "q": "lease  [li:s]  n.",
      "a": "租约 vt. 出租；租用",
      "analysis": ""
-    }
-   ]
-  },
-  "5.2": {
-   "concepts": [
-    "本组共 380 词，来自四级核心 1500 词 List 7–12。",
-    "先看单词自己回想意思，再点开核对——这样才是记忆，不是浏览。",
-    "带 ☞ 的派生词与原词同源，一起记能一次记住两三个。"
-   ],
-   "types": [],
-   "examples": [
+    },
     {
      "q": "thoughtful  [ˈθɔ:tfl]  a.",
      "a": "沉思的；体贴的",
@@ -6308,17 +6960,7 @@
      "q": "microphone  [ˈmaɪkrəfəʊn]  n.",
      "a": "话筒；麦克风；传声器",
      "analysis": "派生：accountable a. 负责任的；discount n. 折扣；journal n. 杂志；期刊；日记；incredible a. 难以置信的；极好的；citizen n. 市民；civilization n. 文明；开化；implicit a. 含蓄的；隐含的；implication n. 可能的影响；暗指；牵涉；devotion n. 奉献；忠诚；immediate a. 立即的；目前的；intermediate a. 中间的；中级的；editor n. 编辑；编者；migrant n. 候鸟；移居者；departure n. 离开；启程；extension n. 扩大；延伸；extensive a. 广阔的；广泛的；appearance n. 外貌；到来；significance n. 重要性；tolerance n. 忍受；宽容；耐性；tolerant a. 容忍的；宽容的；pursuit n. 追赶；追求；爱好；harmonious a. 和谐的；协调的；infectious a. 传染的；有感染力的；prosperity n. 繁荣；昌盛；兴旺；consciousness n. 意识；观念；detect v. 发现；查明；poisonous a. 有毒的；有害的；deliberately ad. 故意；不慌不忙地；occupation n. 占领；职业；occasional a. 偶然的；临时的；representative a. 典型的；有代表性的 n. 代表；fragment n. 碎片；片段；preference n. 偏爱，喜爱；insurance n. 保险；保险费；inflation n. 通货膨胀；instrument n. 仪器；工具；乐器；手段；navigate v.导肮；航行；vigorous a. 充满活力的；moist a. 潮湿的；湿润的；innovation n. 创新；革新；改革；innovative a. 革新的；创新的；furniture n. 家具；dense a. 密集的；collaboration n. 合作；disintegrate v. (使）碎裂；（使）解体；distinguished a. 卓越的；杰出的；procession n. 队伍；行列；excess n. 过量；过度 [＇ekses] a. 超额的；excessive a. 过分的；过度的；inhabit v. 居住于；栖息于；inhabitant n. 居民；栖息动物；conversation n. (非正式的）谈话；会话；infinite a. 无限的；极大的；definition n. 定义；definite a. 明确的；确定的；refined a. 精炼的；举止优雅的；commune n. 公社；explosion n. 爆炸；激增；intelligence n. 才智；情报；entrepreneur n. 企业家；exhausted a. 筋疲力尽的；用光的；executive n. 主管领导；管理人员 a. 执行的；reliable a. 可靠的；stable a. 稳定的；fertilizer n. 肥料；expertise n. 专门的知识或技能；priority n. 优先；优先权；utility n. 实用；效用；公共事业；equivalent a. 等价的；相等的 n. 等价物；相等物；consequently ad. 因此；所以；sympathetic a. 同情的；赞同的；passionate a. 狂热的；fluent a. 流利的；流畅的；coherent a. 合乎逻辑的；有条理的；compulsory a. 强制性的；必修的；义务的；consultant n. 顾问；depression n. 抑郁；萧条期；segment n. 部分；段［seg'ment] vt. 分割；liberty n. 自由；drainage n. 排水；排水系统；corresponding a. 符合的；相应的；accordance n. 一致；按照；accordingly ad. 相应地；照着；因此；enthusiastic a. 热情的；logical a. 符合逻辑的；符合情理的；acquaintance n. 熟人；evidence n. 证据；证明；invisible a. 看不见的；vision n. 视力；视野；democratic a. 民主的；resistance n. 反对；抵抗；resistant a. 抵抗的；抗…的；irrational a. 不合理的；dictation n. 听写；口述；initial a. 最初的；开始的；initiative n. 倡议；自发性；主动性；fundamental a. 基础的；基本的；根本的；injury n. 伤害；损伤；waterproof a. 防水的；resolve v. 解决；决心；invasion n. 入侵；侵略；conquest n. 征服；克服；enquiry (亦作 inquiry) n. 询问；调查；探索；essential a. 基本的；必要的；极其重要的；perseverance n. 毅力；韧性；conservative a. 保守的 n. 保守的人；保守党；criticism n. 批评；评论；critical a. 批判的；极其重要的；accommodation n. 住处；住宿；marvelous a. 不可思议的；latter a. 后者的；后面的；recognition n. 认出；承认；loyalty n. 忠诚；忠实；sincerely ad. 真诚地；诚实地；poetry n. 诗集；诗歌；poet n. 诗人；tension n. 紧张；拉近；张力；elect v. 选举；sorrowful a. 悲伤的；hazardous a. 危险的；有害的；diagnosis n. 诊断；判断；composition n. 构成；作品；作文；exposure n. 面临；暴露；揭发；luxurious a. 奢侈的；豪华的；transition n. 过渡；转变；application n. 应用；申请；应用程序（APP）；remark v. & n. 评论；emergence n. 出现；发生；浮现；emergency n. 紧急情况；突发事件 a. 紧急的；emission n. 发射；喷射；散发；evolution n. 演变；进化论；进展；comprehension n. 理解；comprehensive a. 广泛的；综合的；commercial a. 商业的 n. 广告；original a. 原来的；首创的；oriental a. 东方的；东方人的；dominant a. 占优势的；统治的；possession n. 拥有；财产；residence n. 住处；住宅；resident n. 居民 a. 居住的；automate v. 自动化；motivation n. 动机；动力；additional a. 额外的；附加的；alleged a. 声称的；被断言的；涉嫌的；mercifully ad.（不幸中）幸运地；horizontal a. 水平的；southwest n. 西南方 adj. 西南的 adv.往西南; 来自西南；southern adj. 南的；南方的 n. 南；南方 adv. 在南方；southeast n. 东南；东南地区 adj. 东南的 adv. 来自东南；northern adj. 北方的；北部的；northwest n. 西北 adj. 位于西北的；向西北；northeast n. 东北 adj. 位于东北的 adv. 向东北；anyone pron. 任何人；anybody pron. 任何人；anything pron. 任何事物；anyway adv. 无论如何；反正；尽管如此；至少；anywhere adv. 无论何处；在任何地方；communist n. 共产主义者 adj. 共产主义的；greet vt. 问候；招呼；迎接；对……作出反应；Christian n. 基督教徒 adj. 基督教的；基督教徒的；operator n. 操作人员；接线员；经营者；psychology n. 心理学；心理；microscope n. 显微镜；microwave n. 微波炉"
-    }
-   ]
-  },
-  "5.3": {
-   "concepts": [
-    "本组共 180 词，来自四级核心 1500 词 List 13–18。",
-    "先看单词自己回想意思，再点开核对——这样才是记忆，不是浏览。",
-    "带 ☞ 的派生词与原词同源，一起记能一次记住两三个。"
-   ],
-   "types": [],
-   "examples": [
+    },
     {
      "q": "interfere  [ˌɪntəˈfɪə(r)]  vi.",
      "a": "干涉；干扰；妨碍",
@@ -7218,17 +7860,7 @@
      "q": "advocate  [ˈædvəkeɪt]  vt.",
      "a": "主张；提倡 n. 拥护者",
      "analysis": ""
-    }
-   ]
-  },
-  "5.4": {
-   "concepts": [
-    "本组共 180 词，来自四级核心 1500 词 List 19–24。",
-    "先看单词自己回想意思，再点开核对——这样才是记忆，不是浏览。",
-    "带 ☞ 的派生词与原词同源，一起记能一次记住两三个。"
-   ],
-   "types": [],
-   "examples": [
+    },
     {
      "q": "accumulate  [əˈkju:mjəleɪt]  vt.",
      "a": "积累；积攒",
@@ -8128,17 +8760,7 @@
      "q": "loyal  [ˈlɔɪəl]  a.",
      "a": "忠诚的；忠心的",
      "analysis": ""
-    }
-   ]
-  },
-  "5.5": {
-   "concepts": [
-    "本组共 269 词，来自四级核心 1500 词 List 25–33。",
-    "先看单词自己回想意思，再点开核对——这样才是记忆，不是浏览。",
-    "带 ☞ 的派生词与原词同源，一起记能一次记住两三个。"
-   ],
-   "types": [],
-   "examples": [
+    },
     {
      "q": "dizzy  [ˈdɪzi]  a.",
      "a": "头晕目眩的；眩晕的",
@@ -9486,11 +10108,10 @@
     }
    ]
   },
-  "5.6": {
+  "5.2": {
    "concepts": [
-    "共 190 条，全部来自四级高频词组表。",
-    "词组要连着介词一起背：abide by 不是 abide，be absent from 不是 absent。",
-    "同一动词的不同搭配意思可能完全相反，on account of 是“因为”，on no account 是“绝不”。"
+    "190 条高频词组，动词和介词一起记。",
+    "同样按艾宾浩斯排程，答错的下次更快出现。"
    ],
    "types": [],
    "examples": [
@@ -10443,697 +11064,6 @@
      "q": "(be) at an end (=finished)",
      "a": "结束了",
      "analysis": ""
-    }
-   ]
-  },
-  "3.4": {
-   "concepts": [
-    "按七个主题收录 79 组固定译法，写作文时直接调取，不要临场拼。",
-    "主题词的价值在于准确：文化融合是 cultural integration，不是 culture mix。",
-    "图表作文的趋势词分四档：升、降、波动、不变，用词要分开，不能都写 change。"
-   ],
-   "types": [],
-   "examples": [
-    {
-     "q": "砍伐森林",
-     "a": "deforestation",
-     "analysis": "环境污染与保护"
-    },
-    {
-     "q": "过度捕捞",
-     "a": "overfishing",
-     "analysis": "环境污染与保护"
-    },
-    {
-     "q": "节约资源",
-     "a": "conserve / save resources",
-     "analysis": "环境污染与保护"
-    },
-    {
-     "q": "资源短缺",
-     "a": "resource shortage",
-     "analysis": "环境污染与保护"
-    },
-    {
-     "q": "资源枯竭",
-     "a": "resources exhaustion",
-     "analysis": "环境污染与保护"
-    },
-    {
-     "q": "破坏环境",
-     "a": "damage environment",
-     "analysis": "环境污染与保护"
-    },
-    {
-     "q": "餐厅卫生",
-     "a": "restaurant sanitary",
-     "analysis": "环境污染与保护"
-    },
-    {
-     "q": "汽车限购",
-     "a": "vehicle purchase restriction",
-     "analysis": "环境污染与保护"
-    },
-    {
-     "q": "交通堵塞",
-     "a": "traffic jam / congestion",
-     "analysis": "环境污染与保护"
-    },
-    {
-     "q": "环境恶化",
-     "a": "environmental deterioration",
-     "analysis": "环境污染与保护"
-    },
-    {
-     "q": "一次性塑料袋",
-     "a": "disposable plastic bags",
-     "analysis": "环境污染与保护"
-    },
-    {
-     "q": "文化融合",
-     "a": "cultural integration / fusion / blending",
-     "analysis": "文化类"
-    },
-    {
-     "q": "文化多样性",
-     "a": "cultural diversity",
-     "analysis": "文化类"
-    },
-    {
-     "q": "文化交流",
-     "a": "cultural exchange / interaction",
-     "analysis": "文化类"
-    },
-    {
-     "q": "外国文化",
-     "a": "alien culture",
-     "analysis": "文化类"
-    },
-    {
-     "q": "文化遗产",
-     "a": "cultural heritage",
-     "analysis": "文化类"
-    },
-    {
-     "q": "民间艺术",
-     "a": "folk art",
-     "analysis": "文化类"
-    },
-    {
-     "q": "东西方文化",
-     "a": "oriental and occidental cultures",
-     "analysis": "文化类"
-    },
-    {
-     "q": "强化文化认同",
-     "a": "strengthen cultural identity",
-     "analysis": "文化类"
-    },
-    {
-     "q": "保护珍惜传统",
-     "a": "preserve and cherish tradition",
-     "analysis": "文化类"
-    },
-    {
-     "q": "文化创新",
-     "a": "cultural innovation",
-     "analysis": "文化类"
-    },
-    {
-     "q": "人工智能",
-     "a": "Artificial Intelligence",
-     "analysis": "科技类"
-    },
-    {
-     "q": "网络暴力",
-     "a": "cyber violence / crime / bullying",
-     "analysis": "科技类"
-    },
-    {
-     "q": "共享经济",
-     "a": "sharing economy",
-     "analysis": "科技类"
-    },
-    {
-     "q": "自动驾驶",
-     "a": "auto-pilot",
-     "analysis": "科技类"
-    },
-    {
-     "q": "团购",
-     "a": "group purchasing",
-     "analysis": "科技类"
-    },
-    {
-     "q": "网络购物",
-     "a": "online shopping",
-     "analysis": "科技类"
-    },
-    {
-     "q": "潜在风险",
-     "a": "potential risks",
-     "analysis": "科技类"
-    },
-    {
-     "q": "与时俱进",
-     "a": "keep abreast with the times",
-     "analysis": "科技类"
-    },
-    {
-     "q": "心理健康",
-     "a": "mental / psychological health",
-     "analysis": "社会热点类"
-    },
-    {
-     "q": "孝顺",
-     "a": "fulfill filial duty",
-     "analysis": "社会热点类"
-    },
-    {
-     "q": "互相理解",
-     "a": "mutual understanding",
-     "analysis": "社会热点类"
-    },
-    {
-     "q": "代际关系",
-     "a": "generational relationship",
-     "analysis": "社会热点类"
-    },
-    {
-     "q": "代沟",
-     "a": "generation gap",
-     "analysis": "社会热点类"
-    },
-    {
-     "q": "证书",
-     "a": "certificate",
-     "analysis": "社会热点类"
-    },
-    {
-     "q": "创业",
-     "a": "start a business",
-     "analysis": "社会热点类"
-    },
-    {
-     "q": "出国深造",
-     "a": "study abroad; go abroad for further education",
-     "analysis": "社会热点类"
-    },
-    {
-     "q": "就业压力",
-     "a": "employment pressure",
-     "analysis": "社会热点类"
-    },
-    {
-     "q": "溺爱",
-     "a": "spoil; dote on",
-     "analysis": "社会热点类"
-    },
-    {
-     "q": "履行责任",
-     "a": "fulfill / perform responsibility or duty",
-     "analysis": "社会热点类"
-    },
-    {
-     "q": "老龄化社会",
-     "a": "aging society",
-     "analysis": "社会热点类"
-    },
-    {
-     "q": "啃老族",
-     "a": "the NEET group (Not in Education, Employment or Training)",
-     "analysis": "社会热点类"
-    },
-    {
-     "q": "高考",
-     "a": "college entrance examination",
-     "analysis": "社会热点类"
-    },
-    {
-     "q": "全面发展",
-     "a": "well-round development",
-     "analysis": "社会热点类"
-    },
-    {
-     "q": "传授知识",
-     "a": "impart knowledge",
-     "analysis": "社会热点类"
-    },
-    {
-     "q": "开阔眼界",
-     "a": "broaden one's horizon / vision",
-     "analysis": "社会热点类"
-    },
-    {
-     "q": "盲目崇拜",
-     "a": "blind worship",
-     "analysis": "社会热点类"
-    },
-    {
-     "q": "道德意识",
-     "a": "moral awareness",
-     "analysis": "社会热点类"
-    },
-    {
-     "q": "乐观",
-     "a": "optimism",
-     "analysis": "品质类"
-    },
-    {
-     "q": "悲观",
-     "a": "pessimism",
-     "analysis": "品质类"
-    },
-    {
-     "q": "勤奋",
-     "a": "diligence",
-     "analysis": "品质类"
-    },
-    {
-     "q": "耐心",
-     "a": "patience",
-     "analysis": "品质类"
-    },
-    {
-     "q": "创新",
-     "a": "innovation",
-     "analysis": "品质类"
-    },
-    {
-     "q": "感恩",
-     "a": "be grateful",
-     "analysis": "品质类"
-    },
-    {
-     "q": "奉献",
-     "a": "contribution",
-     "analysis": "品质类"
-    },
-    {
-     "q": "节约",
-     "a": "thrift",
-     "analysis": "品质类"
-    },
-    {
-     "q": "谨慎",
-     "a": "prudence",
-     "analysis": "品质类"
-    },
-    {
-     "q": "坚持",
-     "a": "persistence / perseverance",
-     "analysis": "品质类"
-    },
-    {
-     "q": "自信",
-     "a": "self-confidence; self-assurance",
-     "analysis": "品质类"
-    },
-    {
-     "q": "谦虚",
-     "a": "modesty",
-     "analysis": "品质类"
-    },
-    {
-     "q": "尊老爱幼",
-     "a": "respect the old and care for the young",
-     "analysis": "品质类"
-    },
-    {
-     "q": "成功无捷径",
-     "a": "There is no shortcut to success.",
-     "analysis": "品质类"
-    },
-    {
-     "q": "宜居城市",
-     "a": "livable city",
-     "analysis": "记述与写景"
-    },
-    {
-     "q": "湖光山色",
-     "a": "a landscape of lakes and mountains",
-     "analysis": "记述与写景"
-    },
-    {
-     "q": "避暑胜地",
-     "a": "summer resort",
-     "analysis": "记述与写景"
-    },
-    {
-     "q": "风景如画的",
-     "a": "picturesque",
-     "analysis": "记述与写景"
-    },
-    {
-     "q": "全景",
-     "a": "panorama",
-     "analysis": "记述与写景"
-    },
-    {
-     "q": "当地美食",
-     "a": "local cuisine",
-     "analysis": "记述与写景"
-    },
-    {
-     "q": "美味零食",
-     "a": "mouth-watering snacks",
-     "analysis": "记述与写景"
-    },
-    {
-     "q": "苗条的",
-     "a": "skinny, slim, slender",
-     "analysis": "记述与写景"
-    },
-    {
-     "q": "强壮的",
-     "a": "well-built",
-     "analysis": "记述与写景"
-    },
-    {
-     "q": "包容的",
-     "a": "tolerant",
-     "analysis": "记述与写景"
-    },
-    {
-     "q": "自信的",
-     "a": "self-assured",
-     "analysis": "记述与写景"
-    },
-    {
-     "q": "教养",
-     "a": "have good upbringing",
-     "analysis": "记述与写景"
-    },
-    {
-     "q": "值得信赖的",
-     "a": "reliable / credible",
-     "analysis": "记述与写景"
-    },
-    {
-     "q": "表上升",
-     "a": "increase, climb, rise, jump, rocket, spike, soar, surge",
-     "analysis": "图表趋势"
-    },
-    {
-     "q": "表下降",
-     "a": "drop, fall, reduce, decline, diminish, descend, plunge, plummet, slump",
-     "analysis": "图表趋势"
-    },
-    {
-     "q": "表波动",
-     "a": "fluctuate; slightly increase / decrease",
-     "analysis": "图表趋势"
-    },
-    {
-     "q": "表不变",
-     "a": "remain stable / steady / constant; stay the same",
-     "analysis": "图表趋势"
-    }
-   ]
-  },
-  "4.3": {
-   "concepts": [
-    "按《中国文化概况》的五大部分抽了 55 组主题词：国家概况、文学宗教艺术、教育科技体育、民俗风情、旅游览胜。",
-    "这本书的正文是英文散文，不适合整段背；翻译题真正要用的是这些主题的固定译法。",
-    "专有名词首字母要大写：the Great Wall、the Spring Festival、the Silk Road。",
-    "文化类翻译的万能句型：… dates back to … ／ … is regarded as … ／ … has been passed down for centuries。"
-   ],
-   "types": [],
-   "examples": [
-    {
-     "q": "中华人民共和国",
-     "a": "the People's Republic of China",
-     "analysis": "国家概况"
-    },
-    {
-     "q": "宪法",
-     "a": "the Constitution",
-     "analysis": "国家概况"
-    },
-    {
-     "q": "全国人民代表大会",
-     "a": "the National People's Congress (NPC)",
-     "analysis": "国家概况"
-    },
-    {
-     "q": "自治区",
-     "a": "autonomous region",
-     "analysis": "国家概况"
-    },
-    {
-     "q": "一国两制",
-     "a": "one country, two systems",
-     "analysis": "国家概况"
-    },
-    {
-     "q": "改革开放",
-     "a": "reform and opening-up",
-     "analysis": "国家概况"
-    },
-    {
-     "q": "青藏铁路",
-     "a": "the Qinghai-Tibet Railway",
-     "analysis": "国家概况"
-    },
-    {
-     "q": "西部大开发",
-     "a": "the Western Development Strategy",
-     "analysis": "国家概况"
-    },
-    {
-     "q": "民族团结",
-     "a": "ethnic unity",
-     "analysis": "国家概况"
-    },
-    {
-     "q": "基础设施",
-     "a": "infrastructure",
-     "analysis": "国家概况"
-    },
-    {
-     "q": "儒家思想",
-     "a": "Confucianism",
-     "analysis": "文学宗教艺术"
-    },
-    {
-     "q": "道家",
-     "a": "Taoism",
-     "analysis": "文学宗教艺术"
-    },
-    {
-     "q": "佛教",
-     "a": "Buddhism",
-     "analysis": "文学宗教艺术"
-    },
-    {
-     "q": "孔子",
-     "a": "Confucius",
-     "analysis": "文学宗教艺术"
-    },
-    {
-     "q": "四大名著",
-     "a": "the Four Great Classical Novels",
-     "analysis": "文学宗教艺术"
-    },
-    {
-     "q": "《红楼梦》",
-     "a": "A Dream of Red Mansions",
-     "analysis": "文学宗教艺术"
-    },
-    {
-     "q": "唐诗",
-     "a": "Tang poetry",
-     "analysis": "文学宗教艺术"
-    },
-    {
-     "q": "书法",
-     "a": "calligraphy",
-     "analysis": "文学宗教艺术"
-    },
-    {
-     "q": "京剧",
-     "a": "Peking Opera",
-     "analysis": "文学宗教艺术"
-    },
-    {
-     "q": "水墨画",
-     "a": "ink and wash painting",
-     "analysis": "文学宗教艺术"
-    },
-    {
-     "q": "中医",
-     "a": "Traditional Chinese Medicine (TCM)",
-     "analysis": "文学宗教艺术"
-    },
-    {
-     "q": "针灸",
-     "a": "acupuncture",
-     "analysis": "文学宗教艺术"
-    },
-    {
-     "q": "科举制度",
-     "a": "the imperial examination system",
-     "analysis": "教育科技体育"
-    },
-    {
-     "q": "四大发明",
-     "a": "the Four Great Inventions",
-     "analysis": "教育科技体育"
-    },
-    {
-     "q": "造纸术",
-     "a": "papermaking",
-     "analysis": "教育科技体育"
-    },
-    {
-     "q": "火药",
-     "a": "gunpowder",
-     "analysis": "教育科技体育"
-    },
-    {
-     "q": "指南针",
-     "a": "the compass",
-     "analysis": "教育科技体育"
-    },
-    {
-     "q": "活字印刷",
-     "a": "movable-type printing",
-     "analysis": "教育科技体育"
-    },
-    {
-     "q": "天宫空间站",
-     "a": "the Tiangong space station",
-     "analysis": "教育科技体育"
-    },
-    {
-     "q": "嫦娥探月工程",
-     "a": "the Chang'e lunar probe program",
-     "analysis": "教育科技体育"
-    },
-    {
-     "q": "玉兔号月球车",
-     "a": "the Yutu lunar rover",
-     "analysis": "教育科技体育"
-    },
-    {
-     "q": "孔子学院",
-     "a": "the Confucius Institute",
-     "analysis": "教育科技体育"
-    },
-    {
-     "q": "太极拳",
-     "a": "Tai Chi",
-     "analysis": "教育科技体育"
-    },
-    {
-     "q": "武术",
-     "a": "martial arts",
-     "analysis": "教育科技体育"
-    },
-    {
-     "q": "春节",
-     "a": "the Spring Festival",
-     "analysis": "民俗风情"
-    },
-    {
-     "q": "中秋节",
-     "a": "the Mid-Autumn Festival",
-     "analysis": "民俗风情"
-    },
-    {
-     "q": "端午节",
-     "a": "the Dragon Boat Festival",
-     "analysis": "民俗风情"
-    },
-    {
-     "q": "元宵节",
-     "a": "the Lantern Festival",
-     "analysis": "民俗风情"
-    },
-    {
-     "q": "二十四节气",
-     "a": "the 24 Solar Terms",
-     "analysis": "民俗风情"
-    },
-    {
-     "q": "十二生肖",
-     "a": "the Chinese zodiac",
-     "analysis": "民俗风情"
-    },
-    {
-     "q": "剪纸",
-     "a": "paper-cutting",
-     "analysis": "民俗风情"
-    },
-    {
-     "q": "舞龙舞狮",
-     "a": "dragon and lion dance",
-     "analysis": "民俗风情"
-    },
-    {
-     "q": "饺子",
-     "a": "dumplings",
-     "analysis": "民俗风情"
-    },
-    {
-     "q": "月饼",
-     "a": "mooncakes",
-     "analysis": "民俗风情"
-    },
-    {
-     "q": "春联",
-     "a": "Spring Festival couplets",
-     "analysis": "民俗风情"
-    },
-    {
-     "q": "长城",
-     "a": "the Great Wall",
-     "analysis": "旅游览胜"
-    },
-    {
-     "q": "故宫",
-     "a": "the Palace Museum / the Forbidden City",
-     "analysis": "旅游览胜"
-    },
-    {
-     "q": "兵马俑",
-     "a": "the Terracotta Warriors",
-     "analysis": "旅游览胜"
-    },
-    {
-     "q": "丝绸之路",
-     "a": "the Silk Road",
-     "analysis": "旅游览胜"
-    },
-    {
-     "q": "西湖",
-     "a": "the West Lake",
-     "analysis": "旅游览胜"
-    },
-    {
-     "q": "苏州园林",
-     "a": "Suzhou gardens",
-     "analysis": "旅游览胜"
-    },
-    {
-     "q": "泰山",
-     "a": "Mount Tai",
-     "analysis": "旅游览胜"
-    },
-    {
-     "q": "大熊猫",
-     "a": "the giant panda",
-     "analysis": "旅游览胜"
-    },
-    {
-     "q": "世界文化遗产",
-     "a": "World Cultural Heritage",
-     "analysis": "旅游览胜"
-    },
-    {
-     "q": "茶文化",
-     "a": "tea culture",
-     "analysis": "旅游览胜"
     }
    ]
   }
