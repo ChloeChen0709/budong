@@ -73,7 +73,8 @@ def main():
             "book": p["book"],
             "notes": public_notes(p["notes"]),
         })
-    content_js = "const PACKS = " + dump(slim) + ";\n"
+    body_hash = hashlib.sha1(dump(slim).encode("utf-8")).hexdigest()[:8]
+    content_js = "const PACKS = " + dump(slim) + ";\nconst CONTENT_VER = \"" + body_hash + "\";\n"
 
     stamp = datetime.now().strftime("%Y-%m-%d %H:%M") + " · " + \
             hashlib.sha1((template + css + app + content_js).encode("utf-8")).hexdigest()[:6]

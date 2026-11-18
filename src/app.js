@@ -147,11 +147,25 @@ function load(id){
         if(Array.isArray(DB.items) && DB.items.length === 14 && DB.items.every(it=>/^s\d+$/.test(it.id))){
           DB.items = seedItems();
         }
-        if(!DB.notes || DB.notesVer !== 3){ DB.notes = deepClone(NOTES); DB.notesVer = 3; }
+        syncNotes();
       }
     }
   }catch(e){}
 }
+/* 内容包更新后，把新的节合进来；手改过的节（edited）不动 */
+function syncNotes(){
+  if(typeof CONTENT_VER === "undefined") return;
+  const fresh = (DB.contentVer !== CONTENT_VER);
+  DB.notes = DB.notes || {};
+  for(const id in NOTES){
+    const cur = DB.notes[id];
+    const empty = !cur || (!(cur.concepts||[]).length && !(cur.types||[]).length && !(cur.examples||[]).length);
+    if(empty || (fresh && !cur.edited)) DB.notes[id] = deepClone(NOTES[id]);
+  }
+  DB.notesVer = 3;
+  DB.contentVer = CONTENT_VER;
+}
+
 function save(){
   try{
     localStorage.setItem(storeKey(), JSON.stringify(DB));
@@ -1323,6 +1337,7 @@ function bind(){
         return { q: p[0] || "", a: p[1] || "", analysis: p[2] || "" };
       }).filter(e=>e.q)
     };
+    DB.notes[id].edited = true;
     if(!save()) toast("本地空间满了");
     $("#modalNotes").classList.add("hide");
     renderNotes(); renderAddNotes(); toast("已保存");
