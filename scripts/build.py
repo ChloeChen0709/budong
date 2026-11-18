@@ -66,6 +66,7 @@ def main():
             "name": p["name"],
             "tagline": p.get("tagline", ""),
             "mark": p.get("mark", ""),
+            "labels": p.get("labels", {}),
             "meta": p.get("meta", ""),
             "book": p["book"],
             "notes": public_notes(p["notes"]),

@@ -248,12 +248,16 @@ function renderSidebar(){
   const cnt = id => DB.items.filter(i=>i.sec===id).length;
   $("#bkTitle").textContent = DB.book.title;
   const ns = sections().length;
-  $("#bkMeta").textContent = `${DB.book.chapters.length} 章 · ${ns} 节 · ${DB.items.length} 道错题`;
+  const lb = (packById(DB.bookId).labels) || {};
+  $("#bkMeta").textContent = `${DB.book.chapters.length} ${lb.unit || "章"} · ${ns} 项 · ${DB.items.length} 道错题`;
+  const tocBtn = $("#btnToc");
+  if(tocBtn) tocBtn.textContent = lb.toc || "目录";
 
   let h = "";
   DB.book.chapters.forEach(ch=>{
     const cn = sum(ch.sections.map(s=>cnt(s.id)));
     h += `<div class="ch">${ch.no} ${ch.title}${cn?` <span style="color:#b23a2f;font-weight:500">·${cn}</span>`:""}</div>`;
+    if(ch.note) h += `<div class="chnote">${esc(ch.note)}</div>`;
     ch.sections.forEach(s=>{
       const n = cnt(s.id), lv = levelOf(s.id);
       h += `<div class="sec${curSec===s.id?" on":""}" data-sec="${s.id}">
@@ -273,6 +277,10 @@ function renderSidebar(){
 
 /* ================= 地图 ================= */
 function renderMap(){
+  const lb = packById(DB.bookId).labels || {};
+  const sw = lb.sec || "节";
+  if($("#hMatrix")) $("#hMatrix").textContent = `按${sw} × 错因`;
+  if($("#hMastery")) $("#hMastery").textContent = `各${sw}掌握度`;
   const items = curSec ? DB.items.filter(i=>i.sec===curSec) : DB.items;
   const c = {}; CAUSES.forEach(x=>c[x.k]=0);
   items.forEach(i=>c[i.cause]++);
@@ -321,7 +329,8 @@ function renderMap(){
   }).sort((a,b)=>b.total-a.total);
   const max = Math.max(1, ...rows.flatMap(r=>CAUSES.map(x=>r.cells[x.k])));
 
-  let h = `<thead><tr><th>节</th>${CAUSES.map(x=>`<th class="c">${x.name}</th>`).join("")}<th class="t">合计</th></tr></thead><tbody>`;
+  const uw = (packById(DB.bookId).labels || {}).sec || "节";
+  let h = `<thead><tr><th>${uw}</th>${CAUSES.map(x=>`<th class="c">${x.name}</th>`).join("")}<th class="t">合计</th></tr></thead><tbody>`;
   rows.forEach(r=>{
     h += `<tr><td title="${secTitle(r.id)}">${secTitle(r.id)}</td>`;
     CAUSES.forEach(x=>{
