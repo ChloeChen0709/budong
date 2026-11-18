@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""把 src/ 与 packs/<学科>.json 拼成一个可以双击打开的单文件 index.html。
+"""把 src/ 与 packs/*.json 拼成一个可以双击打开的单文件 index.html。
 
 用法：
-    python3 scripts/build.py            # 默认 calculus
-    python3 scripts/build.py cet46      # 换一个内容包
+    python3 scripts/build.py
+
+packs/ 下每个 JSON 都会打进产物，运行时由书架切换；calculus 排在第一个。
 """
 import hashlib
 import json
