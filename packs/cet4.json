@@ -143,6 +143,14 @@
        "搭配",
        "词组"
       ]
+     },
+     {
+      "id": "4.3",
+      "title": "中国文化主题词",
+      "kw": [
+       "文化",
+       "翻译"
+      ]
      }
     ]
    },
@@ -10840,6 +10848,292 @@
      "q": "表不变",
      "a": "remain stable / steady / constant; stay the same",
      "analysis": "图表趋势"
+    }
+   ]
+  },
+  "4.3": {
+   "concepts": [
+    "按《中国文化概况》的五大部分抽了 55 组主题词：国家概况、文学宗教艺术、教育科技体育、民俗风情、旅游览胜。",
+    "这本书的正文是英文散文，不适合整段背；翻译题真正要用的是这些主题的固定译法。",
+    "专有名词首字母要大写：the Great Wall、the Spring Festival、the Silk Road。",
+    "文化类翻译的万能句型：… dates back to … ／ … is regarded as … ／ … has been passed down for centuries。"
+   ],
+   "types": [],
+   "examples": [
+    {
+     "q": "中华人民共和国",
+     "a": "the People's Republic of China",
+     "analysis": "国家概况"
+    },
+    {
+     "q": "宪法",
+     "a": "the Constitution",
+     "analysis": "国家概况"
+    },
+    {
+     "q": "全国人民代表大会",
+     "a": "the National People's Congress (NPC)",
+     "analysis": "国家概况"
+    },
+    {
+     "q": "自治区",
+     "a": "autonomous region",
+     "analysis": "国家概况"
+    },
+    {
+     "q": "一国两制",
+     "a": "one country, two systems",
+     "analysis": "国家概况"
+    },
+    {
+     "q": "改革开放",
+     "a": "reform and opening-up",
+     "analysis": "国家概况"
+    },
+    {
+     "q": "青藏铁路",
+     "a": "the Qinghai-Tibet Railway",
+     "analysis": "国家概况"
+    },
+    {
+     "q": "西部大开发",
+     "a": "the Western Development Strategy",
+     "analysis": "国家概况"
+    },
+    {
+     "q": "民族团结",
+     "a": "ethnic unity",
+     "analysis": "国家概况"
+    },
+    {
+     "q": "基础设施",
+     "a": "infrastructure",
+     "analysis": "国家概况"
+    },
+    {
+     "q": "儒家思想",
+     "a": "Confucianism",
+     "analysis": "文学宗教艺术"
+    },
+    {
+     "q": "道家",
+     "a": "Taoism",
+     "analysis": "文学宗教艺术"
+    },
+    {
+     "q": "佛教",
+     "a": "Buddhism",
+     "analysis": "文学宗教艺术"
+    },
+    {
+     "q": "孔子",
+     "a": "Confucius",
+     "analysis": "文学宗教艺术"
+    },
+    {
+     "q": "四大名著",
+     "a": "the Four Great Classical Novels",
+     "analysis": "文学宗教艺术"
+    },
+    {
+     "q": "《红楼梦》",
+     "a": "A Dream of Red Mansions",
+     "analysis": "文学宗教艺术"
+    },
+    {
+     "q": "唐诗",
+     "a": "Tang poetry",
+     "analysis": "文学宗教艺术"
+    },
+    {
+     "q": "书法",
+     "a": "calligraphy",
+     "analysis": "文学宗教艺术"
+    },
+    {
+     "q": "京剧",
+     "a": "Peking Opera",
+     "analysis": "文学宗教艺术"
+    },
+    {
+     "q": "水墨画",
+     "a": "ink and wash painting",
+     "analysis": "文学宗教艺术"
+    },
+    {
+     "q": "中医",
+     "a": "Traditional Chinese Medicine (TCM)",
+     "analysis": "文学宗教艺术"
+    },
+    {
+     "q": "针灸",
+     "a": "acupuncture",
+     "analysis": "文学宗教艺术"
+    },
+    {
+     "q": "科举制度",
+     "a": "the imperial examination system",
+     "analysis": "教育科技体育"
+    },
+    {
+     "q": "四大发明",
+     "a": "the Four Great Inventions",
+     "analysis": "教育科技体育"
+    },
+    {
+     "q": "造纸术",
+     "a": "papermaking",
+     "analysis": "教育科技体育"
+    },
+    {
+     "q": "火药",
+     "a": "gunpowder",
+     "analysis": "教育科技体育"
+    },
+    {
+     "q": "指南针",
+     "a": "the compass",
+     "analysis": "教育科技体育"
+    },
+    {
+     "q": "活字印刷",
+     "a": "movable-type printing",
+     "analysis": "教育科技体育"
+    },
+    {
+     "q": "天宫空间站",
+     "a": "the Tiangong space station",
+     "analysis": "教育科技体育"
+    },
+    {
+     "q": "嫦娥探月工程",
+     "a": "the Chang'e lunar probe program",
+     "analysis": "教育科技体育"
+    },
+    {
+     "q": "玉兔号月球车",
+     "a": "the Yutu lunar rover",
+     "analysis": "教育科技体育"
+    },
+    {
+     "q": "孔子学院",
+     "a": "the Confucius Institute",
+     "analysis": "教育科技体育"
+    },
+    {
+     "q": "太极拳",
+     "a": "Tai Chi",
+     "analysis": "教育科技体育"
+    },
+    {
+     "q": "武术",
+     "a": "martial arts",
+     "analysis": "教育科技体育"
+    },
+    {
+     "q": "春节",
+     "a": "the Spring Festival",
+     "analysis": "民俗风情"
+    },
+    {
+     "q": "中秋节",
+     "a": "the Mid-Autumn Festival",
+     "analysis": "民俗风情"
+    },
+    {
+     "q": "端午节",
+     "a": "the Dragon Boat Festival",
+     "analysis": "民俗风情"
+    },
+    {
+     "q": "元宵节",
+     "a": "the Lantern Festival",
+     "analysis": "民俗风情"
+    },
+    {
+     "q": "二十四节气",
+     "a": "the 24 Solar Terms",
+     "analysis": "民俗风情"
+    },
+    {
+     "q": "十二生肖",
+     "a": "the Chinese zodiac",
+     "analysis": "民俗风情"
+    },
+    {
+     "q": "剪纸",
+     "a": "paper-cutting",
+     "analysis": "民俗风情"
+    },
+    {
+     "q": "舞龙舞狮",
+     "a": "dragon and lion dance",
+     "analysis": "民俗风情"
+    },
+    {
+     "q": "饺子",
+     "a": "dumplings",
+     "analysis": "民俗风情"
+    },
+    {
+     "q": "月饼",
+     "a": "mooncakes",
+     "analysis": "民俗风情"
+    },
+    {
+     "q": "春联",
+     "a": "Spring Festival couplets",
+     "analysis": "民俗风情"
+    },
+    {
+     "q": "长城",
+     "a": "the Great Wall",
+     "analysis": "旅游览胜"
+    },
+    {
+     "q": "故宫",
+     "a": "the Palace Museum / the Forbidden City",
+     "analysis": "旅游览胜"
+    },
+    {
+     "q": "兵马俑",
+     "a": "the Terracotta Warriors",
+     "analysis": "旅游览胜"
+    },
+    {
+     "q": "丝绸之路",
+     "a": "the Silk Road",
+     "analysis": "旅游览胜"
+    },
+    {
+     "q": "西湖",
+     "a": "the West Lake",
+     "analysis": "旅游览胜"
+    },
+    {
+     "q": "苏州园林",
+     "a": "Suzhou gardens",
+     "analysis": "旅游览胜"
+    },
+    {
+     "q": "泰山",
+     "a": "Mount Tai",
+     "analysis": "旅游览胜"
+    },
+    {
+     "q": "大熊猫",
+     "a": "the giant panda",
+     "analysis": "旅游览胜"
+    },
+    {
+     "q": "世界文化遗产",
+     "a": "World Cultural Heritage",
+     "analysis": "旅游览胜"
+    },
+    {
+     "q": "茶文化",
+     "a": "tea culture",
+     "analysis": "旅游览胜"
     }
    ]
   }
