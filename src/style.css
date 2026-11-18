@@ -85,6 +85,7 @@ aside{
 .bk .t{font-size:17px;line-height:1.4;font-weight:600;letter-spacing:-.02em}
 .bk .m{font-size:12.5px;color:var(--muted);margin-top:6px}
 .bk .row{margin-top:22px}
+.tocbtn,.tocmask{display:none}
 
 .toc{overflow:auto;padding:0 16px 48px;flex:1}
 .toc::-webkit-scrollbar,main::-webkit-scrollbar{width:0;height:0}
@@ -562,29 +563,126 @@ body.introing > aside, body.introing > main{
 
 /* ---------- 窄屏 ---------- */
 @media (max-width:900px){
-  body{grid-template-columns:1fr;height:auto;overflow:auto}
-  aside{border-right:none;border-bottom:1px solid var(--line);max-height:26vh}
-  .bk{padding:24px 20px 18px}
-  main{padding:36px 22px 100px}
-  h1{font-size:32px}
-  .lead{font-size:21px}
-  .head{margin-bottom:24px}
-  .acts{gap:26px;padding-top:4px}
-  .intro-t{font-size:84px}
-  .intro-s{font-size:12.5px;margin-top:18px;letter-spacing:.04em}
-  .tabs{gap:22px;margin-bottom:36px}
-  .tabs button{font-size:14px}
-  .card{margin-bottom:48px}
-  .card + .card{padding-top:36px}
-  .modal{padding:32px 24px;border-radius:14px}
+  body{display:block;height:auto;overflow:auto;-webkit-text-size-adjust:100%}
+
+  /* 顶部：书名 + 导入 + 目录，吸顶 */
+  aside{
+    position:sticky;top:0;z-index:40;
+    background:var(--bg);
+    border-right:none;border-bottom:1px solid var(--line);
+    max-height:none;display:block;
+  }
+  .bk{
+    display:flex;align-items:center;gap:10px;
+    padding:10px 16px;height:54px;
+  }
+  .bk .t{font-size:16px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .bk .m,.bk .usage{display:none}
+  .bk .row{margin:0;flex:none}
+  .bk .row .tiny{padding:5px 11px;font-size:12px}
+  .tocbtn{
+    display:inline-flex;align-items:center;
+    flex:none;font-size:12px;color:var(--text);
+    padding:5px 11px;border:1px solid var(--line);border-radius:999px;
+  }
+  .tocbtn:active{background:var(--bg-soft)}
+
+  /* 目录改成底部抽屉 */
+  .toc{
+    position:fixed;left:0;right:0;bottom:0;top:auto;z-index:60;
+    height:auto;max-height:74vh;
+    background:var(--bg);
+    border-top:1px solid var(--line);
+    border-radius:16px 16px 0 0;
+    padding:10px 8px calc(22px + env(safe-area-inset-bottom));
+    overflow:auto;
+    transform:translateY(101%);
+    transition:transform .28s var(--ease);
+    box-shadow:0 -8px 40px rgba(0,0,0,.06);
+  }
+  .toc::before{
+    content:"";display:block;width:36px;height:4px;border-radius:2px;
+    background:var(--line);margin:2px auto 10px;
+  }
+  body.toc-open .toc{transform:translateY(0)}
+  /* aside 自身带 z-index，会把抽屉困在它那一层，打开时要抬到页签之上 */
+  body.toc-open aside{z-index:70}
+  body.toc-open{overflow:hidden}
+  .tocmask{
+    display:block;
+    position:fixed;inset:0;z-index:55;
+    background:rgba(0,0,0,.28);
+    opacity:0;pointer-events:none;
+    transition:opacity .24s var(--ease);
+  }
+  body.toc-open .tocmask{opacity:1;pointer-events:auto}
+  .ch{padding:18px 12px 6px}
+  .sec{padding:11px 12px;font-size:14.5px}
+
+  /* 正文 */
+  main{padding:22px 20px calc(96px + env(safe-area-inset-bottom))}
+  .head{display:block;margin-bottom:14px}
+  h1{font-size:30px;line-height:1.15}
+  .acts{
+    gap:20px;padding-top:0;margin-top:14px;
+    flex-wrap:wrap;
+  }
+  .acts .ghost,.acts summary{font-size:12px;color:var(--muted)}
+  .lead{font-size:20px;line-height:1.5}
+  .lead .s{font-size:13.5px;margin-top:14px}
+  .card{margin-bottom:34px}
+  .card + .card{padding-top:26px}
+  .card h2{font-size:19px;margin-bottom:20px}
+
+  /* 页签变底部栏 */
+  .tabs{
+    position:fixed;left:0;right:0;bottom:0;z-index:50;
+    display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+    margin:0;padding:6px 0 calc(6px + env(safe-area-inset-bottom));
+    background:rgba(255,255,255,.94);
+    -webkit-backdrop-filter:saturate(180%) blur(12px);
+    backdrop-filter:saturate(180%) blur(12px);
+    border-top:1px solid var(--line);border-bottom:none;
+  }
+  .tabs button{
+    font-size:12px;padding:8px 0;margin:0;border:none;
+    color:var(--muted);text-align:center;
+  }
+  .tabs button.on{color:var(--ink);font-weight:600;border:none}
+
+  .items-bar{
+    position:fixed;right:18px;z-index:45;
+    bottom:calc(76px + env(safe-area-inset-bottom));
+    margin:0;
+  }
+  .plus{width:54px;height:54px}
+  .plus::before{width:19px}
+  .plus::after{height:19px}
+
+  .modal{padding:30px 22px;border-radius:16px;max-height:88vh}
+  .mask{padding:16px;align-items:flex-end}
+  .modal{width:100%}
   .grid2{grid-template-columns:1fr}
-  .help-panel{position:fixed;left:16px;right:16px;top:50%;transform:translateY(-50%);width:auto;max-height:76vh;overflow:auto}
-  ul.bars li{grid-template-columns:1fr 90px 44px;gap:14px}
-  .qrow{gap:16px}
-  .qimg{width:92px;max-height:72px}
-  .qi .act{gap:16px}
+  .help-panel{position:fixed;left:14px;right:14px;top:50%;transform:translateY(-50%);width:auto;max-height:74vh;overflow:auto}
+  ul.bars li{grid-template-columns:1fr 90px 44px;gap:14px;padding:14px 0}
+  .qrow{gap:14px}
+  .qimg{width:84px;max-height:66px}
+  .qi{padding:24px 0}
+  .qi .q{font-size:16px}
+  .qi .meta{display:block;margin-top:12px}
+  .qi .meta > span{display:inline-block;margin-right:10px}
+  .qi .meta > span:nth-child(3){display:none}
+  .qi .act{display:flex;gap:20px;margin:12px 0 0}
+  .qi .act button{font-size:13px}
+  .rv{gap:16px;padding:18px 0}
   table{min-width:0}
   th:first-child{width:46%}
   th.t,td.tot{display:none}
   .crop-wrap img{max-height:46vh}
+  .nblock{padding:28px 0}
+  .ex .q{font-size:14.5px}
+  .typ > summary{padding:14px 0;font-size:14.5px}
+  .typbody{font-size:13.5px}
+  .frc{font-size:.78em;margin:0 3px}
+  .nblock ul{line-height:2}
 }
