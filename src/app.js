@@ -1254,7 +1254,19 @@ async function migrateImages(){
 
 /* ---------- 备份：把 IDB 里的原图一起打包 ---------- */
 async function buildBackup(){
-  const out = { book: DB.book, items: [], notes: DB.notes, notesVer: DB.notesVer, custom: !!DB.custom };
+  const out = {
+    v: 2,
+    bookId: DB.bookId,
+    book: DB.book,
+    items: [],
+    notes: DB.notes,
+    notesVer: DB.notesVer,
+    contentVer: DB.contentVer,
+    custom: !!DB.custom,
+    srs: DB.srs || {},
+    vocabDay: DB.vocabDay || {},
+    vocabGoal: DB.vocabGoal || 30
+  };
   for(const it of DB.items){
     const copy = Object.assign({}, it);
     if(it.imgKey){
@@ -1774,9 +1786,24 @@ function bind(){
           }
           items.push(copy);
         }
-        DB = { book: o.book || DB.book, items, notes: o.notes || DB.notes,
-               notesVer: o.notesVer || 3, custom: !!o.custom };
-        save(); renderAll();
+        const targetId = (o.bookId && packById(o.bookId)) ? o.bookId : DB.bookId;
+        const restored = {
+          bookId: targetId,
+          book: o.book || DB.book,
+          items,
+          notes: o.notes || DB.notes,
+          notesVer: o.notesVer || 3,
+          contentVer: o.contentVer,
+          custom: !!o.custom,
+          srs: o.srs || {},
+          vocabDay: o.vocabDay || {},
+          vocabGoal: o.vocabGoal || 30
+        };
+        localStorage.setItem(storeKey(targetId), JSON.stringify(restored));
+        localStorage.setItem("cuotiben.v2.last", targetId);
+        if(targetId !== DB.bookId){ switchBook(targetId); }
+        else { DB = restored; renderAll(); }
+        renderShelf();
         toast(`已恢复 ${items.length} 道错题`);
       }catch(e){ toast("文件无法读取"); }
       ev.target.value = "";
