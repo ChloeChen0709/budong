@@ -1,6 +1,6 @@
 "use strict";
 
-/* ================= 数据 ================= */
+// 数据
 const CAUSES = [
   {k:"unknown", name:"不会",   color:"#b23a2f", w:1.0},
   {k:"calc",    name:"算错",   color:"#d68c3c", w:0.5},
@@ -27,7 +27,7 @@ const SAMPLE_ITEMS = [
     }}
 ];
 
-/* ================= 状态 ================= */
+// 状态
 const KEY = "cuotiben.v2";
 const APIK = "cuotiben.api.v1";
 let BOOK = null, NOTES = null;
@@ -46,10 +46,7 @@ const fmt = n => (Math.round(n*10)/10 % 1 === 0) ? String(Math.round(n)) : (Math
 const sum = a => a.reduce((x,y)=>x+y,0);
 
 function esc(v){ return String(v==null?"":v).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
-/* ---------- 数学记号：渲染与序列化 ----------
-   存储用纯文本：\frac{2}{3}、^{x}、_{n}
-   渲染成书写样式：分数上下两层、指数在右上
------------------------------------------------- */
+// 数学记号：存储用纯文本（\frac{2}{3}、^{x}、_{n}），渲染成书写样式
 function readBraced(s, idx){
   let depth = 0, out = "";
   for(let j = idx; j < s.length; j++){
@@ -224,7 +221,7 @@ function seed(){
   save();
 }
 
-/* ================= 归类 ================= */
+// 归类
 function classify(text){
   const raw = String(text || "").trim();
   const t = raw.toLowerCase();
@@ -278,7 +275,7 @@ function classify(text){
   return null;
 }
 
-/* ================= 计算 ================= */
+// 计算
 function riskOf(secId){
   return sum(DB.items.filter(i=>i.sec===secId).map(i=>CM[i.cause].w * (1 + 0.35*i.lapses)));
 }
@@ -293,14 +290,9 @@ function levelOf(secId){
   if(m < 0.75) return "m";
   return "l";
 }
-function byCause(){
-  const o = {}; CAUSES.forEach(c=>o[c.k]=0);
-  DB.items.forEach(i=>{ o[i.cause] = (o[i.cause]||0)+1; });
-  return o;
-}
 function dueLabel(d){ return d < 0 ? `逾期 ${-d} 天` : d === 0 ? "今天" : d === 1 ? "明天" : `${d} 天后`; }
 
-/* ================= 左栏 ================= */
+// 左栏
 function renderSidebar(){
   const cnt = id => DB.items.filter(i=>i.sec===id).length;
   $("#bkTitle").textContent = DB.book.title;
@@ -341,7 +333,7 @@ function renderSidebar(){
   }));
 }
 
-/* ================= 地图 ================= */
+// 地图
 function renderMap(){
   const lb = packById(DB.bookId).labels || {};
   const sw = lb.sec || "节";
@@ -422,7 +414,7 @@ function renderMap(){
   }).join("");
 }
 
-/* ================= 错题 ================= */
+// 错题
 function renderItems(){
   const chips = [{k:"all",n:"全部"},...CAUSES.map(c=>({k:c.k,n:c.name}))];
   $("#chips").innerHTML = chips.map(c=>`<button data-f="${c.k}" class="${filter===c.k?"on":""}">${c.n}</button>`).join("");
@@ -477,7 +469,7 @@ function renderItems(){
   document.addEventListener("keydown", e=>{ if(e.key==="Escape") $("#viewer").classList.add("hide"); });
 }
 
-/* ================= 复习 ================= */
+// 复习
 function renderReview(){
   const due = DB.items.filter(i=>i.due<=0).sort((a,b)=>a.due-b.due);
   const soon = DB.items.filter(i=>i.due>0 && i.due<=7).sort((a,b)=>a.due-b.due);
@@ -505,7 +497,7 @@ function renderReview(){
   }));
 }
 
-/* ================= 知识点（按节） ================= */
+// 知识点（按节）
 
 function notesOf(id){ return (DB.notes && DB.notes[id]) || null; }
 
@@ -653,7 +645,7 @@ function renderAddNotes(){
     + `<div class="mini-body"><ul>${ps.map(x=>`<li>${fmtQ(x)}</li>`).join("")}</ul></div></details>`;
 }
 
-/* ================= 背单词（艾宾浩斯） ================= */
+// 背单词（艾宾浩斯）
 const EBB = [4, 24, 48, 96, 168, 360, 720];   // 小时后：4h 1d 2d 4d 7d 15d 30d
 let VOCAB = { pool: [], idx: 0, key: "", shown: false, done: 0 };
 
@@ -678,7 +670,7 @@ function vocabDue(kind){
     if(!rec){ fresh.push(e); return; }
     if(rec.mastered){ mastered.push(e); return; }
     if(rec.stage <= 1) weak.push(e);
-    // 生词（不认识/模糊）下次进入时优先进队列，不必等到期
+    // 生词优先进队，不等到期
     if(rec.stage <= 1 || rec.due <= now) due.push(e);
   });
   return { due, fresh, weak, mastered, total: all.length,
@@ -782,7 +774,7 @@ function vocabMark(mark){
   toast(mark === "again" ? "已记下，4 小时后会再出现"
         : mark === "hard" ? "已记下，下次提前复习"
         : "已记下，" + EBB[rec.stage] + " 小时后复习");
-  // 不认识的词，本轮末尾再出现一次（和背单词软件一致）
+  // 不认识的本轮末尾再考一次
   if(mark === "again" && VOCAB.pool.length < 40) VOCAB.pool.push(item);
   VOCAB.idx++; VOCAB.done++;
   if(VOCAB.idx >= VOCAB.pool.length){ finishVocab(); return; }
@@ -825,7 +817,7 @@ function vocabShowBack(){
   $("#vocabAct").classList.remove("hide");
 }
 
-/* ================= 批改工具（四级） ================= */
+// 批改工具（四级）
 const TOOLS = {
   "write-check": {
     title: "作文批改",
@@ -914,7 +906,7 @@ async function runTool(){
   }
 }
 
-/* ================= 模式 ================= */
+// 模式
 function isExam(){ return (packById(DB.bookId).mode === "exam"); }
 
 function renderModBar(){
@@ -940,7 +932,7 @@ function openModule(i){
   renderNotes();
 }
 
-/* ================= 书架 ================= */
+// 书架
 function renderShelf(){
   const last = localStorage.getItem(KEY + ".last") || "";
   $("#shelfList").innerHTML = PACKS.map(p=>`
@@ -970,7 +962,7 @@ function openBook(id){
   const card = document.querySelector('[data-book="' + id + '"]');
   if(card) card.classList.add("opening");
   document.body.classList.add("shelf-leaving");
-  // 先在封面背后把内容换成目标书，等渲染完成再散场，避免露出上一本书
+  // 先换内容再散场，避免露出上一本书
   if(DB.bookId !== id) switchBook(id);
   else { renderSidebar(); renderAll(); }
   openingTimer = setTimeout(()=>{
@@ -979,12 +971,7 @@ function openBook(id){
   }, 320);
 }
 
-function showShelf(){
-  renderShelf();
-  document.body.classList.add("shelf-open");
-}
-
-/* ================= 讲解 ================= */
+// 讲解
 function apiCfg(){
   try{ return JSON.parse(localStorage.getItem(APIK) || "{}"); }catch(e){ return {}; }
 }
@@ -1063,7 +1050,7 @@ function explainApiFailure(status, url, detail){
   return "HTTP " + status + (detail ? "：" + detail : "");
 }
 
-/* ---------- 拍照识别 ---------- */
+// 拍照识别
 const OCR_PROMPT = [
   "你是题目转录工具。把图片里的题目转录成一行纯文本，规则：",
   "1. 数学符号一律用 Unicode：∫ ∂ ∑ √ ≤ ≥ ≠ ± × ÷ ∞ π θ α β γ Δ 等；",
@@ -1087,7 +1074,7 @@ function pickMime(){
   return _mime;
 }
 
-// 逐档降质量，直到编码结果不超过预算（dataURL 字符数）
+// 逐档降质量直到体积达标
 function encodeBudget(cv, budget){
   const mime = pickMime();
   let q = 0.86, url = cv.toDataURL(mime, q);
@@ -1246,7 +1233,7 @@ async function realExplain(it, cfg){
   }
 }
 
-/* ================= 导入目录 ================= */
+// 导入目录
 function parseTOC(text){
   const lines = text.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
   const chapters = [];
@@ -1265,7 +1252,7 @@ function parseTOC(text){
   return chapters.filter(c=>c.sections.length);
 }
 
-/* ---------- 把旧的内嵌图搬到 IndexedDB ---------- */
+// 把旧的内嵌图搬到 IndexedDB
 async function migrateImages(){
   const db = await imgDB();
   if(!db) return;
@@ -1284,7 +1271,7 @@ async function migrateImages(){
   if(changed){ save(); renderAll(); toast(`已把 ${changed} 张图移到浏览器数据库`); }
 }
 
-/* ---------- 备份：把 IDB 里的原图一起打包 ---------- */
+// 备份：把 IDB 里的原图一起打包
 async function buildBackup(){
   const out = {
     v: 2,
@@ -1311,7 +1298,48 @@ async function buildBackup(){
   return out;
 }
 
-/* ---------- 导出 PDF（走系统打印） ---------- */
+function safeParse(text){
+  try{ return JSON.parse(text); }catch(e){ return null; }
+}
+
+/* 备份文件写回它自己所属的书，不动当前书架状态 */
+async function restoreFrom(data){
+  if(!data || !Array.isArray(data.items)) throw new Error("bad backup");
+  const items = [];
+  for(const it of data.items){
+    const copy = Object.assign({}, it);
+    if(typeof copy.img === "string" && copy.img.startsWith("data:image")){
+      const key = "img_" + copy.id + "_" + Math.random().toString(36).slice(2, 7);
+      if(await imgPut(key, copy.img)){
+        const mini = await shrinkUrl(copy.img, 260);
+        copy.imgKey = key;
+        if(mini) copy.img = mini;
+      }
+    }
+    items.push(copy);
+  }
+  const bookId = (data.bookId && packById(data.bookId)) ? data.bookId : DB.bookId;
+  const next = {
+    bookId,
+    book: data.book || DB.book,
+    items,
+    notes: data.notes || DB.notes,
+    notesVer: data.notesVer || 3,
+    contentVer: data.contentVer,
+    custom: !!data.custom,
+    srs: data.srs || {},
+    vocabDay: data.vocabDay || {},
+    vocabGoal: data.vocabGoal || 30
+  };
+  localStorage.setItem(storeKey(bookId), JSON.stringify(next));
+  localStorage.setItem("cuotiben.v2.last", bookId);
+  if(bookId !== DB.bookId) switchBook(bookId);
+  else { DB = next; renderAll(); }
+  renderShelf();
+  toast(`已恢复 ${items.length} 道错题`);
+}
+
+// 导出 PDF（走系统打印）
 async function buildPrint(){
   const host = $("#printArea");
 
@@ -1350,7 +1378,7 @@ async function buildPrint(){
   host.innerHTML = `<div class="p-title">${esc(DB.book.title)} · 错题（${items.length}）</div>` + parts.join("");
 }
 
-/* ================= 事件 ================= */
+// 事件
 function goTab(name){
   tab = name;
   $$(".tabs button").forEach(b=>b.classList.toggle("on", b.dataset.tab===name));
@@ -1548,7 +1576,7 @@ function bind(){
     setTimeout(()=>$("#addQ").focus(), 30);
   });
   $("#addQ").addEventListener("input", classifyHint);
-  /* ---- 数学键盘 ---- */
+  // 数学键盘
   const KB_ACTS = [
     ["frac", "分数"], ["sup", "上标"], ["sub", "下标"], ["sqrt", "根号"]
   ];
@@ -1649,7 +1677,7 @@ function bind(){
     }
   });
 
-  /* ---- 裁剪 ---- */
+  // 裁剪
   function openCrop(file){
     return new Promise(resolve=>{
       const url = URL.createObjectURL(file);
@@ -1802,48 +1830,16 @@ function bind(){
   $("#btnRestore").addEventListener("click", ()=>$("#fileRestore").click());
   $("#btnRestore2").addEventListener("click", ()=>$("#fileRestore2").click());
   const onRestoreFile = ev=>{
-    const f = ev.target.files[0]; if(!f) return;
-    const r = new FileReader();
-    r.onload = async ()=>{
-      try{
-        const o = JSON.parse(r.result);
-        if(!o || !Array.isArray(o.items)) throw new Error("格式不对");
-        const items = [];
-        for(const it of o.items){
-          const copy = Object.assign({}, it);
-          if(copy.img && String(copy.img).indexOf("data:image") === 0){
-            const key = "img_" + copy.id + "_" + Math.random().toString(36).slice(2,7);
-            if(await imgPut(key, copy.img)){
-              const mini = await shrinkUrl(copy.img, 260);
-              copy.imgKey = key;
-              if(mini) copy.img = mini;
-            }
-          }
-          items.push(copy);
-        }
-        const targetId = (o.bookId && packById(o.bookId)) ? o.bookId : DB.bookId;
-        const restored = {
-          bookId: targetId,
-          book: o.book || DB.book,
-          items,
-          notes: o.notes || DB.notes,
-          notesVer: o.notesVer || 3,
-          contentVer: o.contentVer,
-          custom: !!o.custom,
-          srs: o.srs || {},
-          vocabDay: o.vocabDay || {},
-          vocabGoal: o.vocabGoal || 30
-        };
-        localStorage.setItem(storeKey(targetId), JSON.stringify(restored));
-        localStorage.setItem("cuotiben.v2.last", targetId);
-        if(targetId !== DB.bookId){ switchBook(targetId); }
-        else { DB = restored; renderAll(); }
-        renderShelf();
-        toast(`已恢复 ${items.length} 道错题`);
-      }catch(e){ toast("文件无法读取"); }
-      ev.target.value = "";
+    const file = ev.target.files[0];
+    ev.target.value = "";
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      const data = safeParse(reader.result);
+      if(!data) return toast("文件无法读取");
+      restoreFrom(data).catch(()=>toast("文件无法读取"));
     };
-    r.readAsText(f);
+    reader.readAsText(file);
   };
   $("#fileRestore").addEventListener("change", onRestoreFile);
   $("#fileRestore2").addEventListener("change", onRestoreFile);
@@ -1896,7 +1892,7 @@ function bind(){
     [...$("#provRow").children].forEach(x=>x.classList.toggle("on", x === b));
   });
 
-  // 从接口拉取该账号可用的模型，避免猜模型名
+  // 拉取账号可用模型
   $("#btnModels").addEventListener("click", async ()=>{
     const url = normalizeApiUrl($("#apiBase").value);
     const key = $("#apiKey").value.trim();
@@ -1979,7 +1975,7 @@ function bind(){
         body: JSON.stringify({ model:c.model, max_tokens:8, temperature:0,
                                messages:[{role:"user", content:"只回复两个字：可以"}] })
       });
-      // 限流时自动等一会儿重试一次
+      // 限流退避重试
       if(res.status === 429){
         for(let left = 6; left > 0; left--){
           box.innerHTML = '<span class="spin"></span>被限流，' + left + ' 秒后自动重试一次…';
@@ -2035,7 +2031,7 @@ function bind(){
   }
   bind(); renderModBar(); goTab(isExam() ? "notes" : "map"); renderAll(); renderShelf();
 
-  // 开场：8 秒，5.4 秒起界面从雾里浮出
+  // 开场 8 秒，5.4 秒起界面浮出
   const intro = $("#intro");
   let introSettled = false;
   renderShelf();                       // 首屏就是书架，不留一帧书本页面
