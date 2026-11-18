@@ -40,12 +40,18 @@ def public_notes(notes):
 
 
 def main():
-    pack_id = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_PACK
-    pack_path = PACKS / f"{pack_id}.json"
-    if not pack_path.exists():
-        sys.exit(f"找不到内容包：{pack_path}")
+    # 把 packs/ 下所有内容包都打进来，运行时由书架切换
+    files = sorted(PACKS.glob("*.json"),
+                   key=lambda f: (f.stem != DEFAULT_PACK, f.stem))
+    if not files:
+        sys.exit("packs/ 里没有内容包")
 
-    pack = json.loads(pack_path.read_text(encoding="utf-8"))
+    packs = []
+    for f in files:
+        p = json.loads(f.read_text(encoding="utf-8"))
+        p.setdefault("id", f.stem)
+        packs.append(p)
+    pack = packs[0]
     template = (SRC / "template.html").read_text(encoding="utf-8")
     css = ((SRC / "script-font.css").read_text(encoding="utf-8")
            + "\n"
@@ -53,10 +59,18 @@ def main():
     app = (SRC / "app.js").read_text(encoding="utf-8")
 
     dump = lambda o: json.dumps(o, ensure_ascii=False, separators=(",", ":"))
-    content_js = (
-        "const BOOK = " + dump(pack["book"]) + ";\n"
-        "const NOTES = " + dump(public_notes(pack["notes"])) + ";\n"
-    )
+    slim = []
+    for p in packs:
+        slim.append({
+            "id": p["id"],
+            "name": p["name"],
+            "tagline": p.get("tagline", ""),
+            "mark": p.get("mark", ""),
+            "meta": p.get("meta", ""),
+            "book": p["book"],
+            "notes": public_notes(p["notes"]),
+        })
+    content_js = "const PACKS = " + dump(slim) + ";\n"
 
     stamp = datetime.now().strftime("%Y-%m-%d %H:%M") + " · " + \
             hashlib.sha1((template + css + app + content_js).encode("utf-8")).hexdigest()[:6]
@@ -70,9 +84,9 @@ def main():
     out = ROOT / "index.html"
     out.write_text(html, encoding="utf-8")
 
-    sections = sum(len(c["sections"]) for c in pack["book"]["chapters"])
+    detail = "，".join(p["name"] for p in packs)
     print(f"构建完成 {out.name}  {len(html.encode('utf-8')):,} 字节  "
-          f"包={pack_id}（{pack['name']}，{len(pack['notes'])}/{sections} 节有内容）")
+          f"{len(packs)} 个内容包：{detail}")
 
     for m in MIRRORS:
         if m.exists():
