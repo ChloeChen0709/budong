@@ -297,6 +297,21 @@ ul.bars li:last-child{border-bottom:none}
   .scard{min-height:180px;padding:28px 20px}
 }
 
+/* 生词本 / 已掌握 */
+.vlist{display:flex;gap:14px;margin-top:18px}
+.vlbtn{
+  flex:1;display:flex;align-items:center;justify-content:space-between;
+  padding:16px 20px;border:1px solid var(--line);border-radius:14px;
+  font-size:14px;color:var(--text);
+}
+.vlbtn:hover{border-color:var(--faint);color:var(--ink)}
+.vlbtn b{font-weight:600;color:var(--ink)}
+.vlbody{max-height:56vh;overflow:auto}
+.vlrow{display:flex;gap:16px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line)}
+.vlrow:last-child{border-bottom:none}
+.vlw{font-size:15px;color:var(--ink);min-width:150px}
+.vlm{font-size:13.5px;color:var(--muted);line-height:1.7}
+
 /* ---------- 批改工具入口 ---------- */
 .tools{margin:0 0 26px;border:1px solid var(--line);border-radius:16px;overflow:hidden}
 .toolrow{

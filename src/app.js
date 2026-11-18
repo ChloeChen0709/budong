@@ -494,15 +494,18 @@ function renderNotes(){
 
     if(ch.title === "词汇"){
       const w = vocabDue("w"), p = vocabDue("p");
+      const weak = vocabAll("weak").length, master = vocabAll("mastered").length;
       host.innerHTML = (toolRow ? `<div class="tools">${toolRow}</div>` : "")
-        + `<div class="vch"> ` +
-          `<button class="vcard" data-vocab="w"><span class="vname">核心词</span>`
+        + `<div class="vch">`
+        + `<button class="vcard" data-vocab="w"><span class="vname">核心词</span>`
         + `<span class="vnum">${w.total} 个</span>`
-        + `<span class="vsub">已学 ${w.learned} · 待复习 ${w.due.length} · 未学 ${w.fresh.length}</span></button>`
+        + `<span class="vsub">待复习 ${w.due.length} · 生词 ${w.weak.length} · 未学 ${w.fresh.length}</span></button>`
         + `<button class="vcard" data-vocab="p"><span class="vname">高频词组</span>`
         + `<span class="vnum">${p.total} 条</span>`
-        + `<span class="vsub">已学 ${p.learned} · 待复习 ${p.due.length} · 未学 ${p.fresh.length}</span></button>`
-        + `</div>`;
+        + `<span class="vsub">待复习 ${p.due.length} · 生词 ${p.weak.length} · 未学 ${p.fresh.length}</span></button>`
+        + `</div>`
+        + `<div class="vlist"><button class="vlbtn" data-vlist="weak"><span>生词本</span><b>${weak}</b></button>`
+        + `<button class="vlbtn" data-vlist="mastered"><span>已掌握</span><b>${master}</b></button></div>`;
       return;
     }
     host.innerHTML = (toolRow ? `<div class="tools">${toolRow}</div>` : "")
@@ -605,13 +608,42 @@ function vocabDue(kind){
   const st = vocabState(), now = Date.now();
   const src = DB.notes[kind === "w" ? "5.1" : "5.2"];
   const all = (src && src.examples) || [];
-  const due = [], fresh = [];
+  const due = [], fresh = [], weak = [], mastered = [];
   all.forEach(e=>{
     const rec = st[vocabKey(kind, e.q)];
-    if(!rec) fresh.push(e);
-    else if(rec.due <= now) due.push(e);
+    if(!rec){ fresh.push(e); return; }
+    if(rec.mastered){ mastered.push(e); return; }
+    if(rec.stage <= 1) weak.push(e);
+    // 生词（不认识/模糊）下次进入时优先进队列，不必等到期
+    if(rec.stage <= 1 || rec.due <= now) due.push(e);
   });
-  return { due, fresh, total: all.length, learned: all.length - fresh.length };
+  return { due, fresh, weak, mastered, total: all.length,
+           learned: all.length - fresh.length, masteredN: mastered.length };
+}
+
+/* 生词本与已掌握：两类词合起来看 */
+function vocabAll(filter){
+  const out = [];
+  [["w","核心词"],["p","高频词组"]].forEach(([k,label])=>{
+    const src = DB.notes[k === "w" ? "5.1" : "5.2"];
+    ((src && src.examples) || []).forEach(e=>{
+      const rec = vocabState()[vocabKey(k, e.q)];
+      if(!rec) return;
+      if(filter === "weak" && !rec.mastered && rec.stage <= 1) out.push({...e, kind:label});
+      if(filter === "mastered" && rec.mastered) out.push({...e, kind:label});
+    });
+  });
+  return out;
+}
+
+function openVocabList(filter){
+  const list = vocabAll(filter);
+  $("#vlTitle").textContent = filter === "weak" ? "生词本" : "已掌握";
+  $("#vlMeta").textContent = list.length ? `${list.length} 个` : "还没有";
+  $("#vlBody").innerHTML = list.length
+    ? list.map(e=>`<div class="vlrow"><span class="vlw">${esc(e.q)}</span><span class="vlm">${esc(e.a || "")}</span></div>`).join("")
+    : `<p class="toolnote">${filter === "weak" ? "背词时标「不认识」或「模糊」的词会出现在这里。" : "标「认识」的词会收进这里。"}</p>`;
+  $("#modalVocabList").classList.remove("hide");
 }
 
 function openVocab(kind){
@@ -630,9 +662,9 @@ function vocabMark(mark){
   const k = vocabKey(VOCAB.key, item.q);
   const rec = st[k] || { stage: 0, seen: 0 };
   rec.seen++;
-  if(mark === "again") rec.stage = 0;
-  else if(mark === "hard") rec.stage = Math.max(0, rec.stage - 1);
-  else rec.stage = Math.min(EBB.length - 1, rec.stage + 1);
+  if(mark === "again"){ rec.stage = 0; rec.mastered = false; }
+  else if(mark === "hard"){ rec.stage = Math.max(0, rec.stage - 1); rec.mastered = false; }
+  else { rec.stage = EBB.length - 1; rec.mastered = true; }
   const h = EBB[rec.stage];
   rec.due = Date.now() + h * 3600 * 1000;
   st[k] = rec;
@@ -1237,6 +1269,7 @@ function bind(){
   $("#notesCard").addEventListener("click", e=>{
     const tb = e.target.closest("[data-tool]"); if(tb){ openTool(tb.dataset.tool); return; }
     const vb = e.target.closest("[data-vocab]"); if(vb){ openVocab(vb.dataset.vocab); return; }
+    const vls = e.target.closest("[data-vlist]"); if(vls){ openVocabList(vls.dataset.vlist); return; }
     const b = e.target.closest("[data-back]"); if(!b) return;
     curSec = null; renderModBar(); renderNotes();
   });
