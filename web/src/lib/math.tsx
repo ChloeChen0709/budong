@@ -50,6 +50,13 @@ export function renderMath(src: string): string {
       i = b.next;
       continue;
     }
+    if (src.startsWith("\\sqrt{", i)) {
+      const a = readBraced(src, i + 5);
+      flush();
+      out += `<span class="rad"><span class="radsign">√</span><span class="radbody">${renderMath(a.body)}</span></span>`;
+      i = a.next;
+      continue;
+    }
     if (src.startsWith("^{", i)) {
       const a = readBraced(src, i + 1);
       flush();

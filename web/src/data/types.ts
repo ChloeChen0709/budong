@@ -28,6 +28,7 @@ export interface SectionNote {
   concepts?: string[];
   types?: (string | TypeEntry)[];
   examples?: Entry[];
+  pages?: string[];
   plain?: boolean;
   typesStyle?: string;
 }

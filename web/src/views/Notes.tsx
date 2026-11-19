@@ -3,25 +3,29 @@ import type { BookState, Pack } from "../data/types";
 import { MathText } from "../lib/math";
 
 export default function Notes({ pack, state }: { pack: Pack; state: BookState }) {
-  const [chapter, setChapter] = useState(0);
   const [sectionId, setSectionId] = useState<string | null>(null);
 
-  const chapterData = pack.book.chapters[chapter];
   const section = useMemo(
-    () => chapterData?.sections.find((s) => s.id === sectionId) ?? null,
-    [chapterData, sectionId]
+    () => pack.book.chapters.flatMap((c) => c.sections).find((s) => s.id === sectionId) ?? null,
+    [pack, sectionId]
   );
+  const chapterName =
+    pack.book.chapters.find((c) => c.sections.some((s) => s.id === sectionId))?.title ?? "";
   const note = section ? state.notes[section.id] : null;
 
   if (section && note) {
     return (
       <article className="section">
         <button className="crumb" onClick={() => setSectionId(null)}>
-          ← {chapterData.title}
+          ← {chapterName}
         </button>
         <h2>
           {section.id} {section.title}
         </h2>
+
+        {!note.concepts?.length && !note.types?.length && !note.examples?.length && (
+          <p className="hint">这一节的内容还在整理</p>
+        )}
 
         {!!note.concepts?.length && (
           <section className="nblock">
@@ -73,29 +77,15 @@ export default function Notes({ pack, state }: { pack: Pack; state: BookState })
 
         {!!note.examples?.length && (
           <section className="nblock">
-            <h3>{note.plain ? "对照表" : "例题"}</h3>
-        {note.plain ? (
-            <dl className="pairs">
+            <h3>例题</h3>
+            <ol className="exs">
               {note.examples.map((e, i) => (
-                <div className="pair" key={i}>
-                  <dt><MathText text={e.q} /></dt>
-                  <dd><MathText text={e.a ?? ""} /></dd>
-                </div>
+                <li key={i}>
+                  <span className="no">{i + 1}</span>
+                  <div className="q"><MathText text={e.q} /></div>
+                </li>
               ))}
-            </dl>
-          ) : (
-            <div className="cards">
-              {note.examples.map((e, i) => (
-                <details key={i}>
-                  <summary><MathText text={e.q} /></summary>
-                  <div className="body">
-                    {e.a && <p><MathText text={e.a} /></p>}
-                    {e.analysis && <p className="note"><MathText text={e.analysis} /></p>}
-                  </div>
-                </details>
-              ))}
-            </div>
-          )}
+            </ol>
           </section>
         )}
       </article>
@@ -104,30 +94,26 @@ export default function Notes({ pack, state }: { pack: Pack; state: BookState })
 
   return (
     <div className="notes">
-      <nav className="modules">
-        {pack.book.chapters.map((c, i) => (
-          <button key={c.no} className={i === chapter ? "on" : ""} onClick={() => setChapter(i)}>
-            {c.title}
-          </button>
-        ))}
-      </nav>
-
-      {chapterData?.sections.length ? (
-        <ul className="sections">
-          {chapterData.sections.map((s) => (
-            <li key={s.id}>
-              <button onClick={() => setSectionId(s.id)}>
-                <span>
-                  {s.id} {s.title}
-                </span>
-                <span className="arrow">›</span>
-              </button>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="hint">这一部分还没有内容。</p>
-      )}
+      {pack.book.chapters.map((c) => (
+        <section className="toc" key={c.no}>
+          <h3>{c.title}</h3>
+          <ul>
+            {c.sections.map((sec) => {
+              const nt = state.notes[sec.id];
+              const empty = !nt || (!nt.concepts?.length && !nt.types?.length && !nt.examples?.length);
+              return (
+                <li key={sec.id}>
+                  <button onClick={() => setSectionId(sec.id)} className={empty ? "empty" : ""}>
+                    <span className="id">{sec.id}</span>
+                    <span className="tt">{sec.title}</span>
+                    {empty ? <span className="mark">整理中</span> : <span className="arrow">›</span>}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ))}
     </div>
   );
 }

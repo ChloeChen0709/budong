@@ -183,9 +183,9 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 @media (min-width:900px){.tabbar.two{grid-template-columns:repeat(2,minmax(0,120px))}}
 
 /* 数学渲染 */
-.frc{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 2px;font-size:.92em}
-.frc-n{border-bottom:1px solid currentColor;padding:0 3px}
-.frc-d{padding:0 3px}
+.frc{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px;font-size:.92em;line-height:1.15}
+.frc-n{border-bottom:1px solid currentColor;padding:0 3px 1px}
+.frc-d{padding:1px 3px 0}
 sup,sub{font-size:.7em;line-height:0}
 
 /* 公式键盘 */
@@ -258,3 +258,32 @@ sup,sub{font-size:.7em;line-height:0}
 .ocrbar{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .ocrbar .link{color:var(--accent);font-size:14px}
 .ocrbar .link:disabled{color:var(--muted)}
+
+/* 知识点长目录 */
+.toc{margin:0 0 26px}
+.toc h3{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.04em;margin:0 0 6px}
+.toc ul{list-style:none;margin:0;padding:0}
+.toc li{border-bottom:1px solid var(--line)}
+.toc button{width:100%;display:flex;align-items:baseline;gap:10px;padding:14px 2px;text-align:left}
+.toc .id{font-size:12px;color:var(--muted);width:30px;flex:none}
+.toc .tt{flex:1;font-size:15px;line-height:1.5}
+.toc .arrow{color:#c7c7cc}
+.toc .mark{font-size:11px;color:var(--muted)}
+.toc button.empty .tt{color:var(--muted)}
+
+/* 原书页面 */
+.pages{display:grid;gap:12px}
+.pages img{width:100%;border-radius:8px;background:#fff;box-shadow:0 1px 0 rgba(0,0,0,.04)}
+
+/* 例题：逐题分行，题号独立 */
+.exs{list-style:none;margin:0;padding:0;counter-reset:none}
+.exs li{display:grid;grid-template-columns:26px 1fr;gap:8px;padding:16px 0;border-bottom:1px solid var(--line)}
+.exs li:last-child{border-bottom:none}
+.exs .no{font-size:12px;color:var(--muted);padding-top:3px}
+.exs .q{font-size:15px;line-height:1.95;white-space:pre-line;color:var(--ink)}
+.exs .q sup,.exs .q sub{white-space:nowrap}
+
+/* 根号：被开方数完整压在横线下 */
+.rad{display:inline-flex;align-items:baseline;margin:0 2px}
+.radsign{font-size:1.05em;line-height:1;transform:translateY(1px)}
+.radbody{border-top:1px solid currentColor;padding:1px 3px 0;margin-left:-1px}
