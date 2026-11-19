@@ -58,7 +58,6 @@ export default function App() {
           ←
         </button>
         <h1>{pack.name}</h1>
-        <span className={`badge ${pack.mode}`}>{pack.mode === "exam" ? "知识点" : "错题本"}</span>
       </header>
 
       <main className="content">

@@ -15,10 +15,11 @@ export function useSync(
   const ready = useRef(false);
 
   useEffect(() => {
-    if (!supabase) return setStatus("off");
+    const sb = supabase;
+    if (!sb) return setStatus("off");
     let cancelled = false;
-    (async () => {
-      const { data } = await supabase.auth.getUser();
+    const run = async () => {
+      const { data } = await sb.auth.getUser();
       if (!data.user) return setStatus("off");
       if (!state) return;
       setStatus("pulling");
@@ -31,9 +32,17 @@ export function useSync(
       }
       ready.current = true;
       setStatus("idle");
-    })();
+    };
+    void run();
+
+    // 登录/退出后重新跑一次，避免刚登录时不同步
+    const sub = sb.auth.onAuthStateChange(() => {
+      ready.current = false;
+      void run();
+    });
     return () => {
       cancelled = true;
+      sub.data.subscription.unsubscribe();
     };
     // 只在切换书本时拉一次
     // eslint-disable-next-line react-hooks/exhaustive-deps
