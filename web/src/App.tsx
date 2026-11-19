@@ -5,6 +5,7 @@ import type { BookState } from "./data/types";
 import Shelf from "./views/Shelf";
 import Notes from "./views/Notes";
 import Course from "./views/Course";
+import Intro from "./views/Intro";
 import Vocab from "./views/Vocab";
 import Account from "./views/Account";
 import { useSync } from "./data/useSync";
@@ -12,6 +13,7 @@ import { useSync } from "./data/useSync";
 type Tab = "notes" | "vocab" | "account";
 
 export default function App() {
+  const [intro, setIntro] = useState(true);
   const [bookId, setBookId] = useState<string | null>(null);
   const [tab, setTab] = useState<Tab>("notes");
   const [state, setState] = useState<BookState | null>(null);
@@ -39,6 +41,8 @@ export default function App() {
   const syncStatus = useSync(state, update);
 
   const book = useMemo(() => (pack && state ? { pack, state } : null), [pack, state]);
+
+  if (intro) return <Intro onDone={() => setIntro(false)} />;
 
   if (!pack) {
     return <Shelf onOpen={(id) => { setBookId(id); setTab("notes"); }} />;

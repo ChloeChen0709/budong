@@ -37,6 +37,11 @@ export function bodyHtml(pack: Pack, state: BookState): string {
 
 const PAGE_CSS = `
 @page{margin:16mm 15mm}
+.bar{position:sticky;top:0;display:flex;gap:10px;padding:10px 12px;background:#fbfbfd;border-bottom:1px solid #e8e8ed;font:13px/1.5 -apple-system,"PingFang SC",sans-serif}
+.bar button{padding:8px 14px;border:1px solid #e8e8ed;border-radius:10px;background:#fff;font-size:13px}
+.bar button.p{background:#1d1d1f;color:#fff;border-color:#1d1d1f}
+.bar span{color:#86868b;align-self:center;margin-left:auto}
+@media print{.bar{display:none}}
 body{font:12px/1.7 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;color:#111}
 h1{font-size:18px;margin:20px 0 8px}
 h2{font-size:14px;margin:16px 0 6px}
@@ -56,7 +61,27 @@ sup,sub{font-size:.7em;line-height:0}
  * 不在当前页面上打印，是为了避免清理时机与打印对话框打架。
  */
 export function buildPrintHtml(pack: Pack, state: BookState): string {
-  return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>${esc(pack.name)}</title><style>${PAGE_CSS}</style></head><body>${bodyHtml(pack, state)}</body></html>`;
+  return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${esc(pack.name)}</title><style>${PAGE_CSS}</style></head><body>
+<div class="bar">
+  <button class="p" onclick="window.print()">打印 / 存为 PDF</button>
+  <button onclick="saveHtml()">下载 HTML</button>
+  <span>若无反应，用浏览器菜单里的「打印」</span>
+</div>
+${bodyHtml(pack, state)}
+<script>
+function saveHtml(){
+  var html = document.documentElement.outerHTML;
+  var blob = new Blob([html], {type:"text/html"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = document.title + ".html";
+  a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 4000);
+}
+</script>
+</body></html>`;
 }
 
 export function exportPdf(pack: Pack, state: BookState) {
@@ -71,5 +96,4 @@ export function exportPdf(pack: Pack, state: BookState) {
   win.document.write(html);
   win.document.close();
   win.focus();
-  setTimeout(() => win.print(), 350);
 }
