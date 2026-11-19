@@ -5,6 +5,7 @@ import { MathText } from "../lib/math";
 export default function Notes({ pack, state }: { pack: Pack; state: BookState }) {
   const [sectionId, setSectionId] = useState<string | null>(null);
   const [zoom, setZoom] = useState<string | null>(null);
+  const [part, setPart] = useState(0);
 
   const section = useMemo(
     () => pack.book.chapters.flatMap((c) => c.sections).find((s) => s.id === sectionId) ?? null,
@@ -146,7 +147,6 @@ export default function Notes({ pack, state }: { pack: Pack; state: BookState })
   }
 
   const isExam = pack.mode === "exam";
-  const [part, setPart] = useState(0);
   const activeCh = isExam ? pack.book.chapters[part] : null;
 
   if (isExam) {
