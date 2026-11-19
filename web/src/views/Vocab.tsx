@@ -17,6 +17,7 @@ export default function Vocab({
   const [shown, setShown] = useState(false);
   const [deckIndex, setDeckIndex] = useState(0);
   const [drag, setDrag] = useState(0);
+  const [sheet, setSheet] = useState<"weak" | "mastered" | "cal" | "goal" | null>(null);
   const startX = useRef(0);
   const dragging = useRef(false);
 
@@ -101,9 +102,11 @@ export default function Vocab({
 
   return (
     <div className="vocab">
-      <p className="today">
-        今天已背 <b>{today}</b> / {goal}　·　连续 {streak(state)} 天
-      </p>
+      <div className="today">
+        <span>今天已背 <b>{today}</b> / {goal}</span>
+        <button className="tlink" onClick={() => setSheet("cal")}>连续 {streak(state)} 天</button>
+        <button className="tlink" onClick={() => setSheet("goal")}>目标</button>
+      </div>
       <div className="deck" onTouchStart={deckDown} onTouchMove={deckMove} onTouchEnd={deckUp}>
         {(
           [
@@ -144,12 +147,53 @@ export default function Vocab({
       </div>
       <ul className="lists">
         <li>
-          生词本<b>{stats.weak.length}</b>
+          <button className="rowbtn" onClick={() => setSheet("weak")}>
+            生词本<b>{stats.weak.length}</b>
+          </button>
         </li>
         <li>
-          已掌握<b>{stats.mastered.length}</b>
+          <button className="rowbtn" onClick={() => setSheet("mastered")}>
+            已掌握<b>{stats.mastered.length}</b>
+          </button>
         </li>
       </ul>
+
+      {sheet && (
+        <div className="sheet" onClick={() => setSheet(null)}>
+          <div className="sheetbox" onClick={(e) => e.stopPropagation()}>
+            {sheet === "goal" ? (
+              <div className="goals">
+                <h3>每天背多少个</h3>
+                {[10, 20, 30, 50, 100].map((g) => (
+                  <button
+                    key={g}
+                    className={g === goal ? "on" : ""}
+                    onClick={() => {
+                      onChange({ ...state, vocabGoal: g });
+                      setSheet(null);
+                    }}
+                  >
+                    {g}
+                  </button>
+                ))}
+              </div>
+            ) : sheet === "cal" ? (
+              <Calendar days={state.vocabDay} />
+            ) : (
+              <div className="words">
+                <h3>{sheet === "weak" ? "生词本" : "已掌握"}</h3>
+                {(sheet === "weak" ? stats.weak : stats.mastered).map((e) => (
+                  <p key={e.q}>
+                    <span>{e.q}</span>
+                    <b>{e.a}</b>
+                  </p>
+                ))}
+                {!(sheet === "weak" ? stats.weak : stats.mastered).length && <p className="hint">暂无</p>}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -165,4 +209,31 @@ function streak(state: BookState): number {
     } else break;
   }
   return n;
+}
+
+function Calendar({ days }: { days: Record<string, number> }) {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = now.getMonth();
+  const first = new Date(y, m, 1).getDay();
+  const total = new Date(y, m + 1, 0).getDate();
+  const cells: (number | null)[] = [
+    ...Array((first + 6) % 7).fill(null),
+    ...Array.from({ length: total }, (_, i) => i + 1),
+  ];
+  const key = (d: number) => `${y}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+  return (
+    <div className="cal">
+      <h3>{y} 年 {m + 1} 月</h3>
+      <div className="calwk">{"一二三四五六日".split("").map((w) => <span key={w}>{w}</span>)}</div>
+      <div className="calgrid">
+        {cells.map((d, i) => (
+          <span key={i} className={d && days[key(d)] ? "has" : ""}>
+            {d ?? ""}
+            {d && days[key(d)] ? <i>{days[key(d)]}</i> : null}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
 }
