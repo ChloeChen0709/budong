@@ -4,6 +4,7 @@ import { MathText } from "../lib/math";
 
 export default function Notes({ pack, state }: { pack: Pack; state: BookState }) {
   const [sectionId, setSectionId] = useState<string | null>(null);
+  const [zoom, setZoom] = useState<string | null>(null);
 
   const section = useMemo(
     () => pack.book.chapters.flatMap((c) => c.sections).find((s) => s.id === sectionId) ?? null,
@@ -16,6 +17,11 @@ export default function Notes({ pack, state }: { pack: Pack; state: BookState })
   if (section && note) {
     return (
       <article className="section">
+        {zoom && (
+          <div className="zoom" onClick={() => setZoom(null)}>
+            <img src={zoom} alt="" />
+          </div>
+        )}
         <button className="crumb" onClick={() => setSectionId(null)}>
           ← {chapterName}
         </button>
@@ -75,7 +81,24 @@ export default function Notes({ pack, state }: { pack: Pack; state: BookState })
           </div>
         )}
 
-        {!!note.examples?.length && (
+        {!!note.pages?.length && (
+          <section className="nblock">
+            <h3>例题</h3>
+            <div className="pages">
+              {note.pages.map((src) => (
+                <button
+                  className="page"
+                  key={src}
+                  onClick={() => setZoom(`${import.meta.env.BASE_URL}${src}`)}
+                >
+                  <img src={`${import.meta.env.BASE_URL}${src}`} alt="" loading="lazy" />
+                </button>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {!note.pages?.length && !!note.examples?.length && (
           <section className="nblock">
             <h3>例题</h3>
             <ol className="exs">

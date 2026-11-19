@@ -287,3 +287,13 @@ sup,sub{font-size:.7em;line-height:0}
 .rad{display:inline-flex;align-items:baseline;margin:0 2px}
 .radsign{font-size:1.05em;line-height:1;transform:translateY(1px)}
 .radbody{border-top:1px solid currentColor;padding:1px 3px 0;margin-left:-1px}
+
+/* 原书页面：黑白、贴合版面、点击放大 */
+.pages{display:grid;gap:14px}
+.page{display:block;width:100%;padding:0;background:#fff;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.page img{display:block;width:100%;height:auto;mix-blend-mode:multiply}
+.zoom{
+  position:fixed;inset:0;z-index:120;background:#fff;
+  overflow:auto;-webkit-overflow-scrolling:touch;
+}
+.zoom img{display:block;width:100%;height:auto}
