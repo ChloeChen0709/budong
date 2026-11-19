@@ -30,6 +30,7 @@ export interface SectionNote {
   examples?: Entry[];
   pages?: string[];
   pitfalls?: string[];
+  answers?: string[];
   plain?: boolean;
   typesStyle?: string;
 }

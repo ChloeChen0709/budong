@@ -98,6 +98,25 @@ export default function Notes({ pack, state }: { pack: Pack; state: BookState })
           </section>
         )}
 
+        {!!note.answers?.length && (
+          <section className="nblock">
+            <details className="ans">
+              <summary>参考答案</summary>
+              <div className="pages">
+                {note.answers.map((src) => (
+                  <button
+                    className="page"
+                    key={src}
+                    onClick={() => setZoom(`${import.meta.env.BASE_URL}${src}`)}
+                  >
+                    <img src={`${import.meta.env.BASE_URL}${src}`} alt="" loading="lazy" />
+                  </button>
+                ))}
+              </div>
+            </details>
+          </section>
+        )}
+
         {!!note.pitfalls?.length && (
           <section className="nblock">
             <h3>易错点</h3>
