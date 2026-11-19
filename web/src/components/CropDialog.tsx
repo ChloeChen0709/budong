@@ -45,7 +45,18 @@ export default function CropDialog({
 
   const finish = () => {
     const img = imgRef.current;
-    if (!img || !rect || rect.w < 12 || rect.h < 12) return;
+    if (!img) return;
+    // 没框选（或框太小）时，整张图直接用
+    if (!rect || rect.w < 12 || rect.h < 12) {
+      const scale = img.naturalWidth / img.getBoundingClientRect().width || 1;
+      const canvas = document.createElement("canvas");
+      const w = Math.min(1400, img.naturalWidth);
+      canvas.width = w;
+      canvas.height = Math.round((img.naturalHeight / img.naturalWidth) * w);
+      canvas.getContext("2d")?.drawImage(img, 0, 0, canvas.width, canvas.height);
+      onDone(canvas.toDataURL("image/jpeg", 0.8));
+      return;
+    }
     const scale = img.naturalWidth / img.getBoundingClientRect().width;
     const canvas = document.createElement("canvas");
     const w = Math.min(1000, Math.round(rect.w * scale));
@@ -75,8 +86,8 @@ export default function CropDialog({
         )}
         <div className="cropfoot">
           <button onClick={onCancel}>取消</button>
-          <button className="primary" onClick={finish} disabled={!rect}>
-            用这块
+          <button className="primary" onClick={finish}>
+            {rect ? "用这块" : "用整张"}
           </button>
         </div>
       </div>

@@ -155,6 +155,7 @@ function AddForm({
   const [ocrNote, setOcrNote] = useState("");
   const [busy, setBusy] = useState(false);
   const shotRef = useRef<HTMLInputElement>(null);
+  const pickRef = useRef<HTMLInputElement>(null);
   const auto = useMemo(() => classify(q, pack), [q, pack]);
   const [sec, setSec] = useState("");
 
@@ -206,22 +207,36 @@ function AddForm({
         <p className="hint">按关键词自动归到「{auto.sec}」，命中了 {auto.hit.join("、")}</p>
       )}
       <div className="ocrbar">
-        <label className="file">
-          附图
-          <input type="file" accept="image/*" onChange={(e) => e.target.files?.[0] && void pick(e.target.files[0])} />
-        </label>
-        <button type="button" className="link" onClick={() => shotRef.current?.click()} disabled={busy}>
+        <button type="button" className="ghostbtn" onClick={() => pickRef.current?.click()}>
+          选图
+        </button>
+        <button type="button" className="ghostbtn" onClick={() => shotRef.current?.click()} disabled={busy}>
           {busy ? "识别中…" : "拍照识别"}
         </button>
-        <input
-          ref={shotRef}
-          type="file"
-          accept="image/*"
-          capture="environment"
-          hidden
-          onChange={(e) => e.target.files?.[0] && setOcrFile(e.target.files[0])}
-        />
       </div>
+      <input
+        ref={pickRef}
+        className="visually-hidden"
+        type="file"
+        accept="image/*"
+        onChange={(e) => {
+          const f = e.target.files?.[0];
+          e.target.value = "";
+          if (f) setCrop(f);
+        }}
+      />
+      <input
+        ref={shotRef}
+        className="visually-hidden"
+        type="file"
+        accept="image/*"
+        capture="environment"
+        onChange={(e) => {
+          const f = e.target.files?.[0];
+          e.target.value = "";
+          if (f) setOcrFile(f);
+        }}
+      />
       {ocrNote && <p className="hint">{ocrNote}</p>}
       {img && <img className="thumb" src={img} alt="" />}
       {crop && (
