@@ -232,3 +232,7 @@ sup,sub{font-size:.7em;line-height:0}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
 .row2 button{padding:12px 0;border-radius:12px;background:var(--bg-soft);font-size:14px}
 .row2 .primary{background:var(--ink);color:#fff}
+
+.nblock{margin:0 0 26px}
+.nblock h3{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.04em;margin:0 0 10px}
+.plainline{margin:0 0 8px;font-size:14px;color:var(--text)}

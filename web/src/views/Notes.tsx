@@ -24,16 +24,42 @@ export default function Notes({ pack, state }: { pack: Pack; state: BookState })
         </h2>
 
         {!!note.concepts?.length && (
-          <ul className="concepts">
-            {note.concepts.map((c, i) => (
-              <li key={i}>{c}</li>
-            ))}
-          </ul>
+          <section className="nblock">
+            <h3>概念</h3>
+            <ul className="concepts">
+              {note.concepts.map((c, i) => (
+                <li key={i}><MathText text={c} /></li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {!!note.types?.length && note.typesStyle !== "scene" && (
+          <section className="nblock">
+            <h3>重点题型</h3>
+            <div className="cards">
+              {note.types.map((t, i) =>
+                typeof t === "string" ? (
+                  <p className="plainline" key={i}>
+                    {t}
+                  </p>
+                ) : (
+                  <details key={i}>
+                    <summary><MathText text={t.t} /></summary>
+                    <div className="body">
+                      <p><MathText text={t.how} /></p>
+                    </div>
+                  </details>
+                )
+              )}
+            </div>
+          </section>
         )}
 
         {note.typesStyle === "scene" && !!note.types?.length && (
           <div className="scenes">
             {note.types.map((t, i) => {
+              if (typeof t !== "string") return null;
               const [head, ...rest] = t.split(/[：:]/);
               return (
                 <div className="scene" key={i}>
@@ -45,8 +71,10 @@ export default function Notes({ pack, state }: { pack: Pack; state: BookState })
           </div>
         )}
 
-        {!!note.examples?.length &&
-          (note.plain ? (
+        {!!note.examples?.length && (
+          <section className="nblock">
+            <h3>{note.plain ? "对照表" : "例题"}</h3>
+        {note.plain ? (
             <dl className="pairs">
               {note.examples.map((e, i) => (
                 <div className="pair" key={i}>
@@ -67,7 +95,9 @@ export default function Notes({ pack, state }: { pack: Pack; state: BookState })
                 </details>
               ))}
             </div>
-          ))}
+          )}
+          </section>
+        )}
       </article>
     );
   }

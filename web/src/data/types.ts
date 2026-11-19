@@ -19,9 +19,14 @@ export interface Entry {
   analysis?: string;
 }
 
+export interface TypeEntry {
+  t: string;
+  how: string;
+}
+
 export interface SectionNote {
   concepts?: string[];
-  types?: string[];
+  types?: (string | TypeEntry)[];
   examples?: Entry[];
   plain?: boolean;
   typesStyle?: string;
