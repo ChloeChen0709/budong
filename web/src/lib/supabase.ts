@@ -9,7 +9,23 @@ const key = import.meta.env.VITE_SUPABASE_ANON_KEY?.trim();
 
 /** 没配置环境变量时返回 null，界面走纯本地模式 */
 export const supabase: SupabaseClient | null =
-  url && key ? createClient(url, key, { auth: { persistSession: true } }) : null;
+  url && key
+    ? createClient(url, key, {
+        auth: {
+          persistSession: true,
+          detectSessionInUrl: true,   // 邮件链接带回的 #access_token 由它接住
+          flowType: "implicit",
+        },
+      })
+    : null;
+
+/** 邮件链接失败时 Supabase 会把原因放在 URL 上，取出来给界面显示 */
+export function urlAuthError(): string | null {
+  const h = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+  const q = new URLSearchParams(window.location.search);
+  const msg = h.get("error_description") || q.get("error_description") || h.get("error") || q.get("error");
+  return msg ? decodeURIComponent(msg.replace(/\+/g, " ")) : null;
+}
 
 export const isCloudEnabled = Boolean(supabase);
 

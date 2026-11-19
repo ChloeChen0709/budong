@@ -80,11 +80,21 @@ export default function Account() {
   }, []);
 
   const send = async () => {
+    setMsg("发送中…");
     try {
       await signInWithEmail(email.trim());
-      setMsg("登录链接已发送");
+      setMsg("已发送，去邮箱点链接");
     } catch (e) {
-      setMsg(e instanceof Error ? e.message : "登录失败");
+      setMsg(`发送失败：${e instanceof Error ? e.message : "未知错误"}`);
+    }
+  };
+
+  const github = async () => {
+    setMsg("正在跳转 GitHub…");
+    try {
+      await signInWithGitHub();
+    } catch (e) {
+      setMsg(`GitHub 登录失败：${e instanceof Error ? e.message : "未知错误"}`);
     }
   };
 
@@ -153,7 +163,7 @@ export default function Account() {
               <button className="primary wide" onClick={send} disabled={!email.includes("@")}>
                 发送链接
               </button>
-              <button className="wide" onClick={() => void signInWithGitHub()}>
+              <button className="wide" onClick={github}>
                 使用 GitHub 登录
               </button>
             </>

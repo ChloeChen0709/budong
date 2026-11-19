@@ -1,9 +1,18 @@
 import { PACKS } from "../data/packs";
 
-export default function Shelf({ onOpen }: { onOpen: (id: string) => void }) {
+export default function Shelf({
+  onOpen,
+  onAccount,
+}: {
+  onOpen: (id: string) => void;
+  onAccount: () => void;
+}) {
   return (
     <div className="shelf">
-      <p className="eyebrow">选择书目</p>
+      <div className="shelf-head">
+        <p className="eyebrow">选择书目</p>
+        <button className="link" onClick={onAccount}>我的</button>
+      </div>
       <ul className="books">
         {PACKS.map((p) => (
           <li key={p.id}>

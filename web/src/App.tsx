@@ -15,6 +15,7 @@ type Tab = "notes" | "vocab" | "account";
 export default function App() {
   const [intro, setIntro] = useState(true);
   const [bookId, setBookId] = useState<string | null>(null);
+  const [accountOpen, setAccountOpen] = useState(false);
   const [tab, setTab] = useState<Tab>("notes");
   const [state, setState] = useState<BookState | null>(null);
 
@@ -45,7 +46,9 @@ export default function App() {
   if (intro) return <Intro onDone={() => setIntro(false)} />;
 
   if (!pack) {
-    return <Shelf onOpen={(id) => { setBookId(id); setTab("notes"); }} />;
+    return accountOpen
+      ? <div className="app"><header className="topbar"><button className="back" onClick={() => setAccountOpen(false)}>←</button><h1>我的</h1></header><main className="content"><Account /></main></div>
+      : <Shelf onOpen={(id) => { setBookId(id); setTab("notes"); }} onAccount={() => setAccountOpen(true)} />;
   }
 
   return (
@@ -77,19 +80,16 @@ export default function App() {
         </div>
       )}
 
-      <nav className={`tabbar ${pack.mode === "course" ? "two" : ""}`}>
-        <button className={tab === "notes" ? "on" : ""} onClick={() => setTab("notes")}>
-          {pack.mode === "course" ? "学习" : "知识点"}
-        </button>
-        {pack.mode === "exam" && (
+      {pack.mode === "exam" && (
+        <nav className="tabbar two">
+          <button className={tab === "notes" ? "on" : ""} onClick={() => setTab("notes")}>
+            知识点
+          </button>
           <button className={tab === "vocab" ? "on" : ""} onClick={() => setTab("vocab")}>
             词汇
           </button>
-        )}
-        <button className={tab === "account" ? "on" : ""} onClick={() => setTab("account")}>
-          我的
-        </button>
-      </nav>
+        </nav>
+      )}
     </div>
   );
 }
