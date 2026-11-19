@@ -452,3 +452,8 @@ button.is-pressed, .book.is-pressed, .choice.is-pressed, .page.is-pressed,
 .mslotsmall{max-width:8ch}
 .mpreview{display:flex;gap:10px;align-items:baseline;margin-top:8px;font-size:15px;color:var(--text)}
 .pvlabel{font-size:11px;letter-spacing:.12em;color:#a1a1a6}
+
+.attach{position:relative;margin-top:10px}
+.attach .thumb{margin-top:0}
+.detach{margin-top:8px;font-size:13px;color:#86868b}
+.detach.is-pressed{color:var(--ink)}

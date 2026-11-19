@@ -208,7 +208,7 @@ function AddForm({
       )}
       <div className="ocrbar">
         <button type="button" className="ghostbtn" onClick={() => pickRef.current?.click()}>
-          选图
+          相册
         </button>
         <button type="button" className="ghostbtn" onClick={() => shotRef.current?.click()} disabled={busy}>
           {busy ? "识别中…" : "拍照识别"}
@@ -238,7 +238,12 @@ function AddForm({
         }}
       />
       {ocrNote && <p className="hint">{ocrNote}</p>}
-      {img && <img className="thumb" src={img} alt="" />}
+      {img && (
+        <div className="attach">
+          <img className="thumb" src={img} alt="" />
+          <button type="button" className="detach" onClick={() => setImg(undefined)}>移除图片</button>
+        </div>
+      )}
       {crop && (
         <CropDialog
           file={crop}
@@ -255,6 +260,7 @@ function AddForm({
           onCancel={() => setOcrFile(undefined)}
           onDone={(url) => {
             setOcrFile(undefined);
+            setImg(url);          // 图先留住，识别失败也不会丢
             void runOcr(url);
           }}
         />
