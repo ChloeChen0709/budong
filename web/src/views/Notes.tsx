@@ -98,6 +98,17 @@ export default function Notes({ pack, state }: { pack: Pack; state: BookState })
           </section>
         )}
 
+        {!!note.pitfalls?.length && (
+          <section className="nblock">
+            <h3>易错点</h3>
+            <ul className="pitfalls">
+              {note.pitfalls.map((p, i) => (
+                <li key={i}><MathText text={p} /></li>
+              ))}
+            </ul>
+          </section>
+        )}
+
         {!note.pages?.length && !!note.examples?.length && (
           <section className="nblock">
             <h3>例题</h3>

@@ -29,6 +29,7 @@ export interface SectionNote {
   types?: (string | TypeEntry)[];
   examples?: Entry[];
   pages?: string[];
+  pitfalls?: string[];
   plain?: boolean;
   typesStyle?: string;
 }
