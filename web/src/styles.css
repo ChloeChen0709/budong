@@ -5,7 +5,7 @@
   --line:#e8e8ed;
   --bg:#fff;
   --bg-soft:#fbfbfd;
-  --accent:#0071e3;
+  --accent:#1d1d1f;
   --tab-h:64px;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -375,3 +375,41 @@ button.is-pressed, .book.is-pressed, .choice.is-pressed, .page.is-pressed,
   .modules button.is-pressed, .modes button.is-pressed, .tabbar button.is-pressed,
   .marks button.is-pressed, .vlbtn.is-pressed { transform: none; }
 }
+
+
+/* ============ 层级与对齐 ============ */
+.topbar h1{font-size:17px;font-weight:600;letter-spacing:-.01em}
+.section h2{font-size:22px;font-weight:600;letter-spacing:-.02em;margin:18px 0 20px}
+.nblock h3{font-size:11px;font-weight:600;letter-spacing:.12em;color:#a1a1a6;text-transform:uppercase}
+.toc h3{font-size:11px;font-weight:600;letter-spacing:.12em;color:#a1a1a6;text-transform:uppercase;margin-bottom:10px}
+.toc .tt{font-size:16px;color:var(--ink)}
+.toc .id{font-size:12px;color:#c7c7cc;width:34px}
+.sections button span:first-child{font-size:16px}
+.exs .q{font-size:15.5px;line-height:2.05}
+.concepts li{font-size:15px;line-height:1.95;color:var(--text)}
+.lead{font-size:17px;font-weight:500;line-height:1.65;letter-spacing:-.01em}
+.mrows li{font-size:15px}
+.ilist .q{font-size:15.5px}
+
+/* 3) 次要操作：小一号、灰色、无蓝 */
+.coursebar{display:flex;justify-content:flex-end;padding:2px 0 10px}
+.coursebar button{font-size:13px;color:#86868b;font-weight:400}
+.coursebar button.is-pressed{color:var(--ink);transform:scale(.96)}
+.crumb{font-size:13px;color:#86868b;padding:8px 0 4px}
+.crumb.is-pressed{color:var(--ink)}
+.ocrbar .link{color:#86868b}
+.ocrbar .link.is-pressed{color:var(--ink)}
+.vlinks button{color:#86868b}
+.aside-link,.shelf-head .link{color:#86868b}
+
+/* 4) 主按钮 vs 次按钮 */
+.marks .primary,.formfoot .primary,.primary{background:var(--ink);color:#fff;font-weight:500}
+.ghost,.marks button,.formfoot button{color:var(--text)}
+
+/* 5) 分隔与留白 */
+.nblock{margin-bottom:30px}
+.ans summary{font-size:14px;color:var(--text);letter-spacing:.01em}
+.ans summary::after{content:"＋";color:#c7c7cc}
+
+.modes .export{margin-left:auto;font-size:13px;color:#86868b;padding-left:14px}
+.modes .export.is-pressed{color:var(--ink)}

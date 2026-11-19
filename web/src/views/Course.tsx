@@ -33,17 +33,13 @@ export default function Course({
 
   return (
     <div className="course">
-      <div className="coursebar">
-        <button className="link" onClick={() => exportPdf(pack, state)}>
-          导出 PDF
-        </button>
-      </div>
       <nav className="modes">
         {TABS.map(([k, label]) => (
           <button key={k} className={tab === k ? "on" : ""} onClick={() => setTab(k)}>
             {label}
           </button>
         ))}
+        <button className="export" onClick={() => exportPdf(pack, state)}>导出</button>
       </nav>
 
       {tab === "map" && <Map pack={pack} items={items} onPick={() => setTab("items")} />}
