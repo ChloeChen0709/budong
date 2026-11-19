@@ -10,9 +10,12 @@ export default function Shelf({
   return (
     <div className="shelf">
       <header className="shelf-top">
-        <span className="brand">不懂</span>
+        <span className="brand">budong</span>
         <button className="avatar" onClick={onAccount} aria-label="我的">
-          <span>我</span>
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true">
+            <circle cx="12" cy="8.2" r="3.6" fill="none" stroke="currentColor" strokeWidth="1.6" />
+            <path d="M4.8 20c0-3.6 3.2-6 7.2-6s7.2 2.4 7.2 6" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+          </svg>
         </button>
       </header>
       <ul className="books">
