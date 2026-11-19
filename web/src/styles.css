@@ -328,3 +328,50 @@ sup,sub{font-size:.7em;line-height:0}
   transition:background-color .2s var(--ease),color .2s var(--ease);
 }
 .avatar:active,.avatar:hover{background:#f5f5f7;color:var(--ink)}
+
+/* ============ 触摸反馈 ============ */
+:root{
+  --press: 0.96;
+  --press-in: 0.1s;
+  --press-in-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --spring: linear(0.0, 0.121, 0.3721, 0.6337, 0.8437, 0.9825, 1.0556, 1.0801, 1.0749, 1.0561, 1.0345, 1.0163, 1.0036, 0.9965, 0.9937, 0.9937, 0.995, 0.9968, 0.9984, 0.9995, 1.0002, 1.0005, 1.0005, 1.0004, 1.0003, 1.0002, 1.0001, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1);
+  --spring-dur: 0.34s;
+  --ease-out: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ui: 0.25s;
+}
+
+*, *::before, *::after { -webkit-tap-highlight-color: transparent; }
+
+button, .book, .choice, .page, .avatar,
+.toc li button, .sections li button, .modules button, .modes button,
+.tabbar button, .marks button, .vlbtn {
+  transition: transform var(--spring-dur) var(--spring),
+              background-color var(--ui) var(--ease-out),
+              color var(--ui) var(--ease-out);
+  will-change: transform;
+  transform: translateZ(0);
+  touch-action: manipulation;
+}
+
+button.is-pressed, .book.is-pressed, .choice.is-pressed, .page.is-pressed,
+.avatar.is-pressed, .toc li button.is-pressed, .sections li button.is-pressed,
+.modules button.is-pressed, .modes button.is-pressed, .tabbar button.is-pressed,
+.marks button.is-pressed, .vlbtn.is-pressed {
+  transform: scale(var(--press));
+  background-color: rgba(0, 0, 0, 0.045);
+  transition: transform var(--press-in) var(--press-in-ease),
+              background-color var(--press-in) var(--press-in-ease);
+}
+
+/* 桌面端保留一点悬停，触屏设备不生效 */
+@media (hover: hover) and (pointer: fine) {
+  .book:hover, .choice:hover, .vcard:hover { background-color: #f5f5f7; }
+  .toc li button:hover, .sections li button:hover { color: var(--ink); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button.is-pressed, .book.is-pressed, .choice.is-pressed, .page.is-pressed,
+  .avatar.is-pressed, .toc li button.is-pressed, .sections li button.is-pressed,
+  .modules button.is-pressed, .modes button.is-pressed, .tabbar button.is-pressed,
+  .marks button.is-pressed, .vlbtn.is-pressed { transform: none; }
+}
