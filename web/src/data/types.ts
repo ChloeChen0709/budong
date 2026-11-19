@@ -45,9 +45,23 @@ export interface SrsRecord {
   mastered?: boolean;
 }
 
+export type Cause = "unknown" | "calc" | "read";
+
+export interface Item {
+  id: string;
+  sec: string;
+  cause: Cause;
+  due: number;
+  lapses: number;
+  q: string;
+  img?: string;
+  demo?: { why: string; how: string; fix: string };
+}
+
 /** 一本书的本地状态。字段与旧版单文件一致，便于互相导入。 */
 export interface BookState {
   bookId: string;
+  items?: Item[];
   notes: Record<string, SectionNote>;
   srs: Record<string, SrsRecord>;
   vocabDay: Record<string, number>;

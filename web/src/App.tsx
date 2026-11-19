@@ -4,8 +4,10 @@ import { lastBookId, loadState, migrateLegacy, saveState } from "./data/store";
 import type { BookState } from "./data/types";
 import Shelf from "./views/Shelf";
 import Notes from "./views/Notes";
+import Course from "./views/Course";
 import Vocab from "./views/Vocab";
 import Account from "./views/Account";
+import { useSync } from "./data/useSync";
 
 type Tab = "notes" | "vocab" | "account";
 
@@ -34,6 +36,8 @@ export default function App() {
     saveState(next);
   };
 
+  const syncStatus = useSync(state, update);
+
   const book = useMemo(() => (pack && state ? { pack, state } : null), [pack, state]);
 
   if (!pack) {
@@ -51,25 +55,33 @@ export default function App() {
       </header>
 
       <main className="content">
-        {book && tab === "notes" && <Notes pack={book.pack} state={book.state} />}
-        {book && tab === "vocab" && <Vocab pack={book.pack} state={book.state} onChange={update} />}
-        {tab === "account" && <Account />}
-        {book && tab === "vocab" && pack.mode !== "exam" && (
-          <p className="hint">这本书没有词表。</p>
+        {book && pack.mode === "course" && tab !== "account" && (
+          <Course pack={book.pack} state={book.state} onChange={update} />
         )}
+        {book && pack.mode === "exam" && tab === "notes" && (
+          <Notes pack={book.pack} state={book.state} />
+        )}
+        {book && pack.mode === "exam" && tab === "vocab" && (
+          <Vocab pack={book.pack} state={book.state} onChange={update} />
+        )}
+        {tab === "account" && <Account />}
       </main>
 
-      <nav className="tabbar">
+      {syncStatus !== "off" && (
+        <div className={`sync ${syncStatus}`}>
+          {syncStatus === "idle" ? "已同步" : syncStatus === "pulling" ? "同步中" : syncStatus === "pushing" ? "上传中" : "同步失败"}
+        </div>
+      )}
+
+      <nav className={`tabbar ${pack.mode === "course" ? "two" : ""}`}>
         <button className={tab === "notes" ? "on" : ""} onClick={() => setTab("notes")}>
-          知识点
+          {pack.mode === "course" ? "学习" : "知识点"}
         </button>
-        <button
-          className={tab === "vocab" ? "on" : ""}
-          onClick={() => setTab("vocab")}
-          disabled={pack.mode !== "exam"}
-        >
-          词汇
-        </button>
+        {pack.mode === "exam" && (
+          <button className={tab === "vocab" ? "on" : ""} onClick={() => setTab("vocab")}>
+            词汇
+          </button>
+        )}
         <button className={tab === "account" ? "on" : ""} onClick={() => setTab("account")}>
           我的
         </button>

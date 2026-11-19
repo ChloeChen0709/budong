@@ -7,6 +7,7 @@ export const storeKey = (bookId: string) => `${KEY}.${bookId}`;
 export function emptyState(pack: Pack): BookState {
   return {
     bookId: pack.id,
+    items: [],
     notes: structuredClone(pack.notes),
     srs: {},
     vocabDay: {},

@@ -126,3 +126,109 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   .tabbar{position:static;height:auto;grid-template-columns:repeat(3,minmax(0,120px));justify-content:center;background:none;border:0;padding:0 0 32px}
   .tabbar button{padding:10px 0}
 }
+
+.account section{margin-bottom:28px}
+.account h3{font-size:13px;font-weight:600;color:var(--muted);margin:0 0 12px}
+.account .row{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 12px;font-size:15px}
+.account .row b{color:var(--muted);font-weight:500;font-size:13px}
+.account .rows{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.account .rows li{border-bottom:1px solid var(--line)}
+.account .rows button{width:100%;text-align:left;padding:16px 2px;font-size:15px;color:var(--text)}
+
+.sync{
+  position:fixed;left:50%;transform:translateX(-50%);
+  bottom:calc(var(--tab-h) + 12px);z-index:15;
+  font-size:11px;color:var(--muted);background:rgba(255,255,255,.9);
+  padding:4px 10px;border-radius:999px;border:1px solid var(--line);
+}
+.sync.error{color:#b23a2f;border-color:#f0d5d1}
+@media (min-width:900px){.sync{position:static;transform:none;display:inline-block;margin:0 0 12px}}
+
+/* 微积分：错题本四页 */
+.modes{display:flex;gap:20px;padding:4px 0 14px;border-bottom:1px solid var(--line);overflow-x:auto}
+.modes button{font-size:14px;color:var(--muted);white-space:nowrap}
+.modes button.on{color:var(--ink);font-weight:600}
+.lead{font-size:16px;line-height:1.7;margin:18px 4px 16px;color:var(--ink)}
+.mrows{list-style:none;margin:0;padding:0}
+.mrows li{display:flex;justify-content:space-between;gap:12px;padding:14px 2px;border-bottom:1px solid var(--line);font-size:14px}
+.mrows .num{color:var(--muted)}
+.mrows li.h .sec{color:#b23a2f}
+.mrows li.m .sec{color:#b8860b}
+.rowhead{display:flex;justify-content:space-between;align-items:center;padding:12px 2px;font-size:13px;color:var(--muted)}
+.link{color:var(--accent);font-size:14px}
+.ilist{list-style:none;margin:0;padding:0}
+.ilist li{position:relative;padding:16px 2px;border-bottom:1px solid var(--line)}
+.ilist .q{font-size:15px;line-height:1.6;padding-right:44px}
+.ilist .meta{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);margin-top:6px;flex-wrap:wrap}
+.ilist .dot{width:6px;height:6px;border-radius:50%}
+.ilist .sep{color:#d2d2d7}
+.ilist .lap{color:#b23a2f}
+.del{position:absolute;top:16px;right:0;font-size:12px;color:var(--muted)}
+.thumb{max-width:100%;border-radius:12px;margin-top:10px}
+.rv{display:flex;gap:10px;margin-top:12px}
+.rv button{flex:1;padding:10px 0;border-radius:12px;background:var(--bg-soft);font-size:14px}
+.rv .primary{background:var(--ink);color:#fff}
+.addform{display:grid;gap:12px;padding:16px 0 22px;border-bottom:1px solid var(--line)}
+.addform textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;font:inherit;resize:vertical}
+.chips{display:flex;gap:8px}
+.chips button{font-size:13px;padding:6px 14px;border-radius:999px;background:var(--bg-soft);color:var(--muted)}
+.chips button.on{background:var(--ink);color:#fff}
+.field,.file{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13px;color:var(--muted)}
+.field select{flex:1;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit}
+.file input{font-size:12px;max-width:60%}
+.formfoot{display:flex;gap:10px}
+.formfoot button{flex:1;padding:12px 0;border-radius:12px;background:var(--bg-soft);font-size:15px}
+.formfoot .primary{background:var(--ink);color:#fff}
+.tabbar.two{grid-template-columns:repeat(2,1fr)}
+@media (min-width:900px){.tabbar.two{grid-template-columns:repeat(2,minmax(0,120px))}}
+
+/* 数学渲染 */
+.frc{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 2px;font-size:.92em}
+.frc-n{border-bottom:1px solid currentColor;padding:0 3px}
+.frc-d{padding:0 3px}
+sup,sub{font-size:.7em;line-height:0}
+
+/* 公式键盘 */
+.mathinput{display:grid;gap:10px}
+.mathinput textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;font:inherit;resize:vertical}
+.kb{display:grid;gap:8px}
+.kbrow{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}
+.kbrow button{flex:none;font-size:14px;padding:8px 12px;border-radius:10px;background:var(--bg-soft);color:var(--text)}
+.preview{padding:12px;background:var(--bg-soft);border-radius:12px;font-size:15px}
+
+/* 裁剪 */
+.cropmask{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:16px}
+.cropbox{background:#fff;border-radius:18px;padding:16px;width:100%;max-width:520px}
+.cropimg{position:relative;touch-action:none;margin:10px 0}
+.cropimg img{width:100%;display:block;border-radius:10px;user-select:none}
+.croprect{position:absolute;border:2px solid var(--accent);background:rgba(0,113,227,.14);pointer-events:none}
+.cropfoot{display:flex;gap:10px}
+.cropfoot button{flex:1;padding:12px 0;border-radius:12px;background:var(--bg-soft)}
+.cropfoot .primary{background:var(--ink);color:#fff}
+
+/* 讲解 */
+.explain{margin-top:10px}
+.explain .wide{width:100%;padding:12px 0;border-radius:12px;background:var(--bg-soft);font-size:14px}
+.blk{display:grid;grid-template-columns:64px 1fr;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.blk .tag{font-size:12px;color:var(--muted)}
+.blk p{margin:0;font-size:14px;line-height:1.8}
+
+.coursebar{display:flex;justify-content:flex-end;padding:6px 0 0}
+
+/* 打印 */
+.printonly{display:none}
+@media print{
+  @page{margin:16mm 15mm}
+  body>*:not(#printroot){display:none!important}
+  #printroot{display:block!important}
+  #printroot h1{font-size:18px;margin:18px 0 6px}
+  #printroot h2{font-size:14px;margin:14px 0 4px}
+  #printroot ul{margin:4px 0 8px;padding-left:18px;font-size:12px}
+  #printroot .p{font-size:12px;margin:6px 0;line-height:1.7}
+  #printroot .m{color:#777;font-size:11px;margin-left:8px}
+  #printroot img{max-width:60%;display:block;margin:6px 0}
+}
+
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.row2 button{padding:12px 0;border-radius:12px;background:var(--bg-soft);font-size:14px}
+.row2 .primary{background:var(--ink);color:#fff}

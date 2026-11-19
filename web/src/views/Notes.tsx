@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import type { BookState, Pack } from "../data/types";
+import { MathText } from "../lib/math";
 
 export default function Notes({ pack, state }: { pack: Pack; state: BookState }) {
   const [chapter, setChapter] = useState(0);
@@ -49,8 +50,8 @@ export default function Notes({ pack, state }: { pack: Pack; state: BookState })
             <dl className="pairs">
               {note.examples.map((e, i) => (
                 <div className="pair" key={i}>
-                  <dt>{e.q}</dt>
-                  <dd>{e.a}</dd>
+                  <dt><MathText text={e.q} /></dt>
+                  <dd><MathText text={e.a ?? ""} /></dd>
                 </div>
               ))}
             </dl>
@@ -58,10 +59,10 @@ export default function Notes({ pack, state }: { pack: Pack; state: BookState })
             <div className="cards">
               {note.examples.map((e, i) => (
                 <details key={i}>
-                  <summary>{e.q}</summary>
+                  <summary><MathText text={e.q} /></summary>
                   <div className="body">
-                    {e.a && <p>{e.a}</p>}
-                    {e.analysis && <p className="note">{e.analysis}</p>}
+                    {e.a && <p><MathText text={e.a} /></p>}
+                    {e.analysis && <p className="note"><MathText text={e.analysis} /></p>}
                   </div>
                 </details>
               ))}
