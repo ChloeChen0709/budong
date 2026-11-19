@@ -117,7 +117,15 @@ export default function Vocab({
             <button
               key={k}
               className={`choice card-${off === 0 ? "on" : off > 0 ? "next" : "prev"}`}
-              style={{ transform: `translateX(${off * 6 + drag}%) scale(${1 - Math.abs(off) * 0.04})` }}
+              style={{
+                transform:
+                  off === 0
+                    ? `translateY(0) scale(1) translateX(${drag}%)`
+                    : off > 0
+                    ? "translateY(18px) scale(.94)"
+                    : "translateY(-18px) scale(.94)",
+                zIndex: off === 0 ? 3 : 2,
+              }}
               onClick={() => (off === 0 ? start(k) : setDeckIndex(i))}
             >
               <span className="title">{label}</span>
