@@ -457,3 +457,12 @@ button.is-pressed, .book.is-pressed, .choice.is-pressed, .page.is-pressed,
 .attach .thumb{margin-top:0}
 .detach{margin-top:8px;font-size:13px;color:#86868b}
 .detach.is-pressed{color:var(--ink)}
+
+.mline{gap:0;flex-wrap:nowrap;overflow-x:auto;white-space:nowrap;align-items:center}
+.mline input{padding:0;margin:0;border:0}
+.mtext{flex:0 0 auto;min-width:2ch}
+.mfrac{margin:0 1px}
+.mfrac .slot{width:auto;min-width:2ch;padding:0}
+.msqrt{margin:0 1px}
+.msqrt .slot{width:auto;min-width:2ch}
+.mslotsmall{min-width:1.5ch}
