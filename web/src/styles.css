@@ -466,3 +466,5 @@ button.is-pressed, .book.is-pressed, .choice.is-pressed, .page.is-pressed,
 .msqrt{margin:0 1px}
 .msqrt .slot{width:auto;min-width:2ch}
 .mslotsmall{min-width:1.5ch}
+
+.mline input::placeholder{color:#b8b8bd;opacity:1}

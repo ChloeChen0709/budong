@@ -21,6 +21,13 @@ const KEYS: [string, string[]][] = [
   ["函数", ["lim", "ln", "sin", "cos", "tan", "dx", "dy", "dt", "e"]],
 ];
 
+/** 粗略估宽：中文按 1em，西文按 0.56em */
+function em(s: string) {
+  let w = 0.4;
+  for (const c of s) w += /[\u3000-\u9fff]/.test(c) ? 1 : 0.56;
+  return Math.max(1.6, w);
+}
+
 /** 把带记号的一行拆成「文字 + 结构」的块，便于直接改内容 */
 function parse(src: string): Part[] {
   const out: Part[] = [];
@@ -110,7 +117,7 @@ export default function MathInput({
               <input
                 key={i}
                 className="mtext"
-                style={{ width: `${Math.max(2, p.v.length || 2) * 1.02 + 0.6}ch` }}
+                style={p.v ? { width: `${em(p.v)}em` } : { flex: "1 1 auto", minWidth: "7em" }}
                 value={p.v}
                 placeholder={i === 0 ? "题目" : ""}
                 onChange={(e) => setAt(i, { v: e.target.value } as Partial<Part>)}
@@ -119,9 +126,9 @@ export default function MathInput({
           if (p.kind === "frac")
             return (
               <span className="mfrac" key={i}>
-                <input className="slot" style={{ width: `${Math.max(2, (p.n.length || 1)) * 1.0 + 0.8}ch` }} value={p.n} placeholder="分子"
+                <input className="slot" style={{ width: `${p.n ? em(p.n) : 2.4}em` }} value={p.n} placeholder="分子"
                   onChange={(e) => setAt(i, { n: e.target.value } as Partial<Part>)} />
-                <input className="slot" style={{ width: `${Math.max(2, (p.d.length || 1)) * 1.0 + 0.8}ch` }} value={p.d} placeholder="分母"
+                <input className="slot" style={{ width: `${p.d ? em(p.d) : 2.4}em` }} value={p.d} placeholder="分母"
                   onChange={(e) => setAt(i, { d: e.target.value } as Partial<Part>)} />
               </span>
             );
@@ -129,7 +136,7 @@ export default function MathInput({
             return (
               <span className="msqrt" key={i}>
                 <span className="hook">√</span>
-                <input className="slot" style={{ width: `${Math.max(2, (p.v.length || 1)) * 1.0 + 0.8}ch` }} value={p.v} placeholder="根号内"
+                <input className="slot" style={{ width: `${p.v ? em(p.v) : 4.2}em` }} value={p.v} placeholder="根号内"
                   onChange={(e) => setAt(i, { v: e.target.value } as Partial<Part>)} />
               </span>
             );
@@ -137,7 +144,7 @@ export default function MathInput({
             <input
               key={i}
               className="mslotsmall"
-              style={{ fontSize: size(p), width: `${Math.max(1.5, (p.v.length || 1))}ch`, ...lift(p) }}
+              style={{ fontSize: size(p), width: `${em(p.v || "0")}em`, ...lift(p) }}
               value={p.v}
               placeholder={p.kind === "sup" ? "上标" : "下标"}
               onChange={(e) => setAt(i, { v: e.target.value } as Partial<Part>)}
