@@ -13,12 +13,13 @@ export default function Intro({ onDone }: { onDone: () => void }) {
     };
   }, [onDone]);
 
+  const skip = () => {
+    setLeaving(true);
+    window.setTimeout(onDone, 450);
+  };
+
   return (
-    <div
-      className={`intro${leaving ? " out" : ""}`}
-      onClick={() => setLeaving(true)}
-      role="presentation"
-    >
+    <div className={`intro${leaving ? " out" : ""}`} onClick={skip} role="presentation">
       <div className="intro-inner">
         <h1>budong</h1>
         <p>Stay hungry. Stay foolish.</p>

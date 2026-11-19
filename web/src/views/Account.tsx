@@ -8,11 +8,12 @@ function ModelSection() {
   const init = apiCfg();
   const [url, setUrl] = useState(init.url ?? "");
   const [model, setModel] = useState(init.model ?? "");
+  const [vision, setVision] = useState(init.vision ?? "");
   const [key, setKey] = useState(init.key ?? "");
   const [msg, setMsg] = useState("");
 
   const save = () => {
-    saveApiCfg({ url: normalizeApiUrl(url), model: model || hostModel(url), key });
+    saveApiCfg({ url: normalizeApiUrl(url), model: model || hostModel(url), vision, key });
     setMsg("已保存");
   };
 
@@ -47,6 +48,13 @@ function ModelSection() {
       />
       <label htmlFor="apiModel">模型名</label>
       <input id="apiModel" value={model} onChange={(e) => setModel(e.target.value)} placeholder="deepseek-chat" />
+      <label htmlFor="apiVision">识图模型</label>
+      <input
+        id="apiVision"
+        value={vision}
+        onChange={(e) => setVision(e.target.value)}
+        placeholder="如 qwen-vl-max、glm-4v"
+      />
       <label htmlFor="apiKey">API Key</label>
       <input id="apiKey" type="password" value={key} onChange={(e) => setKey(e.target.value)} placeholder="sk-..." />
       <div className="row2">

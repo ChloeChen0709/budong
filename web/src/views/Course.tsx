@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import type { BookState, Cause, Item, Pack } from "../data/types";
 import { CAUSES, causeOf, classify, dueItems, dueLabel, levelOf, masteryOf, newItem, reviewItem } from "../data/course";
 import Notes from "./Notes";
@@ -7,6 +7,7 @@ import CropDialog from "../components/CropDialog";
 import Explain from "../components/Explain";
 import { MathText } from "../lib/math";
 import { exportPdf } from "../lib/print";
+import { recognize } from "../lib/ocr";
 
 type CourseTab = "map" | "items" | "review" | "notes";
 const TABS: [CourseTab, string][] = [
@@ -154,6 +155,10 @@ function AddForm({
   const [cause, setCause] = useState<Cause>("unknown");
   const [img, setImg] = useState<string | undefined>();
   const [crop, setCrop] = useState<File | undefined>();
+  const [ocrFile, setOcrFile] = useState<File | undefined>();
+  const [ocrNote, setOcrNote] = useState("");
+  const [busy, setBusy] = useState(false);
+  const shotRef = useRef<HTMLInputElement>(null);
   const auto = useMemo(() => classify(q, pack), [q, pack]);
   const [sec, setSec] = useState("");
 
@@ -161,6 +166,24 @@ function AddForm({
   const target = sec || auto.sec || sections[0]?.id;
 
   const pick = (file: File) => setCrop(file);
+
+  const runOcr = async (dataUrl: string) => {
+    setBusy(true);
+    setOcrNote("");
+    try {
+      const text = await recognize(dataUrl);
+      if (text) {
+        setQ(text);
+        setOcrNote("已识别，可修改");
+      } else {
+        setOcrNote("图里没识别出题目");
+      }
+    } catch (e) {
+      setOcrNote(e instanceof Error ? e.message : "识别失败");
+    } finally {
+      setBusy(false);
+    }
+  };
 
   return (
     <div className="addform">
@@ -186,10 +209,24 @@ function AddForm({
       {auto.sec && !sec && (
         <p className="hint">按关键词自动归到「{auto.sec}」，命中了 {auto.hit.join("、")}</p>
       )}
-      <label className="file">
-        附图
-        <input type="file" accept="image/*" onChange={(e) => e.target.files?.[0] && void pick(e.target.files[0])} />
-      </label>
+      <div className="ocrbar">
+        <label className="file">
+          附图
+          <input type="file" accept="image/*" onChange={(e) => e.target.files?.[0] && void pick(e.target.files[0])} />
+        </label>
+        <button type="button" className="link" onClick={() => shotRef.current?.click()} disabled={busy}>
+          {busy ? "识别中…" : "拍照识别"}
+        </button>
+        <input
+          ref={shotRef}
+          type="file"
+          accept="image/*"
+          capture="environment"
+          hidden
+          onChange={(e) => e.target.files?.[0] && setOcrFile(e.target.files[0])}
+        />
+      </div>
+      {ocrNote && <p className="hint">{ocrNote}</p>}
       {img && <img className="thumb" src={img} alt="" />}
       {crop && (
         <CropDialog
@@ -198,6 +235,16 @@ function AddForm({
           onDone={(url) => {
             setImg(url);
             setCrop(undefined);
+          }}
+        />
+      )}
+      {ocrFile && (
+        <CropDialog
+          file={ocrFile}
+          onCancel={() => setOcrFile(undefined)}
+          onDone={(url) => {
+            setOcrFile(undefined);
+            void runOcr(url);
           }}
         />
       )}

@@ -5,6 +5,7 @@ const APIK = "budong.api.v1";
 export interface ApiCfg {
   url?: string;
   model?: string;
+  vision?: string;
   key?: string;
 }
 
