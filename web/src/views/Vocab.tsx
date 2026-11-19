@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import type { BookState, Entry, Pack } from "../data/types";
 import { buildQueue, markWord, vocabStats, type Kind, type Mark } from "../data/vocab";
 
@@ -15,6 +15,28 @@ export default function Vocab({
   const [queue, setQueue] = useState<Entry[] | null>(null);
   const [index, setIndex] = useState(0);
   const [shown, setShown] = useState(false);
+  const [deckIndex, setDeckIndex] = useState(0);
+  const [drag, setDrag] = useState(0);
+  const startX = useRef(0);
+  const dragging = useRef(false);
+
+  const deckDown = (e: React.TouchEvent) => {
+    startX.current = e.touches[0].clientX;
+    dragging.current = true;
+  };
+  const deckMove = (e: React.TouchEvent) => {
+    if (!dragging.current) return;
+    const dx = e.touches[0].clientX - startX.current;
+    setDrag(Math.max(-40, Math.min(40, dx / 4)));
+  };
+  const deckUp = (e: React.TouchEvent) => {
+    if (!dragging.current) return;
+    dragging.current = false;
+    const dx = e.changedTouches[0].clientX - startX.current;
+    if (dx < -40) setDeckIndex(1);
+    else if (dx > 40) setDeckIndex(0);
+    setDrag(0);
+  };
 
   const stats = useMemo(() => vocabStats(state, kind), [state, kind]);
   const today = state.vocabDay[new Date().toISOString().slice(0, 10)] ?? 0;
@@ -51,7 +73,7 @@ export default function Vocab({
           </span>
           <button onClick={() => setQueue(null)}>关闭</button>
         </div>
-        <button className="card" onClick={() => setShown(true)}>
+        <button className="card flip" key={`${kind}-${index}`} onClick={() => setShown(true)}>
           <span className="word">{entry.q}</span>
           {shown && (
             <>
@@ -82,16 +104,22 @@ export default function Vocab({
       <p className="today">
         今天已背 <b>{today}</b> / {goal}　·　连续 {streak(state)} 天
       </p>
-      <div className="choices">
+      <div className="deck" onTouchStart={deckDown} onTouchMove={deckMove} onTouchEnd={deckUp}>
         {(
           [
             ["w", "核心词"],
             ["p", "高频词组"],
           ] as [Kind, string][]
-        ).map(([k, label]) => {
+        ).map(([k, label], i) => {
           const s = vocabStats(state, k);
+          const off = i - deckIndex;
           return (
-            <button key={k} className="choice" onClick={() => start(k)}>
+            <button
+              key={k}
+              className={`choice card-${off === 0 ? "on" : off > 0 ? "next" : "prev"}`}
+              style={{ transform: `translateX(${off * 6 + drag}%) scale(${1 - Math.abs(off) * 0.04})` }}
+              onClick={() => (off === 0 ? start(k) : setDeckIndex(i))}
+            >
               <span className="title">{label}</span>
               <span className="count">{s.total}</span>
               <span className="sub">
@@ -100,6 +128,11 @@ export default function Vocab({
             </button>
           );
         })}
+        <div className="dots">
+          {[0, 1].map((i) => (
+            <span key={i} className={i === deckIndex ? "on" : ""} />
+          ))}
+        </div>
       </div>
       <ul className="lists">
         <li>

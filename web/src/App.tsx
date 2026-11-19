@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { PACKS, packById } from "./data/packs";
-import { lastBookId, loadState, migrateLegacy, saveState } from "./data/store";
+import { loadState, migrateLegacy, saveState } from "./data/store";
 import type { BookState } from "./data/types";
 import Shelf from "./views/Shelf";
 import Notes from "./views/Notes";
@@ -21,10 +21,6 @@ export default function App() {
 
   useEffect(() => {
     migrateLegacy();
-    const last = lastBookId();
-    if (last && PACKS.some((p) => p.id === last)) {
-      setBookId(last);
-    }
   }, []);
 
   const pack = bookId ? packById(bookId) : null;
