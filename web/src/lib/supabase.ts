@@ -29,6 +29,21 @@ export function urlAuthError(): string | null {
 
 export const isCloudEnabled = Boolean(supabase);
 
+/** 若链接带回 ?code=（PKCE 流程），换一次会话 */
+export async function exchangeCodeIfPresent() {
+  if (!supabase) return "no-client";
+  const code = new URLSearchParams(window.location.search).get("code");
+  if (!code) return "no-code";
+  const { error } = await supabase.auth.exchangeCodeForSession(code);
+  return error ? `exchange-error: ${error.message}` : "exchanged";
+}
+
+export function authDebug(): string {
+  const h = window.location.hash ? "hash" : "";
+  const q = window.location.search ? "query" : "";
+  return [h, q].filter(Boolean).join("+") || "clean";
+}
+
 export async function currentUser() {
   if (!supabase) return null;
   const { data } = await supabase.auth.getUser();

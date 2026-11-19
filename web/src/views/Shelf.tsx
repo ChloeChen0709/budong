@@ -9,10 +9,12 @@ export default function Shelf({
 }) {
   return (
     <div className="shelf">
-      <div className="shelf-head">
-        <p className="eyebrow">选择书目</p>
-        <button className="link" onClick={onAccount}>我的</button>
-      </div>
+      <header className="shelf-top">
+        <span className="brand">不懂</span>
+        <button className="avatar" onClick={onAccount} aria-label="我的">
+          <span>我</span>
+        </button>
+      </header>
       <ul className="books">
         {PACKS.map((p) => (
           <li key={p.id}>

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { isCloudEnabled, signInWithEmail, signInWithGitHub, supabase } from "../lib/supabase";
+import { authDebug, exchangeCodeIfPresent, isCloudEnabled, signInWithEmail, signInWithGitHub, supabase, urlAuthError } from "../lib/supabase";
 import { PACKS } from "../data/packs";
 import { loadState, saveState } from "../data/store";
 import { apiCfg, hostModel, normalizeApiUrl, saveApiCfg, failureHint } from "../lib/ai";
@@ -74,6 +74,9 @@ export default function Account() {
   const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    void exchangeCodeIfPresent().then((r) => r.startsWith("exchange-error") && setMsg(r));
+    const linkErr = urlAuthError();
+    if (linkErr) setMsg(`链接无效：${linkErr}`);
     supabase?.auth.getUser().then(({ data }) => setUser(data.user?.email ?? null));
     const sub = supabase?.auth.onAuthStateChange((_e, s) => setUser(s?.user?.email ?? null));
     return () => sub?.data.subscription.unsubscribe();
@@ -172,6 +175,7 @@ export default function Account() {
           <p className="hint">未配置云端，仅存本机</p>
         )}
         {msg && <p className="hint">{msg}</p>}
+        <p className="hint">状态：{user ? "已登录" : "未登录"} · 地址标记：{authDebug()}</p>
       </section>
       )}
 
@@ -200,6 +204,7 @@ export default function Account() {
           </li>
         </ul>
         {msg && <p className="hint">{msg}</p>}
+        <p className="hint">状态：{user ? "已登录" : "未登录"} · 地址标记：{authDebug()}</p>
       </section>
       )}
 

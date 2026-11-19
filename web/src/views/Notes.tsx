@@ -145,6 +145,34 @@ export default function Notes({ pack, state }: { pack: Pack; state: BookState })
     );
   }
 
+  const isExam = pack.mode === "exam";
+  const [part, setPart] = useState(0);
+  const activeCh = isExam ? pack.book.chapters[part] : null;
+
+  if (isExam) {
+    return (
+      <div className="notes">
+        <nav className="modules">
+          {pack.book.chapters.map((c, i) => (
+            <button key={c.no} className={i === part ? "on" : ""} onClick={() => setPart(i)}>
+              {c.title}
+            </button>
+          ))}
+        </nav>
+        <ul className="sections">
+          {activeCh?.sections.map((sec) => (
+            <li key={sec.id}>
+              <button onClick={() => setSectionId(sec.id)}>
+                <span>{sec.id} {sec.title}</span>
+                <span className="arrow">›</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+
   return (
     <div className="notes">
       {pack.book.chapters.map((c) => (
