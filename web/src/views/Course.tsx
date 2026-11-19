@@ -80,7 +80,7 @@ function Map({ pack, items, onPick }: { pack: Pack; items: Item[]; onPick: () =>
       </ul>
       {!items.length && (
         <button className="wide" onClick={onPick}>
-          去记第一道
+          新增错题
         </button>
       )}
     </div>
@@ -96,7 +96,7 @@ function Items({ pack, items, onChange }: { pack: Pack; items: Item[]; onChange:
       <div className="rowhead">
         <span>{items.length} 道</span>
         <button className="link" onClick={() => setAdding((v) => !v)}>
-          {adding ? "收起" : "记一道"}
+          {adding ? "取消" : "新增"}
         </button>
       </div>
 
@@ -136,7 +136,7 @@ function Items({ pack, items, onChange }: { pack: Pack; items: Item[]; onChange:
           </li>
         ))}
       </ul>
-      {!items.length && <p className="hint">还没有错题。</p>}
+      {!items.length && <p className="hint">暂无错题</p>}
     </div>
   );
 }
@@ -219,7 +219,7 @@ function Review({ pack, items, onChange }: { pack: Pack; items: Item[]; onChange
   const due = dueItems({ items } as BookState);
   const sections = pack.book.chapters.flatMap((c) => c.sections);
 
-  if (!due.length) return <p className="hint">今天没有到期的题。</p>;
+  if (!due.length) return <p className="hint">今天没有到期的题</p>;
 
   return (
     <ul className="ilist">

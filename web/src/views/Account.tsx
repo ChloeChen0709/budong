@@ -17,7 +17,7 @@ function ModelSection() {
   };
 
   const test = async () => {
-    setMsg("测试中…");
+    setMsg("测试中");
     try {
       const res = await fetch(normalizeApiUrl(url), {
         method: "POST",
@@ -28,15 +28,15 @@ function ModelSection() {
         }),
       });
       const body = await res.text();
-      setMsg(res.ok ? "连通了" : failureHint(res.status, body));
+      setMsg(res.ok ? "可用" : failureHint(res.status, body));
     } catch {
-      setMsg("请求没到服务器：地址错误或被跨域拦下");
+      setMsg("请求未发出：地址错误或跨域被拦");
     }
   };
 
   return (
     <section>
-      <h3>模型（AI 讲题用）</h3>
+      <h3>接口</h3>
       <label htmlFor="apiUrl">接口地址</label>
       <input
         id="apiUrl"
@@ -50,7 +50,7 @@ function ModelSection() {
       <label htmlFor="apiKey">API Key</label>
       <input id="apiKey" type="password" value={key} onChange={(e) => setKey(e.target.value)} placeholder="sk-..." />
       <div className="row2">
-        <button onClick={test}>测试连接</button>
+        <button onClick={test}>测试</button>
         <button className="primary" onClick={save}>保存</button>
       </div>
       {msg && <p className="hint">{msg}</p>}
@@ -62,6 +62,7 @@ export default function Account() {
   const [email, setEmail] = useState("");
   const [msg, setMsg] = useState("");
   const [user, setUser] = useState<string | null>(null);
+  const [pane, setPane] = useState<"账号" | "数据" | "模型" | "关于">("账号");
   const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -73,7 +74,7 @@ export default function Account() {
   const send = async () => {
     try {
       await signInWithEmail(email.trim());
-      setMsg("登录链接已发到邮箱，点开即完成登录。");
+      setMsg("登录链接已发送");
     } catch (e) {
       setMsg(e instanceof Error ? e.message : "登录失败");
     }
@@ -87,7 +88,7 @@ export default function Account() {
     a.download = `不懂备份-${new Date().toISOString().slice(0, 10)}.json`;
     a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-    setMsg("备份已下载");
+    setMsg("已下载");
   };
 
   const importBackup = async (file: File) => {
@@ -96,9 +97,9 @@ export default function Account() {
       const books = Array.isArray(data.books) ? data.books : [];
       if (!books.length) throw new Error("no books");
       for (const b of books) if (b?.bookId) saveState(b);
-      setMsg(`已恢复 ${books.length} 本书的数据`);
+      setMsg(`已恢复 ${books.length} 本`);
     } catch {
-      setMsg("文件读不出来");
+      setMsg("文件无法读取");
     }
   };
 
@@ -109,8 +110,16 @@ export default function Account() {
 
   return (
     <div className="account">
+      <nav className="modes">
+        {(["账号", "数据", "模型", "关于"] as const).map((k) => (
+          <button key={k} className={pane === k ? "on" : ""} onClick={() => setPane(k)}>
+            {k}
+          </button>
+        ))}
+      </nav>
+
+      {pane === "账号" && (
       <section>
-        <h3>账号</h3>
         {isCloudEnabled ? (
           user ? (
             <>
@@ -134,7 +143,7 @@ export default function Account() {
                 placeholder="you@example.com"
               />
               <button className="primary wide" onClick={send} disabled={!email.includes("@")}>
-                发送登录链接
+                发送链接
               </button>
               <button className="wide" onClick={() => void signInWithGitHub()}>
                 使用 GitHub 登录
@@ -142,22 +151,23 @@ export default function Account() {
             </>
           )
         ) : (
-          <p className="hint">未配置云端，当前只存本机。配置后可用邮箱登录并跨设备同步。</p>
+          <p className="hint">未配置云端，仅存本机</p>
         )}
         {msg && <p className="hint">{msg}</p>}
       </section>
+      )}
 
+      {pane === "数据" && (
       <section>
-        <h3>数据</h3>
         <p className="row">
           本机占用<b>{(bytes / 1024).toFixed(0)} KB</b>
         </p>
         <ul className="rows">
           <li>
-            <button onClick={exportBackup}>下载备份</button>
+            <button onClick={exportBackup}>导出</button>
           </li>
           <li>
-            <button onClick={() => fileRef.current?.click()}>从备份恢复</button>
+            <button onClick={() => fileRef.current?.click()}>恢复</button>
             <input
               ref={fileRef}
               type="file"
@@ -171,19 +181,22 @@ export default function Account() {
             />
           </li>
         </ul>
+        {msg && <p className="hint">{msg}</p>}
       </section>
+      )}
 
-      <ModelSection />
+      {pane === "模型" && <ModelSection />}
 
+      {pane === "关于" && (
       <section>
-        <h3>关于</h3>
         <p className="row">
           版本<b>{new Date(__BUILD__).toLocaleDateString("zh-CN")}</b>
         </p>
         <p className="hint">
-          内容包：{PACKS.map((p) => p.name).join("、")}。清除浏览器数据会清空本机记录，建议定期下载备份。
+          {PACKS.map((p) => p.name).join("、")}·清除浏览器数据会清空本机记录
         </p>
       </section>
+      )}
     </div>
   );
 }
