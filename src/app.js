@@ -28,8 +28,9 @@ const SAMPLE_ITEMS = [
 ];
 
 // 状态
-const KEY = "cuotiben.v2";
-const APIK = "cuotiben.api.v1";
+const KEY = "budong.v1";                 // 每本书一份快照：budong.v1.<bookId>
+const LEGACY = "cuotiben.v2";            // 旧版本命名空间，读不到新键时回退
+const APIK = "budong.api.v1";
 let BOOK = null, NOTES = null;
 let curModule = "";
 let DB = { book: null, items: [] };
@@ -37,6 +38,29 @@ let DB = { book: null, items: [] };
 function packById(id){ return PACKS.find(p=>p.id===id) || PACKS[0]; }
 function applyPack(id){ const p = packById(id); BOOK = p.book; NOTES = p.notes; return p; }
 function storeKey(id){ return KEY + "." + (id || DB.bookId || "calculus"); }
+
+/* 旧版本键搬到新命名空间，新键已存在时不覆盖 */
+function migrateKeys(){
+  const rename = k => {
+    if(k.indexOf("cuotiben.v2") === 0) return KEY + k.slice("cuotiben.v2".length);
+    if(k === "cuotiben.api.v1") return APIK;
+    if(k === "cuotiben.backupAt") return BACKUP_AT;
+    if(k === "cuotiben.nagAt") return "budong.nagAt";
+    if(k === "cuotiben.printTip") return "budong.printTip";
+    return null;
+  };
+  const olds = [];
+  for(let i = 0; i < localStorage.length; i++){
+    const k = localStorage.key(i);
+    if(k && k.indexOf("cuotiben") === 0) olds.push(k);
+  }
+  olds.forEach(k=>{
+    const target = rename(k);
+    if(target && localStorage.getItem(target) === null){
+      localStorage.setItem(target, localStorage.getItem(k));
+    }
+  });
+}
 let tab = "map", filter = "all", curSec = null;
 
 function deepClone(o){ return JSON.parse(JSON.stringify(o)); }
@@ -121,7 +145,7 @@ function markPlain(v){
     .replace(/_\{([^{}]*)\}/g, "_$1");
 }
 
-const BACKUP_AT = "cuotiben.backupAt";
+const BACKUP_AT = "budong.backupAt";
 let nagTimer = null;
 
 function showNag(text){
@@ -142,11 +166,11 @@ function daysSinceBackup(){
 function nagBackup(){
   const hasData = (DB.items && DB.items.length) || Object.keys(DB.srs || {}).length;
   if(!hasData) return;
-  const last = +(sessionStorage.getItem("cuotiben.nagAt") || 0);
+  const last = +(sessionStorage.getItem("budong.nagAt") || 0);
   if(Date.now() - last < 30 * 60000) return;
   const d = daysSinceBackup();
   if(d !== null && d < 7) return;
-  sessionStorage.setItem("cuotiben.nagAt", String(Date.now()));
+  sessionStorage.setItem("budong.nagAt", String(Date.now()));
   showNag(d === null
     ? "还没有备份过。数据只存在这台设备，清缓存就没了"
     : `距上次备份 ${d} 天，数据只存在这台设备`);
@@ -161,11 +185,11 @@ function chOf(id){ return DB.book.chapters.find(ch=>ch.sections.some(s=>s.id===i
 function chapterName(id){ const ch=chOf(id); return ch? ch.no+" "+ch.title : ""; }
 
 function load(id){
-  id = id || localStorage.getItem(KEY + ".last") || PACKS[0].id;
+  id = id || localStorage.getItem(KEY + ".last") || localStorage.getItem(LEGACY + ".last") || PACKS[0].id;
   const pack = applyPack(id);
   DB = { book: deepClone(BOOK), items: [], notes: deepClone(NOTES), notesVer: 3, custom:false, bookId: id };
   try{
-    const raw = localStorage.getItem(storeKey(id)) || (id === PACKS[0].id ? localStorage.getItem(KEY) : null);
+    const raw = localStorage.getItem(storeKey(id)) || (id === PACKS[0].id ? localStorage.getItem(LEGACY) : null);
     if(raw){
       const o = JSON.parse(raw);
       if(o && o.book && Array.isArray(o.items)){
@@ -1085,12 +1109,43 @@ function encodeBudget(cv, budget){
   return url;
 }
 
+/* 旧版本的图片库叫 cuotiben-img，首次运行时整库复制到 budong-img */
+function copyLegacyImgDB(){
+  return new Promise(res=>{
+    try{
+      const r = indexedDB.open("cuotiben-img");
+      r.onupgradeneeded = ()=>{ r.transaction.abort(); };
+      r.onsuccess = ()=>{
+        const old = r.result;
+        if(!old.objectStoreNames.contains("img")){ old.close(); return res(false); }
+        const tx = old.transaction("img", "readonly");
+        const all = tx.objectStore("img").getAllKeys();
+        all.onsuccess = async ()=>{
+          const keys = all.result || [];
+          for(const k of keys){
+            const v = await new Promise(done=>{
+              const t2 = old.transaction("img", "readonly");
+              const q = t2.objectStore("img").get(k);
+              q.onsuccess = ()=>done(q.result || null); q.onerror = ()=>done(null);
+            });
+            if(v) await imgPut(k, v);
+          }
+          old.close(); res(true);
+        };
+        all.onerror = ()=>{ old.close(); res(false); };
+      };
+      r.onerror = ()=>res(false);
+      r.onblocked = ()=>res(false);
+    }catch(e){ res(false); }
+  });
+}
+
 let _imgDB;
 function imgDB(){
   if(_imgDB !== undefined) return Promise.resolve(_imgDB);
   return new Promise(res=>{
     try{
-      const r = indexedDB.open("cuotiben-img", 1);
+      const r = indexedDB.open("budong-img", 1);   // 旧库不迁移，图片由 migrateImages 重新落库
       r.onupgradeneeded = ()=>{ r.result.createObjectStore("img"); };
       r.onsuccess = ()=>{ _imgDB = r.result; res(_imgDB); };
       r.onerror = ()=>{ _imgDB = null; res(null); };
@@ -1332,7 +1387,7 @@ async function restoreFrom(data){
     vocabGoal: data.vocabGoal || 30
   };
   localStorage.setItem(storeKey(bookId), JSON.stringify(next));
-  localStorage.setItem("cuotiben.v2.last", bookId);
+  localStorage.setItem(KEY + ".last", bookId);
   if(bookId !== DB.bookId) switchBook(bookId);
   else { DB = next; renderAll(); }
   renderShelf();
@@ -1846,9 +1901,9 @@ function bind(){
 
   $("#btnPdf").addEventListener("click", async ()=>{
     await buildPrint();
-    if(!localStorage.getItem("cuotiben.printTip")){
+    if(!localStorage.getItem("budong.printTip")){
       toast("打印窗口里把「页眉和页脚」取消勾选，导出的 PDF 就只有内容");
-      localStorage.setItem("cuotiben.printTip", "1");
+      localStorage.setItem("budong.printTip", "1");
     }
     const oldTitle = document.title;
     document.title = "";
@@ -2025,6 +2080,8 @@ function bind(){
 }
 
 (function init(){
+  migrateKeys();
+  copyLegacyImgDB().then(()=>migrateImages());
   load();
   if(!DB.items.length && !localStorage.getItem(KEY+".seeded")){
     seed(); try{localStorage.setItem(KEY+".seeded","1");}catch(e){}
@@ -2056,7 +2113,6 @@ function bind(){
   }
   $("#nagBtn").addEventListener("click", ()=>{ $("#btnBackup").click(); $("#nag").classList.remove("on"); });
 
-  migrateImages();
 
   const WEEK = 7 * 864e5;
   if(DB.items.length && (!DB.lastBackup || Date.now() - DB.lastBackup > WEEK)){

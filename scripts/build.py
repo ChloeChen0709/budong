@@ -20,9 +20,7 @@ DEFAULT_PACK = "calculus"
 
 # 构建产物同步到的位置（存在才复制）
 MIRRORS = [
-    ROOT.parent / "错题本.html",
     ROOT.parent / "budong.html",
-    ROOT.parent / "cuotiben-site" / "index.html",
 ]
 
 
@@ -58,7 +56,6 @@ def main():
         p = json.loads(f.read_text(encoding="utf-8"))
         p.setdefault("id", f.stem)
         packs.append(p)
-    pack = packs[0]
     template = (SRC / "template.html").read_text(encoding="utf-8")
     css = ((SRC / "script-font.css").read_text(encoding="utf-8")
            + "\n"
@@ -86,7 +83,6 @@ def main():
             hashlib.sha1((template + css + app + content_js).encode("utf-8")).hexdigest()[:6]
 
     html = (template
-            .replace("{{PACK_NAME}}", pack["name"])
             .replace("{{BUILD}}", stamp)
             .replace("{{STYLE}}", css)
             .replace("{{SCRIPT}}", content_js + app))
