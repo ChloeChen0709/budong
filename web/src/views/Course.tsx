@@ -184,7 +184,7 @@ function AddForm({
 
   return (
     <div className="addform">
-      <MathInput value={q} onChange={setQ} rows={4} placeholder="题目，可用下方键盘输入符号" />
+      <MathInput value={q} onChange={setQ} />
       {q.includes("\\") && <p className="preview"><MathText text={q} /></p>}
       <div className="chips">
         {CAUSES.map((c) => (

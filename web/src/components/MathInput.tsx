@@ -1,11 +1,18 @@
-import { useRef } from "react";
+import { useMemo, useState } from "react";
+import { MathText } from "../lib/math";
 
-const ACTS: [string, string, number][] = [
-  // 键名、插入文本、插入后光标相对起点的位置（放在第一个 {} 内）
-  ["frac", "\\frac{}{}", 6],
-  ["sup", "^{}", 2],
-  ["sub", "_{}", 2],
-  ["sqrt", "\\sqrt{}", 6],
+type Part =
+  | { kind: "text"; v: string }
+  | { kind: "frac"; n: string; d: string }
+  | { kind: "sup"; v: string }
+  | { kind: "sub"; v: string }
+  | { kind: "sqrt"; v: string };
+
+const ACTS: [string, string][] = [
+  ["frac", "分数"],
+  ["sup", "上标"],
+  ["sub", "下标"],
+  ["sqrt", "根号"],
 ];
 
 const KEYS: [string, string[]][] = [
@@ -14,103 +21,152 @@ const KEYS: [string, string[]][] = [
   ["函数", ["lim", "ln", "sin", "cos", "tan", "dx", "dy", "dt", "e"]],
 ];
 
-/** 找到光标所在的那对花括号，返回 { 与 } 的位置 */
-function bracesAround(v: string, caret: number): { open: number; close: number } | null {
-  let open = -1;
-  for (let i = caret - 1; i >= 0; i--) {
-    if (v[i] === "}") break;
-    if (v[i] === "{") { open = i; break; }
+/** 把带记号的一行拆成「文字 + 结构」的块，便于直接改内容 */
+function parse(src: string): Part[] {
+  const out: Part[] = [];
+  let buf = "";
+  const flush = () => { if (buf) { out.push({ kind: "text", v: buf }); buf = ""; } };
+  const read = (i: number) => {
+    let depth = 0, s = "";
+    for (let j = i; j < src.length; j++) {
+      if (src[j] === "{") { depth++; if (depth === 1) continue; }
+      else if (src[j] === "}") { depth--; if (depth === 0) return { body: s, next: j + 1 }; }
+      s += src[j];
+    }
+    return { body: s, next: src.length };
+  };
+  let i = 0;
+  while (i < src.length) {
+    if (src.startsWith("\\frac", i)) {
+      const a = read(i + 5); const b = read(a.next);
+      flush(); out.push({ kind: "frac", n: a.body, d: b.body }); i = b.next; continue;
+    }
+    if (src.startsWith("\\sqrt", i)) {
+      const a = read(i + 5); flush(); out.push({ kind: "sqrt", v: a.body }); i = a.next; continue;
+    }
+    if (src.startsWith("^{", i)) {
+      const a = read(i + 1); flush(); out.push({ kind: "sup", v: a.body }); i = a.next; continue;
+    }
+    if (src.startsWith("_{", i)) {
+      const a = read(i + 1); flush(); out.push({ kind: "sub", v: a.body }); i = a.next; continue;
+    }
+    buf += src[i++];
   }
-  if (open < 0) return null;
-  let depth = 0;
-  for (let i = open; i < v.length; i++) {
-    if (v[i] === "{") depth++;
-    else if (v[i] === "}") { depth--; if (depth === 0) return { open, close: i }; }
-  }
-  return null;
+  flush();
+  return out.length ? out : [{ kind: "text", v: "" }];
+}
+
+function serialize(parts: Part[]): string {
+  return parts.map(p => {
+    if (p.kind === "text") return p.v;
+    if (p.kind === "frac") return `\\frac{${p.n}}{${p.d}}`;
+    if (p.kind === "sqrt") return `\\sqrt{${p.v}}`;
+    if (p.kind === "sup") return `^{${p.v}}`;
+    return `_{${p.v}}`;
+  }).join("");
 }
 
 export default function MathInput({
   value,
   onChange,
-  rows = 4,
-  placeholder,
 }: {
   value: string;
   onChange: (v: string) => void;
-  rows?: number;
-  placeholder?: string;
 }) {
-  const ref = useRef<HTMLTextAreaElement>(null);
+  const [parts, setParts] = useState<Part[]>(() => parse(value));
 
-  const put = (text: string, offset: number) => {
-    const el = ref.current;
-    if (!el) return;
-    const s = el.selectionStart;
-    const e = el.selectionEnd;
-    onChange(value.slice(0, s) + text + value.slice(e));
-    requestAnimationFrame(() => {
-      el.focus();
-      const at = s + offset;
-      el.setSelectionRange(at, at);
-    });
+  const commit = (next: Part[]) => { setParts(next); onChange(serialize(next)); };
+
+  const setAt = (i: number, patch: Partial<Part>) => {
+    const next = parts.map((p, k) => (k === i ? ({ ...p, ...patch } as Part) : p));
+    commit(next);
   };
 
-  /** Tab：从分子跳到分母；已在分母则跳出花括号 */
-  const nextSlot = () => {
-    const el = ref.current;
-    if (!el) return false;
-    const caret = el.selectionStart;
-    const b = bracesAround(value, caret);
-    if (!b) return false;
-    const after = value.slice(b.close + 1);
-    const m = /^\{([^{}]*)\}/.exec(after);
-    if (m) {
-      const at = b.close + 2;
-      el.setSelectionRange(at, at);
-      return true;
-    }
-    const at = b.close + 1;
-    el.setSelectionRange(at, at);
-    return true;
+  const add = (kind: string) => {
+    const block: Part =
+      kind === "frac" ? { kind: "frac", n: "", d: "" } :
+      kind === "sqrt" ? { kind: "sqrt", v: "" } :
+      kind === "sup" ? { kind: "sup", v: "" } : { kind: "sub", v: "" };
+    commit([...parts, block, { kind: "text", v: "" }]);
   };
 
-  const act = (key: string) => {
-    const hit = ACTS.find((a) => a[0] === key);
-    if (hit) put(hit[1], hit[2]);
+  const pushKey = (k: string) => {
+    const last = parts[parts.length - 1];
+    if (last && last.kind === "text") setAt(parts.length - 1, { v: last.v + k } as Partial<Part>);
+    else commit([...parts, { kind: "text", v: k }]);
   };
+
+  const size = (p: Part) => (p.kind === "sup" || p.kind === "sub" ? "0.78em" : undefined);
+  const lift = (p: Part) => (p.kind === "sup" ? { verticalAlign: "super" as const } : p.kind === "sub" ? { verticalAlign: "sub" as const } : {});
+
+  const plain = useMemo(() => serialize(parts), [parts]);
 
   return (
     <div className="mathinput">
-      <textarea
-        ref={ref}
-        rows={rows}
-        value={value}
-        placeholder={placeholder}
-        onChange={(e) => onChange(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === "Tab" && nextSlot()) e.preventDefault();
-        }}
-      />
+      <div className="mline">
+        {parts.map((p, i) => {
+          if (p.kind === "text")
+            return (
+              <input
+                key={i}
+                className="mtext"
+                value={p.v}
+                placeholder={i === 0 ? "题目" : ""}
+                onChange={(e) => setAt(i, { v: e.target.value } as Partial<Part>)}
+              />
+            );
+          if (p.kind === "frac")
+            return (
+              <span className="mfrac" key={i}>
+                <input className="slot" value={p.n} placeholder="分子"
+                  onChange={(e) => setAt(i, { n: e.target.value } as Partial<Part>)} />
+                <input className="slot" value={p.d} placeholder="分母"
+                  onChange={(e) => setAt(i, { d: e.target.value } as Partial<Part>)} />
+              </span>
+            );
+          if (p.kind === "sqrt")
+            return (
+              <span className="msqrt" key={i}>
+                <span className="hook">√</span>
+                <input className="slot" value={p.v} placeholder="根号内"
+                  onChange={(e) => setAt(i, { v: e.target.value } as Partial<Part>)} />
+              </span>
+            );
+          return (
+            <input
+              key={i}
+              className="mslotsmall"
+              style={{ fontSize: size(p), ...lift(p) }}
+              value={p.v}
+              placeholder={p.kind === "sup" ? "上标" : "下标"}
+              onChange={(e) => setAt(i, { v: e.target.value } as Partial<Part>)}
+            />
+          );
+        })}
+        {!parts.length && <input className="mtext" placeholder="题目" value="" readOnly />}
+      </div>
+
       <div className="kb">
         <div className="kbrow">
-          {ACTS.map(([k, , ]) => (
-            <button type="button" key={k} onClick={() => act(k)}>
-              {k === "frac" ? "分数" : k === "sup" ? "上标" : k === "sub" ? "下标" : "根号"}
-            </button>
+          {ACTS.map(([k, label]) => (
+            <button type="button" key={k} onClick={() => add(k)}>{label}</button>
           ))}
         </div>
         {KEYS.map(([label, keys]) => (
           <div className="kbrow" key={label}>
             {keys.map((k) => (
-              <button type="button" key={k} onClick={() => put(k, k.length)}>
-                {k}
-              </button>
+              <button type="button" key={k} onClick={() => pushKey(k)}>{k}</button>
             ))}
           </div>
         ))}
       </div>
-      <p className="kbhint">点「分数」后光标停在分子，填完按 Tab 跳到分母。</p>
+
+      {plain && (
+        <div className="mpreview">
+          <span className="pvlabel">预览</span>
+          <MathText text={plain} />
+        </div>
+      )}
     </div>
   );
 }
