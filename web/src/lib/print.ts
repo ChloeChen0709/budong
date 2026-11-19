@@ -29,7 +29,6 @@ export function bodyHtml(pack: Pack, state: BookState): string {
       parts.push(
         `<p>${renderMath(it.q)}<span class="m">${esc(causeOf(it.cause).name)} · ${esc(it.sec)}</span></p>`
       );
-      if (it.img) parts.push(`<img src="${it.img}" alt="">`);
     }
   }
   return parts.join("");

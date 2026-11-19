@@ -62,7 +62,7 @@ export interface Item {
   due: number;
   lapses: number;
   q: string;
-  img?: string;
+  imgKey?: string;
   demo?: { why: string; how: string; fix: string };
 }
 

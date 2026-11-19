@@ -8,6 +8,8 @@ import Explain from "../components/Explain";
 import { MathText } from "../lib/math";
 import { exportPdf } from "../lib/print";
 import { recognize } from "../lib/ocr";
+import { newImgKey, putImage } from "../lib/imgstore";
+import Img from "../components/Img";
 
 type CourseTab = "map" | "items" | "review" | "notes";
 const TABS: [CourseTab, string][] = [
@@ -121,7 +123,7 @@ function Items({ pack, items, onChange }: { pack: Pack; items: Item[]; onChange:
               {dueLabel(it.due)}
               {it.lapses > 0 && <span className="lap">错 {it.lapses} 次</span>}
             </div>
-            {it.img && <img className="thumb" src={it.img} alt="" />}
+            {it.imgKey && <Img imgKey={it.imgKey} className="thumb" />}
             <Explain item={it} pack={pack} />
             <button
               className="del"
@@ -149,7 +151,7 @@ function AddForm({
 }) {
   const [q, setQ] = useState("");
   const [cause, setCause] = useState<Cause>("unknown");
-  const [img, setImg] = useState<string | undefined>();
+  const [imgKey, setImgKey] = useState<string | undefined>();
   const [crop, setCrop] = useState<File | undefined>();
   const [ocrFile, setOcrFile] = useState<File | undefined>();
   const [ocrNote, setOcrNote] = useState("");
@@ -163,6 +165,12 @@ function AddForm({
   const target = sec || auto.sec || sections[0]?.id;
 
   const pick = (file: File) => setCrop(file);
+
+  const saveImg = async (dataUrl: string) => {
+    const key = newImgKey();
+    const ok = await putImage(key, dataUrl);
+    setImgKey(ok ? key : undefined);
+  };
 
   const runOcr = async (dataUrl: string) => {
     setBusy(true);
@@ -238,10 +246,10 @@ function AddForm({
         }}
       />
       {ocrNote && <p className="hint">{ocrNote}</p>}
-      {img && (
+      {imgKey && (
         <div className="attach">
-          <img className="thumb" src={img} alt="" />
-          <button type="button" className="detach" onClick={() => setImg(undefined)}>移除图片</button>
+          <Img imgKey={imgKey} className="thumb" />
+          <button type="button" className="detach" onClick={() => setImgKey(undefined)}>移除图片</button>
         </div>
       )}
       {crop && (
@@ -249,7 +257,7 @@ function AddForm({
           file={crop}
           onCancel={() => setCrop(undefined)}
           onDone={(url) => {
-            setImg(url);
+            void saveImg(url);
             setCrop(undefined);
           }}
         />
@@ -260,7 +268,7 @@ function AddForm({
           onCancel={() => setOcrFile(undefined)}
           onDone={(url) => {
             setOcrFile(undefined);
-            setImg(url);          // 图先留住，识别失败也不会丢
+            void saveImg(url);    // 图先留住，识别失败也不会丢
             void runOcr(url);
           }}
         />
@@ -270,7 +278,7 @@ function AddForm({
         <button
           className="primary"
           disabled={!q.trim()}
-          onClick={() => onAdd(newItem({ q: q.trim(), sec: target, cause, img }))}
+          onClick={() => onAdd(newItem({ q: q.trim(), sec: target, cause, imgKey }))}
         >
           保存
         </button>
