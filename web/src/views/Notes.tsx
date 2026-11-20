@@ -131,15 +131,29 @@ export default function Notes({ pack, state }: { pack: Pack; state: BookState })
 
         {!note.pages?.length && !!note.examples?.length && (
           <section className="nblock">
-            <h3>例题</h3>
-            <ol className="exs">
-              {note.examples.map((e, i) => (
-                <li key={i}>
-                  <span className="no">{i + 1}</span>
-                  <div className="q"><MathText text={e.q} /></div>
-                </li>
-              ))}
-            </ol>
+            <h3>{note.plain ? "对照表" : "例题"}</h3>
+            {note.plain ? (
+              <dl className="pairs">
+                {note.examples.map((e, i) => (
+                  <div className="pair" key={i}>
+                    <dt><MathText text={e.q} /></dt>
+                    <dd><MathText text={e.a ?? ""} /></dd>
+                  </div>
+                ))}
+              </dl>
+            ) : (
+              <div className="cards">
+                {note.examples.map((e, i) => (
+                  <details key={i}>
+                    <summary><MathText text={e.q} /></summary>
+                    <div className="body">
+                      {e.a && <p><MathText text={e.a} /></p>}
+                      {e.analysis && <p className="note"><MathText text={e.analysis} /></p>}
+                    </div>
+                  </details>
+                ))}
+              </div>
+            )}
           </section>
         )}
       </article>
