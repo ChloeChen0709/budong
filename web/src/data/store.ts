@@ -18,11 +18,24 @@ export function emptyState(pack: Pack): BookState {
 
 /** 本地快照里空着的节，用内容包补齐（旧版本留下的空壳会一直显示空白） */
 function fillFromPack(notes: Record<string, SectionNote>, pack: Pack) {
-  const out = { ...notes };
-  for (const [id, src] of Object.entries(pack.notes)) {
-    const cur = out[id];
-    const empty = !cur || (!cur.concepts?.length && !cur.types?.length && !cur.examples?.length && !cur.pages?.length);
-    if (empty) out[id] = structuredClone(src);
+  const out: Record<string, SectionNote> = {};
+  const ids = new Set([...Object.keys(pack.notes), ...Object.keys(notes)]);
+  for (const id of ids) {
+    const src = pack.notes[id];
+    const cur = notes[id];
+    const merged: SectionNote = { ...(cur ?? {}) };
+    for (const field of ["concepts", "types", "examples", "pages"] as const) {
+      const mine = merged[field] as unknown[] | undefined;
+      const theirs = src ? (src[field] as unknown[] | undefined) : undefined;
+      if ((!mine || mine.length === 0) && theirs?.length) {
+        (merged as Record<string, unknown>)[field] = structuredClone(theirs);
+      }
+    }
+    if (src) {
+      if (merged.plain === undefined && src.plain !== undefined) merged.plain = src.plain;
+      if (merged.typesStyle === undefined && src.typesStyle !== undefined) merged.typesStyle = src.typesStyle;
+    }
+    out[id] = merged;
   }
   return out;
 }
