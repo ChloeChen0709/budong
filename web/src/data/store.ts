@@ -1,4 +1,4 @@
-import type { BookState, Pack } from "./types";
+import type { BookState, Pack, SectionNote } from "./types";
 
 const KEY = "budong.v1";              // 每本书一份：budong.v1.<bookId>
 
@@ -16,12 +16,25 @@ export function emptyState(pack: Pack): BookState {
   };
 }
 
+/** 本地快照里空着的节，用内容包补齐（旧版本留下的空壳会一直显示空白） */
+function fillFromPack(notes: Record<string, SectionNote>, pack: Pack) {
+  const out = { ...notes };
+  for (const [id, src] of Object.entries(pack.notes)) {
+    const cur = out[id];
+    const empty = !cur || (!cur.concepts?.length && !cur.types?.length && !cur.examples?.length && !cur.pages?.length);
+    if (empty) out[id] = structuredClone(src);
+  }
+  return out;
+}
+
 export function loadState(pack: Pack): BookState {
   try {
     const raw = localStorage.getItem(storeKey(pack.id));
     if (!raw) return emptyState(pack);
     const parsed = JSON.parse(raw) as BookState;
-    return { ...emptyState(pack), ...parsed, bookId: pack.id };
+    const base = { ...emptyState(pack), ...parsed, bookId: pack.id };
+    base.notes = fillFromPack(base.notes ?? {}, pack);
+    return base;
   } catch {
     return emptyState(pack);
   }
