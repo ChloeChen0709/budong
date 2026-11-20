@@ -1,0 +1,8 @@
+{
+  "name": "不懂 budong",
+  "short_name": "不懂",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff"
+}
